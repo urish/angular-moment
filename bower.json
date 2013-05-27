@@ -1,0 +1,15 @@
+{
+	"name": "angular-moment",
+	"version": "0.1.0",
+	"description": "Angular.JS directives for Moment.JS (timeago alternative)",
+	"author": "Uri Shaked",
+	"license": "MIT",
+	"homepage": "http://angular-ui.github.com",
+	"main": "./angular-moment.js",
+	"ignore": [
+	],
+	"dependencies": {
+		"angular": "~1.x",
+		"moment": "~2.x"
+	}
+}
