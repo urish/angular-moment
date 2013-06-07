@@ -21,8 +21,14 @@ angular.module('angularMoment', [])
 			}
 
 			scope.$watch(attr.amTimeAgo, function (value) {
+				// Using array to build a Date object no matter of the browser (iPhone fix)
+				// solution taken from: http://stackoverflow.com/questions/5324178/javascript-date-parsing-on-iphone
+				
+				var arr = value.toString().split(/[- :]/),
+				    date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+
 				if (!(value instanceof Date)) {
-					value = new Date(value);
+					value = new Date(date);
 				}
 
 				updateTime(moment(value));
