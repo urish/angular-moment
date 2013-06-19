@@ -1,4 +1,4 @@
-// angular-moment.js / v0.1.2 / (c) 2013 Uri Shaked / Apache License
+// angular-moment.js / v0.1.3 / (c) 2013 Uri Shaked / Apache License
 
 angular.module('angularMoment', [])
 	.directive('amTimeAgo', function ($timeout) {
