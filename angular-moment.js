@@ -5,6 +5,8 @@ angular.module('angularMoment', [])
 		'use strict';
 
 		return function (scope, element, attr) {
+			var activeTimeout = null;
+		
 			function updateTime(momentInstance) {
 				element.text(momentInstance.fromNow());
 				var howOld = moment().diff(momentInstance, 'minute');
@@ -17,7 +19,7 @@ angular.module('angularMoment', [])
 					secondsUntilUpdate = 300;
 				}
 
-				$timeout(function () {
+				activeTimeout = $timeout(function () {
 					updateTime(momentInstance);
 				}, secondsUntilUpdate * 1000);
 			}
@@ -35,6 +37,10 @@ angular.module('angularMoment', [])
 				}
 				// else assume the given value is already a date
 
+				if (activeTimeout) {
+					$timeout.cancel(activeTimeout);
+					activeTimeout = null;
+				}
 				updateTime(moment(value));
 			});
 		};
