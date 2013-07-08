@@ -12,8 +12,8 @@ Usage
 Include both moment.js and angular-moment.js in your application.
 
 ```html
-<script src="moment.js"></script>
-<script src="angular-moment.js"></script>
+<script src="components/moment/moment.js"></script>
+<script src="components/angular-moment/angular-moment.js"></script>
 ```
 
 Add the module `angularMoment` as a dependency to your app module:
