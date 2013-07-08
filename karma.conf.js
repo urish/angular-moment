@@ -11,12 +11,17 @@ module.exports = function (config) {
 		logLevel: config.LOG_INFO,
 		browsers: ['PhantomJS'],
 		singleRun: true,
+		reporters: ['dots', 'coverage'],
 		files: [
 			'components/angular/angular.js',
 			'components/angular-mocks/angular-mocks.js',
 			'components/moment/moment.js',
 			'angular-moment.js',
 			'tests.js'
-		]
+		],
+		preprocessors: {
+			'components/moment/moment.js': 'coverage',
+			'angular-moment.js': 'coverage'
+		}
 	});
 };
