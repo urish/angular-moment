@@ -7,7 +7,6 @@
 module.exports = function (grunt) {
 	// load all grunt tasks
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-	var path = require('path');
 
 	grunt.initConfig({
 		karma: {
@@ -15,6 +14,16 @@ module.exports = function (grunt) {
 				configFile: 'karma.conf.js',
 				singleRun: true
 			}
+		},
+		jshint: {
+			options: {
+				jshintrc: '.jshintrc'
+			},
+			all: [
+				'Gruntfile.js',
+				'angular-moment.js',
+				'tests.js'
+			]
 		},
 		ngmin: {
 			dist: {
@@ -36,11 +45,13 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('test', [
+		'jshint',
 		'karma'
 	]);
 
 	grunt.registerTask('build', [
 		'ngmin',
+		'jshint',
 		'uglify'
 	]);
 

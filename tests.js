@@ -2,6 +2,8 @@
  * Copyright (C) 2013, Uri Shaked.
  */
 
+/* global describe, inject, module, beforeEach, it, expect, waitsFor, runs */
+
 'use strict';
 
 describe('Directive: am-time-ago', function () {
