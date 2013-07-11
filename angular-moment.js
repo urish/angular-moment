@@ -24,7 +24,7 @@ angular.module('angularMoment', [])
 
 					activeTimeout = $timeout(function () {
 						updateTime(momentInstance);
-					}, secondsUntilUpdate * 1000);
+					}, secondsUntilUpdate * 1000, false);
 				}
 
 				scope.$watch(attr.amTimeAgo, function (value) {
