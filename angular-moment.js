@@ -1,7 +1,7 @@
 /* angular-moment.js / v0.1.4 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
-	.directive('amTimeAgo', function ($window, $timeout) {
+	.directive('amTimeAgo', ['$window', '$timeout', function ($window, $timeout) {
 		'use strict';
 
 		return function (scope, element, attr) {
@@ -38,4 +38,4 @@ angular.module('angularMoment', [])
 				updateTime($window.moment(value));
 			});
 		};
-	});
+	}]);

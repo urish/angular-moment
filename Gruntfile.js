@@ -25,20 +25,10 @@ module.exports = function (grunt) {
 				'tests.js'
 			]
 		},
-		ngmin: {
-			dist: {
-				files: [
-					{
-						src: 'angular-moment.js',
-						dest: 'angular-moment.min.js'
-					}
-				]
-			}
-		},
 		uglify: {
 			dist: {
 				files: {
-					'angular-moment.min.js': 'angular-moment.min.js'
+					'angular-moment.min.js': 'angular-moment.js'
 				}
 			}
 		}
@@ -50,7 +40,6 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('build', [
-		'ngmin',
 		'jshint',
 		'uglify'
 	]);
