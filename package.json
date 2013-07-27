@@ -1,6 +1,6 @@
 {
 	"name": "angular-moment",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"dependencies": {},
 	"devDependencies": {
 		"matchdep": "~0.1.1",
