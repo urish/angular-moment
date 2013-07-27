@@ -21,10 +21,14 @@ angular.module('angularMoment', [])
 
 				activeTimeout = $timeout(function () {
 					updateTime(momentInstance);
-				}, secondsUntilUpdate * 1000);
+				}, secondsUntilUpdate * 1000, false);
 			}
 
 			scope.$watch(attr.amTimeAgo, function (value) {
+				if (typeof value === 'undefined' || value === null) {
+					return;
+				}
+
 				if (angular.isNumber(value)) {
 					// Milliseconds since the epoch
 					value = new Date(value);
