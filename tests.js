@@ -87,4 +87,14 @@ describe('Directive: am-time-ago', function () {
 			expect(element.text()).toBe('a minute ago');
 		});
 	});
+
+	it('should handle undefined data', function () {
+		$rootScope.testDate = null;
+		var element = angular.element('<div am-time-ago="testDate"></div>');
+		element = $compile(element)($rootScope);
+		var digest = function () {
+			$rootScope.$digest();
+		};
+		expect(digest).not.toThrow();
+	});
 });

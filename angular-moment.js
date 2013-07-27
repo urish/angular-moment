@@ -25,6 +25,10 @@ angular.module('angularMoment', [])
 			}
 
 			scope.$watch(attr.amTimeAgo, function (value) {
+				if (typeof value === 'undefined' || value === null) {
+					return;
+				}
+
 				if (angular.isNumber(value)) {
 					// Milliseconds since the epoch
 					value = new Date(value);
