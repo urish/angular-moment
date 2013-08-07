@@ -5,12 +5,19 @@ angular.module('angularMoment', [])
 		'use strict';
 
 		return function (scope, element, attr) {
-			var activeTimeout = null;
 
-			function updateTime(momentInstance) {
+			var updateTime, activeTimeout, momentInstance;
+
+			scope.$on('$destroy', function(){ $timeout.cancel(activeTimeout); });
+
+			updateTime = function () {
+                		var howOld, secondsUntilUpdate;
+
 				element.text(momentInstance.fromNow());
-				var howOld = $window.moment().diff(momentInstance, 'minute');
-				var secondsUntilUpdate = 3600;
+
+				howOld = $window.moment().diff(momentInstance, 'minute');
+				secondsUntilUpdate = 3600;
+
 				if (howOld < 1) {
 					secondsUntilUpdate = 1;
 				} else if (howOld < 60) {
@@ -19,10 +26,8 @@ angular.module('angularMoment', [])
 					secondsUntilUpdate = 300;
 				}
 
-				activeTimeout = $timeout(function () {
-					updateTime(momentInstance);
-				}, secondsUntilUpdate * 1000, false);
-			}
+				activeTimeout = $timeout(updateTime, secondsUntilUpdate * 1000, false);
+			};
 
 			scope.$watch(attr.amTimeAgo, function (value) {
 				if (typeof value === 'undefined' || value === null) {
@@ -39,7 +44,9 @@ angular.module('angularMoment', [])
 					$timeout.cancel(activeTimeout);
 					activeTimeout = null;
 				}
-				updateTime($window.moment(value));
+
+                		momentInstance = $window.moment(value);
+				updateTime();
 			});
 		};
 	}]);
