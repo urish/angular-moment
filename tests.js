@@ -2,7 +2,7 @@
  * Copyright (C) 2013, Uri Shaked.
  */
 
-/* global describe, inject, module, beforeEach, it, expect, waitsFor, runs */
+/* global describe, inject, module, beforeEach, it, expect, waitsFor, runs, spyOn */
 
 'use strict';
 
@@ -96,5 +96,16 @@ describe('Directive: am-time-ago', function () {
 			$rootScope.$digest();
 		};
 		expect(digest).not.toThrow();
+	});
+
+	it('should cancel the timer when the scope is destroyed', function() {
+		var scope = $rootScope.$new();
+		$rootScope.testDate = new Date();
+		var element = angular.element('<span am-time-ago="testDate"></span>');
+		element = $compile(element)(scope);
+		$rootScope.$digest();
+		spyOn($timeout, 'cancel').andCallThrough();
+		scope.$destroy();
+		expect($timeout.cancel).toHaveBeenCalled();
 	});
 });

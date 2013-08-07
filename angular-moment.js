@@ -7,6 +7,13 @@ angular.module('angularMoment', [])
 		return function (scope, element, attr) {
 			var activeTimeout = null;
 
+			function cancelTimer() {
+				if (activeTimeout) {
+					$timeout.cancel(activeTimeout);
+					activeTimeout = null;
+				}
+			}
+
 			function updateTime(momentInstance) {
 				element.text(momentInstance.fromNow());
 				var howOld = $window.moment().diff(momentInstance, 'minute');
@@ -35,11 +42,12 @@ angular.module('angularMoment', [])
 				}
 				// else assume the given value is already a date
 
-				if (activeTimeout) {
-					$timeout.cancel(activeTimeout);
-					activeTimeout = null;
-				}
+				cancelTimer();
 				updateTime($window.moment(value));
+			});
+
+			scope.$on('$destroy', function () {
+				cancelTimer();
 			});
 		};
 	}]);
