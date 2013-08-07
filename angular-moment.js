@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.1.6 / (c) 2013 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.1.7 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
 	.directive('amTimeAgo', ['$window', '$timeout', function ($window, $timeout) {
