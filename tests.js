@@ -140,5 +140,20 @@ describe('Directive: am-time-ago', function () {
 			$rootScope.$digest();
 			expect(element.text()).toBe(today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear());
 		});
+
+		it('should gracefully handle undefined values', function () {
+			var element = angular.element('<span>{{testDate|amDateFormat:\'D.M.YYYY\'}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('');
+		});
+
+		it('should accepmt a numeric unix timestamp (milliseconds since the epoch) as input', function () {
+			$rootScope.testTimestamp = 1327243566545;
+			var element = angular.element('<span>{{testTimestamp|amDateFormat:\'(HH,mm,SS);MM.DD.YYYY\'}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('(12,46,54);01.22.2012');
+		});
 	});
 });
