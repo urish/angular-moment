@@ -63,18 +63,20 @@ angular.module('angularMoment', [])
 			});
 		};
 	}])
-    .filter('amDateFormat', function() {
-        return function(value, format) {
+    .filter('amDateFormat', function ($window) {
+        'use strict';
+
+        return function (value, format) {
             if (typeof value === 'undefined' || value === null) {
-                return '';
+              return '';
             }
 
             if (angular.isNumber(value)) {
-                // Milliseconds since the epoch
-                value = new Date(value);
+              // Milliseconds since the epoch
+              value = new Date(value);
             }
             // else assume the given value is already a date
 
-            return moment(value).format(format);
-        }
-    });
+            return $window.moment(value).format(format);
+          };
+      });
