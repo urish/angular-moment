@@ -98,7 +98,7 @@ describe('Directive: am-time-ago', function () {
 		expect(digest).not.toThrow();
 	});
 
-	it('should cancel the timer when the scope is destroyed', function() {
+	it('should cancel the timer when the scope is destroyed', function () {
 		var scope = $rootScope.$new();
 		$rootScope.testDate = new Date();
 		var element = angular.element('<span am-time-ago="testDate"></span>');
@@ -107,5 +107,27 @@ describe('Directive: am-time-ago', function () {
 		spyOn($timeout, 'cancel').andCallThrough();
 		scope.$destroy();
 		expect($timeout.cancel).toHaveBeenCalled();
+	});
+
+	describe('am-format attribute', function () {
+		it('should support custom date format', function () {
+			var today = new Date();
+			$rootScope.testDate = today.getFullYear() + '#' + today.getDate() + '#' + today.getMonth();
+			var element = angular.element('<span am-time-ago="testDate" am-format="YYYY#DD#MM"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a month ago');
+		});
+
+		it('should support angular expressions in date format', function () {
+			var today = new Date();
+			$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + today.getDate();
+			var element = angular.element('<span am-time-ago="testDate" am-format="{{dateFormat}}"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			$rootScope.dateFormat = 'MM@YYYY@DD';
+			$rootScope.$digest();
+			expect(element.text()).toBe('a month ago');
+		});
 	});
 });

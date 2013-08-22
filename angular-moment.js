@@ -6,6 +6,8 @@ angular.module('angularMoment', [])
 
 		return function (scope, element, attr) {
 			var activeTimeout = null;
+			var currentValue;
+			var currentFormat;
 
 			function cancelTimer() {
 				if (activeTimeout) {
@@ -31,6 +33,11 @@ angular.module('angularMoment', [])
 				}, secondsUntilUpdate * 1000, false);
 			}
 
+			function updateMoment() {
+				cancelTimer();
+				updateTime($window.moment(currentValue, currentFormat));
+			}
+
 			scope.$watch(attr.amTimeAgo, function (value) {
 				if (typeof value === 'undefined' || value === null) {
 					return;
@@ -42,8 +49,13 @@ angular.module('angularMoment', [])
 				}
 				// else assume the given value is already a date
 
-				cancelTimer();
-				updateTime($window.moment(value));
+				currentValue = value;
+				updateMoment();
+			});
+
+			attr.$observe('amFormat', function(format) {
+				currentFormat = format;
+				updateMoment();
 			});
 
 			scope.$on('$destroy', function () {

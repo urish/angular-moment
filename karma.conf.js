@@ -10,7 +10,7 @@ module.exports = function (config) {
 		frameworks: ['jasmine'],
 		logLevel: config.LOG_INFO,
 		browsers: ['PhantomJS'],
-		singleRun: true,
+		autoWatch: true,
 		reporters: ['dots', 'coverage'],
 		files: [
 			'components/angular/angular.js',
