@@ -131,12 +131,14 @@ describe('Directive: am-time-ago', function () {
 		});
 	});
 
-  describe('amDateFormat filter', function() {
-      it('should support displaying format', function () {
-        var today = new Date();
-        $rootScope.testDate = today;
-        var element = angular.element('<span>{{testDate|amDateFormat:\'DD.MM.YYYY\'}}</span>');
-        expect(element.text()).toBe(today.getDate() + '.' + today.getMonth() + '.' + today.getFullYear());
-      });
-    });
+	describe('amDateFormat filter', function () {
+		it('should support displaying format', function () {
+			var today = new Date();
+			$rootScope.testDate = today;
+			var element = angular.element('<span>{{testDate|amDateFormat:\'D.M.YYYY\'}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe(today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear());
+		});
+	});
 });
