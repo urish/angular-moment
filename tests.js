@@ -149,8 +149,8 @@ describe('Directive: am-time-ago', function () {
 		});
 
 		it('should accepmt a numeric unix timestamp (milliseconds since the epoch) as input', function () {
-			$rootScope.testTimestamp = 1327243566545;
-			var element = angular.element('<span>{{testTimestamp|amDateFormat:\'(HH,mm,SS);MM.DD.YYYY\'}}</span>');
+			$rootScope.testTimestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
+			var element = angular.element('<span>{{testTimestamp|amDateFormat:\'(HH,mm,ss);MM.DD.YYYY\'}}</span>');
 			element = $compile(element)($rootScope);
 			$rootScope.$digest();
 			expect(element.text()).toBe('(12,46,54);01.22.2012');

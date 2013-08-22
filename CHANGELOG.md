@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 - 2013-08-22
+
+- Fix an issue with tests failing on a different timezone
+
 ## 0.2.0 - 2013-08-22
 
 - Add optional am-format attribute to am-time-ago ([#11](https://github.com/urish/angular-moment/issues/11))
