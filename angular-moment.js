@@ -73,7 +73,7 @@ angular.module('angularMoment', [])
 
 			if(!isNaN(parseFloat(value)) && isFinite(value)) {
 				// Milliseconds since the epoch
-				value = new Date(parseInt(value));
+				value = new Date(parseInt(value, null));
 			}
 			// else assume the given value is already a date
 
