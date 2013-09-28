@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.2.1 / (c) 2013 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.2.2 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
 	.directive('amTimeAgo', ['$window', '$timeout', function ($window, $timeout) {
@@ -73,7 +73,7 @@ angular.module('angularMoment', [])
 
 			if(!isNaN(parseFloat(value)) && isFinite(value)) {
 				// Milliseconds since the epoch
-				value = new Date(parseInt(value, null));
+				value = new Date(parseInt(value, 10));
 			}
 			// else assume the given value is already a date
 
