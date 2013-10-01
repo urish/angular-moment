@@ -46,6 +46,9 @@ angular.module('angularMoment', [])
 				if (angular.isNumber(value)) {
 					// Milliseconds since the epoch
 					value = new Date(value);
+				} else if (angular.isString(value)) {
+					// allow date strings
+					value = new moment(value);
 				}
 				// else assume the given value is already a date
 
