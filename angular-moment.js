@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.2.2 / (c) 2013 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.3.0 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
 	.directive('amTimeAgo', ['$window', '$timeout', function ($window, $timeout) {
@@ -39,7 +39,12 @@ angular.module('angularMoment', [])
 			}
 
 			scope.$watch(attr.amTimeAgo, function (value) {
-				if (typeof value === 'undefined' || value === null) {
+				if ((typeof value === 'undefined') || (value === null) || (value === '')) {
+					cancelTimer();
+					if (currentValue) {
+						element.text('');
+						currentValue = null;
+					}
 					return;
 				}
 
@@ -71,7 +76,7 @@ angular.module('angularMoment', [])
 				return '';
 			}
 
-			if(!isNaN(parseFloat(value)) && isFinite(value)) {
+			if (!isNaN(parseFloat(value)) && isFinite(value)) {
 				// Milliseconds since the epoch
 				value = new Date(parseInt(value, 10));
 			}

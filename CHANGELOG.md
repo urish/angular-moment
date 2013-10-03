@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0 - 2013-10-03
+
+- Bugfix: am-time-ago support for empty string ([#15](https://github.com/urish/angular-moment/issues/15))
+
 ## 0.2.2 - 2013-09-29
 
 - Add support for passing unix timestamp as a string to amDateFormat filter ([#14](https://github.com/urish/angular-moment/issues/14))

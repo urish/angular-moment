@@ -98,6 +98,19 @@ describe('Directive: am-time-ago', function () {
 		expect(digest).not.toThrow();
 	});
 
+	it('should remove the element text and cancel the timer when an empty string is given (#15)', function () {
+		$rootScope.testDate = new Date().getTime();
+		var element = angular.element('<div am-time-ago="testDate"></div>');
+		element = $compile(element)($rootScope);
+		$rootScope.$digest();
+		expect(element.text()).toBe('a few seconds ago');
+		$rootScope.testDate = '';
+		spyOn($timeout, 'cancel').andCallThrough();
+		$rootScope.$digest();
+		expect($timeout.cancel).toHaveBeenCalled();
+		expect(element.text()).toBe('');
+	});
+
 	it('should cancel the timer when the scope is destroyed', function () {
 		var scope = $rootScope.$new();
 		$rootScope.testDate = new Date();
