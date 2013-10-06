@@ -112,6 +112,17 @@ describe('module angularMoment', function () {
 			expect(element.text()).toBe('');
 		});
 
+		it('should not change the contents of the element until a date is given', function() {
+			$rootScope.testDate = null;
+			var element = angular.element('<div am-time-ago="testDate">Initial text</div>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('Initial text');
+			$rootScope.testDate = new Date().getTime();
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds ago');
+		});
+
 		it('should cancel the timer when the scope is destroyed', function () {
 			var scope = $rootScope.$new();
 			$rootScope.testDate = new Date();

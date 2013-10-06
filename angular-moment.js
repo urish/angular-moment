@@ -60,7 +60,9 @@ angular.module('angularMoment', [])
 
 			attr.$observe('amFormat', function (format) {
 				currentFormat = format;
-				updateMoment();
+				if (currentValue) {
+					updateMoment();
+				}
 			});
 
 			scope.$on('$destroy', function () {
