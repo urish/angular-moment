@@ -7,7 +7,7 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"matchdep": "~0.1.1",
+		"matchdep": "~0.3.0",
 		"grunt": "~0.4.1",
 		"grunt-contrib-uglify": "~0.2.0",
 		"grunt-contrib-jshint": "~0.6.0",
