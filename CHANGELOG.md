@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1 - 2013-10-27
+
+- Support moment.js v2.4.0. See [here](https://github.com/moment/moment/#240) for changelog.
+
 ## 0.4.0 - 2013-10-08
 
 - Support moment.js v2.3.0. See [here](https://gist.github.com/ichernev/6864354) for possibly breaking changes.
