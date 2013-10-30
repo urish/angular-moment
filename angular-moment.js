@@ -1,7 +1,8 @@
 /* angular-moment.js / v0.4.1 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
-	.directive('amTimeAgo', ['$window', '$timeout', function ($window, $timeout) {
+	.constant('amTimeAgoConfig', { withoutSuffix: false })
+	.directive('amTimeAgo', ['$window', '$timeout', 'amTimeAgoConfig', function ($window, $timeout, amTimeAgoConfig) {
 		'use strict';
 
 		return function (scope, element, attr) {
@@ -17,7 +18,7 @@ angular.module('angularMoment', [])
 			}
 
 			function updateTime(momentInstance) {
-				element.text(momentInstance.fromNow());
+				element.text(momentInstance.fromNow(amTimeAgoConfig.withoutSuffix));
 				var howOld = $window.moment().diff(momentInstance, 'minute');
 				var secondsUntilUpdate = 3600;
 				if (howOld < 1) {

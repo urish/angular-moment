@@ -7,15 +7,18 @@
 'use strict';
 
 describe('module angularMoment', function () {
-	var $rootScope, $compile, $timeout;
+	var $rootScope, $compile, $timeout, amTimeAgoConfig;
 
 	beforeEach(module('angularMoment'));
 
-	beforeEach(inject(function ($injector) {
+	/* jshint camelcase:false */
+	beforeEach(inject(function ($injector, _amTimeAgoConfig_) {
 		$rootScope = $injector.get('$rootScope');
 		$compile = $injector.get('$compile');
 		$timeout = $injector.get('$timeout');
+		amTimeAgoConfig = _amTimeAgoConfig_;
 	}));
+	/* jshint camelcase:true */
 
 	describe('am-time-ago directive', function () {
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
@@ -134,6 +137,17 @@ describe('module angularMoment', function () {
 			expect($timeout.cancel).toHaveBeenCalled();
 		});
 
+		it('should generate a time string without suffix when configured to do so', function () {
+			amTimeAgoConfig.withoutSuffix = true;
+			$rootScope.testDate = new Date();
+			var element = angular.element('<span am-time-ago="testDate"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds');
+			// Restore config
+			amTimeAgoConfig.withoutSuffix = false;
+		});
+
 		describe('am-format attribute', function () {
 			it('should support custom date format', function () {
 				var today = new Date();
@@ -190,4 +204,11 @@ describe('module angularMoment', function () {
 			expect(element.text()).toBe('(12,46,54);01.22.2012');
 		});
 	});
+
+	describe('amTimeAgoConfig constant', function () {
+		it('should generate time with suffix by default', function () {
+			expect(amTimeAgoConfig.withoutSuffix).toBe(false);
+		});
+	});
+
 });
