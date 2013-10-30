@@ -1,6 +1,6 @@
 {
 	"name": "angular-moment",
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"description": "Angular.JS directives for Moment.JS (timeago alternative)",
 	"author": "Uri Shaked",
 	"license": "MIT",
