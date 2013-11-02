@@ -7,16 +7,16 @@
 'use strict';
 
 describe('module angularMoment', function () {
-	var $rootScope, $compile, $timeout, amTimeAgoConfig;
+	var $rootScope, $compile, $window, amTimeAgoConfig;
 
 	beforeEach(module('angularMoment'));
 
 	/* jshint camelcase:false */
-	beforeEach(inject(function ($injector, _amTimeAgoConfig_) {
+	beforeEach(inject(function ($injector) {
 		$rootScope = $injector.get('$rootScope');
 		$compile = $injector.get('$compile');
-		$timeout = $injector.get('$timeout');
-		amTimeAgoConfig = _amTimeAgoConfig_;
+		$window = $injector.get('$window');
+		amTimeAgoConfig = $injector.get('amTimeAgoConfig');
 	}));
 	/* jshint camelcase:true */
 
@@ -86,7 +86,6 @@ describe('module angularMoment', function () {
 			}, '$rootScope.date is more than 45 seconds old', 1500);
 
 			runs(function () {
-				$timeout.flush();
 				$rootScope.$digest();
 				expect(element.text()).toBe('a minute ago');
 			});
@@ -109,9 +108,9 @@ describe('module angularMoment', function () {
 			$rootScope.$digest();
 			expect(element.text()).toBe('a few seconds ago');
 			$rootScope.testDate = '';
-			spyOn($timeout, 'cancel').andCallThrough();
+			spyOn($window, 'clearTimeout').andCallThrough();
 			$rootScope.$digest();
-			expect($timeout.cancel).toHaveBeenCalled();
+			expect($window.clearTimeout).toHaveBeenCalled();
 			expect(element.text()).toBe('');
 		});
 
@@ -132,9 +131,9 @@ describe('module angularMoment', function () {
 			var element = angular.element('<span am-time-ago="testDate"></span>');
 			element = $compile(element)(scope);
 			$rootScope.$digest();
-			spyOn($timeout, 'cancel').andCallThrough();
+			spyOn($window, 'clearTimeout').andCallThrough();
 			scope.$destroy();
-			expect($timeout.cancel).toHaveBeenCalled();
+			expect($window.clearTimeout).toHaveBeenCalled();
 		});
 
 		it('should generate a time string without suffix when configured to do so', function () {

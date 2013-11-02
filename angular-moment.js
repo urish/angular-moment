@@ -2,7 +2,7 @@
 
 angular.module('angularMoment', [])
 	.constant('amTimeAgoConfig', { withoutSuffix: false })
-	.directive('amTimeAgo', ['$window', '$timeout', 'amTimeAgoConfig', function ($window, $timeout, amTimeAgoConfig) {
+	.directive('amTimeAgo', ['$window', 'amTimeAgoConfig', function ($window, amTimeAgoConfig) {
 		'use strict';
 
 		return function (scope, element, attr) {
@@ -12,7 +12,7 @@ angular.module('angularMoment', [])
 
 			function cancelTimer() {
 				if (activeTimeout) {
-					$timeout.cancel(activeTimeout);
+					$window.clearTimeout(activeTimeout);
 					activeTimeout = null;
 				}
 			}
@@ -29,9 +29,9 @@ angular.module('angularMoment', [])
 					secondsUntilUpdate = 300;
 				}
 
-				activeTimeout = $timeout(function () {
+				activeTimeout = $window.setTimeout(function () {
 					updateTime(momentInstance);
-				}, secondsUntilUpdate * 1000, false);
+				}, secondsUntilUpdate * 1000);
 			}
 
 			function updateMoment() {
