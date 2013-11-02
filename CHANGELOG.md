@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0 - 2013-11-02
+
+- Use $window.setTimeout instead of $timeout, fixes protractor synchronization issue ([#19](https://github.com/urish/angular-moment/issues/19))
+
 ## 0.4.2 - 2013-10-30
 
 - Add settings constant for configuring moment.js withoutSuffix-option ([#18](https://github.com/urish/angular-moment/pull/18))
