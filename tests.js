@@ -204,6 +204,50 @@ describe('module angularMoment', function () {
 		});
 	});
 
+	describe('amDurationFormat filter', function () {
+		it('should support displaying format in milliseconds', function () {
+			$rootScope.testDate = 1000;
+			var element = angular.element('<span>{{testDate|amDurationFormat:\'milliseconds\'}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds');
+		});
+
+		it('should support give a day with 24 hours', function () {
+			$rootScope.testDate = 24;
+			var element = angular.element('<span>{{testDate|amDurationFormat:\'hours\'}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a day');
+		});
+
+		it('should support suffix or not within duration: 1 minute', function () {
+			$rootScope.testDate = 1;
+			var element = angular.element('<span>{{testDate|amDurationFormat:\'minutes\':true}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('in a minute');
+		});
+
+		it('should support suffix or not within a negative duration: 1 minute', function () {
+			$rootScope.testDate = -1;
+			var element = angular.element('<span>{{testDate|amDurationFormat:\'minutes\':true}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a minute ago');
+		});
+
+		it('should gracefully handle undefined values for duration', function () {
+			var element = angular.element('<span>{{testDate|amDurationFormat:\'D.M.YYYY\'}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('');
+		});
+
+		
+	});
+
+
 	describe('amTimeAgoConfig constant', function () {
 		it('should generate time with suffix by default', function () {
 			expect(amTimeAgoConfig.withoutSuffix).toBe(false);
