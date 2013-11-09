@@ -87,4 +87,15 @@ angular.module('angularMoment', [])
 
 			return $window.moment(value).format(format);
 		};
+	}]).filter('amDurationFormat', ['$window', function ($window) {
+		'use strict';
+
+		return function (value, format, suffix) {
+			if (typeof value === 'undefined' || value === null) {
+				return '';
+			}
+			
+			// else assume the given value is already a duration in a format (miliseconds, etc)
+			return $window.moment.duration(value, format).humanize(suffix);
+		};
 	}]);
