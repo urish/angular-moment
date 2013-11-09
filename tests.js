@@ -243,8 +243,6 @@ describe('module angularMoment', function () {
 			$rootScope.$digest();
 			expect(element.text()).toBe('');
 		});
-
-		
 	});
 
 

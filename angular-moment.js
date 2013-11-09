@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.5.0 / (c) 2013 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.5.1 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
 	.constant('amTimeAgoConfig', { withoutSuffix: false })

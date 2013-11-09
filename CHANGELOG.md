@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1 - 2013-11-09
+
+- Add amDuration filter ([#20](https://github.com/urish/angular-moment/issues/20), contributed by [gabrielstuff](https://github.com/gabrielstuff))
+
 ## 0.5.0 - 2013-11-02
 
 - Use $window.setTimeout instead of $timeout, fixes protractor synchronization issue ([#19](https://github.com/urish/angular-moment/issues/19))
