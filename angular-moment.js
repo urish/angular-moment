@@ -94,9 +94,7 @@ angular.module('angularMoment', [])
 			if (typeof value === 'undefined' || value === null) {
 				return '';
 			}
-			/*if (!isNaN(parseFloat(value)) && isFinite(value)) {
-				return '';
-			}*/
+			
 			// else assume the given value is already a duration in a format (miliseconds, etc)
 			return $window.moment.duration(value, format).humanize(suffix);
 		};
