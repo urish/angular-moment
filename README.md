@@ -1,7 +1,7 @@
 angular-moment
 ==============
 
-Angular.JS directive for [Moment.JS](http://www.momentjs.com).
+Angular.JS directive and filters for [Moment.JS](http://www.momentjs.com).
 
 Copyright (C) 2013, Uri Shaked <uri@urish.org>
 
