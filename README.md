@@ -34,8 +34,8 @@ Than trigger global moment.js language (e.g. in your app's run() callback):
 $window.moment.lang('de');
 ```
 
-You can now start using the am-time-ago directive to format your
-relative timestamps. For example:
+### Timeago directive
+Use am-time-ago directive to format your relative timestamps. For example:
 
 ```html
 <span am-time-ago="message.time"></span>
