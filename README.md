@@ -55,9 +55,7 @@ The user will initially see "a few seconds ago", and about a minute
 after the span will automatically update with the text "a minute ago",
 etc.
 
-amDateFormat filter
-----
-
+### amDateFormat filter
 Format dates using moment.js format() method. Example:
 
 ```html
@@ -68,6 +66,19 @@ This snippet will format the given time as "Monday, October 7th 2013, 12:36:29 a
 
 For more information about Moment.JS formatting options, see the
 [docs for the format() function](http://momentjs.com/docs/#/displaying/format/).
+
+### amCalendar filter
+
+Format dates using moment.js calendar() method. Example:
+
+```html
+<span>{{message.time | amCalendar}}</span>
+```
+
+This snippet will format the given time as e.g. "Today 2:30 AM" or "Last Monday 2:30 AM" etc..
+
+For more information about Moment.JS calendar time format, see the
+[docs for the calendar() function](http://momentjs.com/docs/#/displaying/calendar-time/).
 
 License
 ----
