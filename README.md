@@ -22,6 +22,18 @@ Add the module `angularMoment` as a dependency to your app module:
 var myapp = angular.module('myapp', ['angularMoment']);
 ```
 
+If you need internationalization support, load specified moment.js locale file first:
+
+```html
+<script src="components/moment/lang/de.js"></script>
+```
+
+Than trigger global moment.js language (e.g. in your app's run() callback):
+
+```html
+$window.moment.lang('de');
+```
+
 You can now start using the am-time-ago directive to format your
 relative timestamps. For example:
 
