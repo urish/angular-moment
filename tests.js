@@ -170,6 +170,40 @@ describe('module angularMoment', function () {
 		});
 	});
 
+	describe('amCalendar filter', function () {
+		it('should convert today date to calendar form', function () {
+			var today = new Date();
+			$rootScope.testDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13, 33, 33);
+			var element = angular.element('<span>{{testDate|amCalendar}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('Today at 1:33 PM');
+		});
+
+		it('should convert date in long past to calendar form', function () {
+			$rootScope.testDate = new Date(2012, 2, 25, 13, 14, 15);
+			var element = angular.element('<span>{{testDate|amCalendar}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('03/25/2012');
+		});
+
+		it('should gracefully handle undefined values', function () {
+			var element = angular.element('<span>{{undefinedDate|amCalendar}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('');
+		});
+
+		it('should accept a numeric unix timestamp (milliseconds since the epoch) as input', function () {
+			$rootScope.testTimestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
+			var element = angular.element('<span>{{testTimestamp|amCalendar}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('01/22/2012');
+		});
+	});
+
 	describe('amDateFormat filter', function () {
 		it('should support displaying format', function () {
 			var today = new Date();
