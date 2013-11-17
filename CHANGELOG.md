@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.2 - 2013-11-17
+
+- Add amCalendar filter ([#24](https://github.com/urish/angular-moment/issues/24), contributed by [OndraM](https://github.com/OndraM))
+
 ## 0.5.1 - 2013-11-09
 
 - Add amDuration filter ([#20](https://github.com/urish/angular-moment/issues/20), contributed by [gabrielstuff](https://github.com/gabrielstuff))
