@@ -1,7 +1,7 @@
 /* angular-moment.js / v0.5.2 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
-	.constant('amTimeAgoConfig', { withoutSuffix: false })
+	.value('amTimeAgoConfig', { withoutSuffix: false})
 	.directive('amTimeAgo', ['$window', 'amTimeAgoConfig', function ($window, amTimeAgoConfig) {
 		'use strict';
 
@@ -9,6 +9,10 @@ angular.module('angularMoment', [])
 			var activeTimeout = null;
 			var currentValue;
 			var currentFormat;
+			var withoutSuffix = amTimeAgoConfig.withoutSuffix;
+			if (typeof attr.amWithoutSuffix !== 'undefined') {
+				withoutSuffix = attr.amWithoutSuffix;
+			}
 
 			function cancelTimer() {
 				if (activeTimeout) {
@@ -18,7 +22,7 @@ angular.module('angularMoment', [])
 			}
 
 			function updateTime(momentInstance) {
-				element.text(momentInstance.fromNow(amTimeAgoConfig.withoutSuffix));
+				element.text(momentInstance.fromNow(withoutSuffix));
 				var howOld = $window.moment().diff(momentInstance, 'minute');
 				var secondsUntilUpdate = 3600;
 				if (howOld < 1) {
@@ -58,6 +62,16 @@ angular.module('angularMoment', [])
 				currentValue = value;
 				updateMoment();
 			});
+			
+			if (typeof attr.amWithoutSuffix !== 'undefined') {
+				scope.$watch(attr.amWithoutSuffix, function (value) {
+					if ((typeof value === 'undefined') || (value === null) || (typeof value !== 'boolean')) {
+						return;
+					}
+				  withoutSuffix = value;
+				  updateMoment();
+				});
+			}
 
 			attr.$observe('amFormat', function (format) {
 				currentFormat = format;

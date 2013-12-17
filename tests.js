@@ -146,6 +146,32 @@ describe('module angularMoment', function () {
 			// Restore config
 			amTimeAgoConfig.withoutSuffix = false;
 		});
+		
+		it('should generate a time string without suffix (in directive) when configured to do so', function () {
+			$rootScope.testDate = new Date();
+			var element = angular.element('<span am-time-ago="testDate" am-without-suffix="true"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds');
+		});
+		
+		it('should generate a time string without suffix (in directive) when configured to do so2', function () {
+			$rootScope.testDate = new Date();
+			$rootScope.withSuffix = false;
+			var element = angular.element('<span am-time-ago="testDate" am-without-suffix="!withSuffix"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds');
+		});
+		
+		it('should generate a time string without suffix (in directive) when configured to do so2', function () {
+			$rootScope.testDate = new Date();
+			$rootScope.withSuffix = true;
+			var element = angular.element('<span am-time-ago="testDate" am-without-suffix="!withSuffix"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds ago');
+		});
 
 		describe('am-format attribute', function () {
 			it('should support custom date format', function () {
@@ -280,7 +306,7 @@ describe('module angularMoment', function () {
 	});
 
 
-	describe('amTimeAgoConfig constant', function () {
+	describe('amTimeAgoConfig value', function () {
 		it('should generate time with suffix by default', function () {
 			expect(amTimeAgoConfig.withoutSuffix).toBe(false);
 		});
