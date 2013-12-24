@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0 - 2013-12-24
+
+- Add optional am-without-suffix attribute to am-time-ago ([#22](https://github.com/urish/angular-moment/issues/22), contributed by [hramaker](https://github.com/hramaker))
+- Support moment.js v2.5.0. See [here](https://gist.github.com/ichernev/8104451) for changelog.
+- Merry Christmas!
+
 ## 0.5.2 - 2013-11-17
 
 - Add amCalendar filter ([#24](https://github.com/urish/angular-moment/issues/24), contributed by [OndraM](https://github.com/OndraM))
