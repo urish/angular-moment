@@ -306,7 +306,7 @@ describe('module angularMoment', function () {
 	});
 
 
-	describe('amTimeAgoConfig value', function () {
+	describe('amTimeAgoConfig constant', function () {
 		it('should generate time with suffix by default', function () {
 			expect(amTimeAgoConfig.withoutSuffix).toBe(false);
 		});

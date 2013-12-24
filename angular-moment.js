@@ -1,7 +1,7 @@
 /* angular-moment.js / v0.5.2 / (c) 2013 Uri Shaked / MIT Licence */
 
 angular.module('angularMoment', [])
-	.value('amTimeAgoConfig', { withoutSuffix: false})
+	.constant('amTimeAgoConfig', { withoutSuffix: false})
 	.directive('amTimeAgo', ['$window', 'amTimeAgoConfig', function ($window, amTimeAgoConfig) {
 		'use strict';
 
