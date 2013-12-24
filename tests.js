@@ -2,23 +2,27 @@
  * Copyright (C) 2013, Uri Shaked.
  */
 
-/* global describe, inject, module, beforeEach, it, expect, waitsFor, runs, spyOn */
+/* global describe, inject, module, beforeEach, afterEach, it, expect, waitsFor, runs, spyOn */
 
 'use strict';
 
 describe('module angularMoment', function () {
-	var $rootScope, $compile, $window, amTimeAgoConfig;
+	var $rootScope, $compile, $window, amTimeAgoConfig, originalTimeAgoConfig;
 
 	beforeEach(module('angularMoment'));
 
-	/* jshint camelcase:false */
 	beforeEach(inject(function ($injector) {
 		$rootScope = $injector.get('$rootScope');
 		$compile = $injector.get('$compile');
 		$window = $injector.get('$window');
 		amTimeAgoConfig = $injector.get('amTimeAgoConfig');
+		originalTimeAgoConfig = angular.copy(amTimeAgoConfig);
 	}));
-	/* jshint camelcase:true */
+
+	afterEach(function() {
+		// Restore original configuration after each test
+		amTimeAgoConfig.withoutSuffix = originalTimeAgoConfig.withoutSuffix;
+	});
 
 	describe('am-time-ago directive', function () {
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
@@ -114,7 +118,7 @@ describe('module angularMoment', function () {
 			expect(element.text()).toBe('');
 		});
 
-		it('should not change the contents of the element until a date is given', function() {
+		it('should not change the contents of the element until a date is given', function () {
 			$rootScope.testDate = null;
 			var element = angular.element('<div am-time-ago="testDate">Initial text</div>');
 			element = $compile(element)($rootScope);
@@ -143,34 +147,46 @@ describe('module angularMoment', function () {
 			element = $compile(element)($rootScope);
 			$rootScope.$digest();
 			expect(element.text()).toBe('a few seconds');
-			// Restore config
-			amTimeAgoConfig.withoutSuffix = false;
 		});
-		
-		it('should generate a time string without suffix (in directive) when configured to do so', function () {
-			$rootScope.testDate = new Date();
-			var element = angular.element('<span am-time-ago="testDate" am-without-suffix="true"></span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds');
-		});
-		
-		it('should generate a time string without suffix (in directive) when configured to do so2', function () {
-			$rootScope.testDate = new Date();
-			$rootScope.withSuffix = false;
-			var element = angular.element('<span am-time-ago="testDate" am-without-suffix="!withSuffix"></span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds');
-		});
-		
-		it('should generate a time string without suffix (in directive) when configured to do so2', function () {
-			$rootScope.testDate = new Date();
-			$rootScope.withSuffix = true;
-			var element = angular.element('<span am-time-ago="testDate" am-without-suffix="!withSuffix"></span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds ago');
+
+		describe('am-without-suffix attribute', function () {
+			it('should generate a time string without suffix when true', function () {
+				$rootScope.testDate = new Date();
+				var element = angular.element('<span am-time-ago="testDate" am-without-suffix="true"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a few seconds');
+			});
+
+			it('should generate a time string with suffix when false', function () {
+				amTimeAgoConfig.withoutSuffix = true;
+				$rootScope.testDate = new Date();
+				var element = angular.element('<span am-time-ago="testDate" am-without-suffix="false"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a few seconds ago');
+			});
+
+			it('should support expressions', function () {
+				$rootScope.testDate = new Date();
+				$rootScope.withSuffix = false;
+				var element = angular.element('<span am-time-ago="testDate" am-without-suffix="!withSuffix"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a few seconds');
+				$rootScope.withSuffix = true;
+				$rootScope.$digest();
+				expect(element.text()).toBe('a few seconds ago');
+			});
+
+			it('should ignore non-boolean values', function () {
+				$rootScope.testDate = new Date();
+				$rootScope.withoutSuffix = 'string';
+				var element = angular.element('<span am-time-ago="testDate" am-without-suffix="withoutSuffix"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a few seconds ago');
+			});
 		});
 
 		describe('am-format attribute', function () {

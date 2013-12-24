@@ -10,9 +10,6 @@ angular.module('angularMoment', [])
 			var currentValue;
 			var currentFormat;
 			var withoutSuffix = amTimeAgoConfig.withoutSuffix;
-			if (typeof attr.amWithoutSuffix !== 'undefined') {
-				withoutSuffix = attr.amWithoutSuffix;
-			}
 
 			function cancelTimer() {
 				if (activeTimeout) {
@@ -63,13 +60,14 @@ angular.module('angularMoment', [])
 				updateMoment();
 			});
 
-			if (typeof attr.amWithoutSuffix !== 'undefined') {
+			if (angular.isDefined(attr.amWithoutSuffix)) {
 				scope.$watch(attr.amWithoutSuffix, function (value) {
-					if ((typeof value === 'undefined') || (value === null) || (typeof value !== 'boolean')) {
-						return;
+					if (typeof value === 'boolean') {
+						withoutSuffix = value;
+						updateMoment();
+					} else {
+						withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					}
-					withoutSuffix = value;
-					updateMoment();
 				});
 			}
 
