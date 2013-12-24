@@ -62,14 +62,14 @@ angular.module('angularMoment', [])
 				currentValue = value;
 				updateMoment();
 			});
-			
+
 			if (typeof attr.amWithoutSuffix !== 'undefined') {
 				scope.$watch(attr.amWithoutSuffix, function (value) {
 					if ((typeof value === 'undefined') || (value === null) || (typeof value !== 'boolean')) {
 						return;
 					}
-				  withoutSuffix = value;
-				  updateMoment();
+					withoutSuffix = value;
+					updateMoment();
 				});
 			}
 
