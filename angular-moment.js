@@ -22,7 +22,7 @@
 		* Common configuration of the angularMoment module
 		*/
 		.constant('angularMomentConfig', {
-			timezone: '' // 'Europe/London'
+			timezone: '' // e.g. 'Europe/London'
 		})
 		.constant('amTimeAgoConfig', { withoutSuffix: false})
 		.directive('amTimeAgo', ['$window', 'amTimeAgoConfig', function ($window, amTimeAgoConfig) {
