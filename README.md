@@ -10,7 +10,7 @@ Copyright (C) 2013, Uri Shaked <uri@urish.org>
 Installation
 ------------
 
-You can choose one your preferred method of installation:
+You can choose your preferred method of installation:
 * Through bower: `bower install angular-moment --save`
 * Through npm: `npm install angular-moment --save`
 * Download from github: [angular-moment.min.js](https://raw.github.com/urish/angular-moment/master/angular-moment.min.js)
