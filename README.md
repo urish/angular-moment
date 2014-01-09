@@ -7,6 +7,14 @@ Copyright (C) 2013, Uri Shaked <uri@urish.org>
 
 [![Build Status](https://travis-ci.org/urish/angular-moment.png?branch=master)](https://travis-ci.org/urish/angular-moment)
 
+Installation
+------------
+
+You can choose one your preferred method of installation:
+* Through bower: `bower install angular-moment --save`
+* Through npm: `npm install angular-moment --save`
+* Download from github: [angular-moment.min.js](https://raw.github.com/urish/angular-moment/master/angular-moment.min.js)
+
 Usage
 -----
 Include both moment.js and angular-moment.js in your application.
