@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.6.0 / (c) 2013, 2014 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.6.1 / (c) 2013, 2014 Uri Shaked / MIT Licence */
 
 (function(){
 	'use strict';
