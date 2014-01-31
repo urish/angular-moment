@@ -1,5 +1,5 @@
 /* License: MIT.
- * Copyright (C) 2013, Uri Shaked.
+ * Copyright (C) 2013, 2014, Uri Shaked.
  */
 
 /* global describe, inject, module, beforeEach, afterEach, it, expect, waitsFor, runs, spyOn */

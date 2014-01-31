@@ -3,7 +3,7 @@ angular-moment
 
 Angular.JS directive and filters for [Moment.JS](http://www.momentjs.com).
 
-Copyright (C) 2013, Uri Shaked <uri@urish.org>
+Copyright (C) 2013, 2014, Uri Shaked <uri@urish.org>
 
 [![Build Status](https://travis-ci.org/urish/angular-moment.png?branch=master)](https://travis-ci.org/urish/angular-moment)
 
