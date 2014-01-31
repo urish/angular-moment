@@ -7,7 +7,7 @@
 'use strict';
 
 describe('module angularMoment', function () {
-	var $rootScope, $compile, $window, amTimeAgoConfig, originalTimeAgoConfig, angularMomentConfig,
+	var $rootScope, $compile, $window, $filter, amTimeAgoConfig, originalTimeAgoConfig, angularMomentConfig,
 		originalAngularMomentConfig;
 
 	beforeEach(module('angularMoment'));
@@ -16,6 +16,7 @@ describe('module angularMoment', function () {
 		$rootScope = $injector.get('$rootScope');
 		$compile = $injector.get('$compile');
 		$window = $injector.get('$window');
+		$filter = $injector.get('$filter');
 		amTimeAgoConfig = $injector.get('amTimeAgoConfig');
 		angularMomentConfig = $injector.get('angularMomentConfig');
 		originalTimeAgoConfig = angular.copy(amTimeAgoConfig);
@@ -224,45 +225,33 @@ describe('module angularMoment', function () {
 	});
 
 	describe('amCalendar filter', function () {
+		var amCalendar;
+
+		beforeEach(function () {
+			amCalendar = $filter('amCalendar');
+		});
+
 		it('should convert today date to calendar form', function () {
 			var today = new Date();
-			$rootScope.testDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13, 33, 33);
-			var element = angular.element('<span>{{testDate|amCalendar}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('Today at 1:33 PM');
+			var testDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13, 33, 33);
+			expect(amCalendar(testDate)).toBe('Today at 1:33 PM');
 		});
 
 		it('should convert date in long past to calendar form', function () {
-			$rootScope.testDate = new Date(2012, 2, 25, 13, 14, 15);
-			var element = angular.element('<span>{{testDate|amCalendar}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('03/25/2012');
+			expect(amCalendar(new Date(2012, 2, 25, 13, 14, 15))).toBe('03/25/2012');
 		});
 
 		it('should gracefully handle undefined values', function () {
-			var element = angular.element('<span>{{undefinedDate|amCalendar}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('');
+			expect(amCalendar()).toBe('');
 		});
 
 		it('should accept a numeric unix timestamp (milliseconds since the epoch) as input', function () {
-			$rootScope.testTimestamp = new Date(2012, 0, 22, 4, 46, 54).getTime();
-			var element = angular.element('<span>{{testTimestamp|amCalendar}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('01/22/2012');
+			expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe('01/22/2012');
 		});
 
 		it('should respect the configured timezone', function () {
 			angularMomentConfig.timezone = 'Pacific/Tahiti';
-			$rootScope.testTimestamp = new Date(2012, 0, 22, 4, 46, 54).getTime();
-			var element = angular.element('<span>{{testTimestamp|amCalendar}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('01/21/2012');
+			expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe('01/21/2012');
 		});
 
 		it('should gracefully handle the case where timezone is given but moment-timezone is not loaded', function () {
@@ -270,11 +259,7 @@ describe('module angularMoment', function () {
 			var originalMomentTz = moment.fn.tz;
 			try {
 				delete moment.fn.tz;
-				$rootScope.testTimestamp = new Date(2012, 0, 22, 4, 46, 54).getTime();
-				var element = angular.element('<span>{{testTimestamp|amCalendar}}</span>');
-				element = $compile(element)($rootScope);
-				$rootScope.$digest();
-				expect(element.text()).toBe('01/22/2012');
+				expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe('01/22/2012');
 			} finally {
 				moment.fn.tz = originalMomentTz;
 			}
@@ -282,89 +267,66 @@ describe('module angularMoment', function () {
 	});
 
 	describe('amDateFormat filter', function () {
+		var amDateFormat;
+
+		beforeEach(function () {
+			amDateFormat = $filter('amDateFormat');
+		});
+
 		it('should support displaying format', function () {
 			var today = new Date();
-			$rootScope.testDate = today;
-			var element = angular.element('<span>{{testDate|amDateFormat:\'D.M.YYYY\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe(today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear());
+			var expectedResult = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear();
+			expect(amDateFormat(today, 'D.M.YYYY')).toBe(expectedResult);
 		});
 
 		it('should gracefully handle undefined values', function () {
-			var element = angular.element('<span>{{testDate|amDateFormat:\'D.M.YYYY\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('');
+			expect(amDateFormat(undefined, 'D.M.YYYY')).toBe('');
 		});
 
 		it('should accept a numeric unix timestamp (milliseconds since the epoch) as input', function () {
-			$rootScope.testTimestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
-			var element = angular.element('<span>{{testTimestamp|amDateFormat:\'(HH,mm,ss);MM.DD.YYYY\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('(12,46,54);01.22.2012');
+			var timestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
+			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY')).toBe('(12,46,54);01.22.2012');
 		});
 
 		it('should gracefully handle string unix timestamp as input', function () {
-			$rootScope.testTimestamp = String(new Date(2012, 0, 22, 12, 46, 54).getTime());
-			var element = angular.element('<span>{{testTimestamp|amDateFormat:\'(HH,mm,ss);MM.DD.YYYY\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('(12,46,54);01.22.2012');
+			var strTimestamp = String(new Date(2012, 0, 22, 12, 46, 54).getTime());
+			expect(amDateFormat(strTimestamp, '(HH,mm,ss);MM.DD.YYYY')).toBe('(12,46,54);01.22.2012');
 		});
 
 		it('should respect the configured timezone', function () {
 			angularMomentConfig.timezone = 'Pacific/Tahiti';
-			$rootScope.testTimestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
-			var element = angular.element('<span>{{testTimestamp|amDateFormat:\'(HH,mm,ss);MM.DD.YYYY\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('(00,46,54);01.22.2012');
+			var timestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
+			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY')).toBe('(00,46,54);01.22.2012');
 		});
 	});
 
 	describe('amDurationFormat filter', function () {
-		it('should support displaying format in milliseconds', function () {
-			$rootScope.testDate = 1000;
-			var element = angular.element('<span>{{testDate|amDurationFormat:\'milliseconds\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds');
+		var amDurationFormat;
+
+		beforeEach(function () {
+			amDurationFormat = $filter('amDurationFormat');
 		});
 
-		it('should support give a day with 24 hours', function () {
-			$rootScope.testDate = 24;
-			var element = angular.element('<span>{{testDate|amDurationFormat:\'hours\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a day');
+		it('should support return the given duration as text', function () {
+			expect(amDurationFormat(1000, 'milliseconds')).toBe('a few seconds');
 		});
 
-		it('should support suffix or not within duration: 1 minute', function () {
-			$rootScope.testDate = 1;
-			var element = angular.element('<span>{{testDate|amDurationFormat:\'minutes\':true}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('in a minute');
+		it('should support return a day given 24 hours', function () {
+			expect(amDurationFormat(24, 'hours')).toBe('a day');
 		});
 
-		it('should support suffix or not within a negative duration: 1 minute', function () {
-			$rootScope.testDate = -1;
-			var element = angular.element('<span>{{testDate|amDurationFormat:\'minutes\':true}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a minute ago');
+		it('should add prefix the result with the word "in" if the third parameter (suffix) is true', function () {
+			expect(amDurationFormat(1, 'minutes', true)).toBe('in a minute');
+		});
+
+		it('should add suffix the result with the word "ago" if the duration is negative and the third parameter is true', function () {
+			expect(amDurationFormat(-1, 'minutes', true)).toBe('a minute ago');
 		});
 
 		it('should gracefully handle undefined values for duration', function () {
-			var element = angular.element('<span>{{testDate|amDurationFormat:\'D.M.YYYY\'}}</span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('');
+			expect(amDurationFormat(undefined, 'minutes')).toBe('');
 		});
 	});
-
 
 	describe('amTimeAgoConfig constant', function () {
 		it('should generate time with suffix by default', function () {
