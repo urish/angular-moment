@@ -88,6 +88,20 @@ This snippet will format the given time as e.g. "Today 2:30 AM" or "Last Monday 
 For more information about Moment.JS calendar time format, see the
 [docs for the calendar() function](http://momentjs.com/docs/#/displaying/calendar-time/).
 
+### Time zone support
+
+The `amDateFormat` and `amCalendar` filters can be configured to display dates aligned
+to a specific timezone. You can configure the timezone using the following syntax:
+
+```js
+angular.module('myapp').constant('angularMomentConfig', {
+    timezone: 'Name of Timezone' // e.g. 'Europe/London'
+});
+```
+
+Remember to include `moment-timezone.js` in your project, otherwise the custom timezone
+functionality will not be available.
+
 License
 ----
 
