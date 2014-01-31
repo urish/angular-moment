@@ -251,7 +251,7 @@ describe('module angularMoment', function () {
 
 		it('should respect the configured timezone', function () {
 			angularMomentConfig.timezone = 'Pacific/Tahiti';
-			expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe('01/21/2012');
+			expect(amCalendar(Date.UTC(2012, 0, 22, 4, 46, 54))).toBe('01/21/2012');
 		});
 
 		it('should gracefully handle the case where timezone is given but moment-timezone is not loaded', function () {
@@ -259,7 +259,7 @@ describe('module angularMoment', function () {
 			var originalMomentTz = moment.fn.tz;
 			try {
 				delete moment.fn.tz;
-				expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe('01/22/2012');
+				expect(amCalendar(Date.UTC(2012, 0, 22, 4, 46, 54))).toBe('01/22/2012');
 			} finally {
 				moment.fn.tz = originalMomentTz;
 			}
@@ -295,8 +295,8 @@ describe('module angularMoment', function () {
 
 		it('should respect the configured timezone', function () {
 			angularMomentConfig.timezone = 'Pacific/Tahiti';
-			var timestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
-			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY')).toBe('(00,46,54);01.22.2012');
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY')).toBe('(02,46,54);01.22.2012');
 		});
 	});
 
