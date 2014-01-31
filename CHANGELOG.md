@@ -1,18 +1,22 @@
 # Changelog
 
+## 0.6.1 - 2014-01-31
+- Add optional timezone support to `amCalendar` and `amDateFormat` filters ([#27](https://github.com/urish/angular-moment/pull/27), contributed by [kayhadrin](https://github.com/kayhadrin))
+- Happy Year of the Horse!
+
 ## 0.6.0 - 2013-12-24
 
-- Add optional am-without-suffix attribute to am-time-ago ([#22](https://github.com/urish/angular-moment/issues/22), contributed by [hramaker](https://github.com/hramaker))
+- Add optional `am-without-suffix` attribute to `am-time-ago` ([#22](https://github.com/urish/angular-moment/issues/22), contributed by [hramaker](https://github.com/hramaker))
 - Support moment.js v2.5.0. See [here](https://gist.github.com/ichernev/8104451) for changelog.
 - Merry Christmas!
 
 ## 0.5.2 - 2013-11-17
 
-- Add amCalendar filter ([#24](https://github.com/urish/angular-moment/issues/24), contributed by [OndraM](https://github.com/OndraM))
+- Add `amCalendar` filter ([#24](https://github.com/urish/angular-moment/issues/24), contributed by [OndraM](https://github.com/OndraM))
 
 ## 0.5.1 - 2013-11-09
 
-- Add amDuration filter ([#20](https://github.com/urish/angular-moment/issues/20), contributed by [gabrielstuff](https://github.com/gabrielstuff))
+- Add `amDuration` filter ([#20](https://github.com/urish/angular-moment/issues/20), contributed by [gabrielstuff](https://github.com/gabrielstuff))
 
 ## 0.5.0 - 2013-11-02
 
@@ -32,12 +36,12 @@
 
 ## 0.3.0 - 2013-10-07
 
-- Bugfix: am-time-ago support for empty string ([#15](https://github.com/urish/angular-moment/issues/15))
-- Behavior change: am-time-ago will only change the text once there is date
+- Bugfix: `am-time-ago` support for empty string ([#15](https://github.com/urish/angular-moment/issues/15))
+- Behavior change: `am-time-ago` will only change the text once there is date
 
 ## 0.2.2 - 2013-09-29
 
-- Add support for passing unix timestamp as a string to amDateFormat filter ([#14](https://github.com/urish/angular-moment/issues/14))
+- Add support for passing unix timestamp as a string to `amDateFormat` filter ([#14](https://github.com/urish/angular-moment/issues/14))
 
 ## 0.2.1 - 2013-09-13
 
@@ -46,6 +50,6 @@
 
 ## 0.2.0 - 2013-08-22
 
-- Add optional am-format attribute to am-time-ago ([#11](https://github.com/urish/angular-moment/issues/11))
-- Add new amDateFormat filter ([#12](https://github.com/urish/angular-moment/issues/12))
+- Add optional `am-format` attribute to `am-time-ago` ([#11](https://github.com/urish/angular-moment/issues/11))
+- Add new `amDateFormat` filter ([#12](https://github.com/urish/angular-moment/issues/12))
 - Add changelog file

@@ -16,6 +16,7 @@ module.exports = function (config) {
 			'components/angular/angular.js',
 			'components/angular-mocks/angular-mocks.js',
 			'components/moment/moment.js',
+			'components/moment-timezone/moment-timezone.js',
 			'angular-moment.js',
 			'tests.js'
 		],

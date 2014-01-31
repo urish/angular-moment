@@ -2,12 +2,13 @@
  * Copyright (C) 2013, 2014, Uri Shaked.
  */
 
-/* global describe, inject, module, beforeEach, afterEach, it, expect, waitsFor, runs, spyOn */
+/* global describe, inject, module, beforeEach, afterEach, it, expect, waitsFor, runs, spyOn, moment */
 
 'use strict';
 
 describe('module angularMoment', function () {
-	var $rootScope, $compile, $window, amTimeAgoConfig, originalTimeAgoConfig;
+	var $rootScope, $compile, $window, amTimeAgoConfig, originalTimeAgoConfig, angularMomentConfig,
+		originalAngularMomentConfig;
 
 	beforeEach(module('angularMoment'));
 
@@ -16,12 +17,22 @@ describe('module angularMoment', function () {
 		$compile = $injector.get('$compile');
 		$window = $injector.get('$window');
 		amTimeAgoConfig = $injector.get('amTimeAgoConfig');
+		angularMomentConfig = $injector.get('angularMomentConfig');
 		originalTimeAgoConfig = angular.copy(amTimeAgoConfig);
+		originalAngularMomentConfig = angular.copy(angularMomentConfig);
 	}));
 
-	afterEach(function() {
+	afterEach(function () {
 		// Restore original configuration after each test
-		amTimeAgoConfig.withoutSuffix = originalTimeAgoConfig.withoutSuffix;
+		angular.copy(originalTimeAgoConfig, amTimeAgoConfig);
+		angular.copy(originalAngularMomentConfig, angularMomentConfig);
+	});
+
+	// Add a sample timezone for tests
+	moment.tz.add({
+		zones: {
+			'Pacific/Tahiti': ['-9:58:16 - LMT 1912_9 -9:58:16', '-10 - TAHT']
+		}
 	});
 
 	describe('am-time-ago directive', function () {
@@ -238,11 +249,35 @@ describe('module angularMoment', function () {
 		});
 
 		it('should accept a numeric unix timestamp (milliseconds since the epoch) as input', function () {
-			$rootScope.testTimestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
+			$rootScope.testTimestamp = new Date(2012, 0, 22, 4, 46, 54).getTime();
 			var element = angular.element('<span>{{testTimestamp|amCalendar}}</span>');
 			element = $compile(element)($rootScope);
 			$rootScope.$digest();
 			expect(element.text()).toBe('01/22/2012');
+		});
+
+		it('should respect the configured timezone', function () {
+			angularMomentConfig.timezone = 'Pacific/Tahiti';
+			$rootScope.testTimestamp = new Date(2012, 0, 22, 4, 46, 54).getTime();
+			var element = angular.element('<span>{{testTimestamp|amCalendar}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('01/21/2012');
+		});
+
+		it('should gracefully handle the case where timezone is given but moment-timezone is not loaded', function () {
+			angularMomentConfig.timezone = 'Pacific/Tahiti';
+			var originalMomentTz = moment.fn.tz;
+			try {
+				delete moment.fn.tz;
+				$rootScope.testTimestamp = new Date(2012, 0, 22, 4, 46, 54).getTime();
+				var element = angular.element('<span>{{testTimestamp|amCalendar}}</span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('01/22/2012');
+			} finally {
+				moment.fn.tz = originalMomentTz;
+			}
 		});
 	});
 
@@ -277,6 +312,15 @@ describe('module angularMoment', function () {
 			element = $compile(element)($rootScope);
 			$rootScope.$digest();
 			expect(element.text()).toBe('(12,46,54);01.22.2012');
+		});
+
+		it('should respect the configured timezone', function () {
+			angularMomentConfig.timezone = 'Pacific/Tahiti';
+			$rootScope.testTimestamp = new Date(2012, 0, 22, 12, 46, 54).getTime();
+			var element = angular.element('<span>{{testTimestamp|amDateFormat:\'(HH,mm,ss);MM.DD.YYYY\'}}</span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('(00,46,54);01.22.2012');
 		});
 	});
 
@@ -328,4 +372,9 @@ describe('module angularMoment', function () {
 		});
 	});
 
+	describe('angularMomentConfig constant', function () {
+		it('should have an empty timezone value by default', function () {
+			expect(angularMomentConfig.timezone).toBe('');
+		});
+	});
 });

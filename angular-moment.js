@@ -10,9 +10,13 @@
 	 * @param {string} timezone
 	 * @returns {Moment}
 	 */
-	function applyTimezone (aMoment, timezone) {
-		if (aMoment && aMoment.tz && timezone) {
-			aMoment = aMoment.tz(timezone);
+	function applyTimezone(aMoment, timezone, $log) {
+		if (aMoment && timezone) {
+			if (aMoment.tz) {
+				aMoment = aMoment.tz(timezone);
+			} else {
+				$log.warn('angular-moment: timezone specified but moment.tz() is undefined. Did you forget to include moment-timezone.js?');
+			}
 		}
 		return aMoment;
 	}
@@ -26,7 +30,7 @@
 		})
 		.constant('amTimeAgoConfig', { withoutSuffix: false})
 		.directive('amTimeAgo', ['$window', 'amTimeAgoConfig', function ($window, amTimeAgoConfig) {
-			
+
 			return function (scope, element, attr) {
 				var activeTimeout = null;
 				var currentValue;
@@ -105,8 +109,8 @@
 				});
 			};
 		}])
-		.filter('amCalendar', ['$window', 'angularMomentConfig', function ($window, angularMomentConfig) {
-			
+		.filter('amCalendar', ['$window', '$log', 'angularMomentConfig', function ($window, $log, angularMomentConfig) {
+
 			return function (value) {
 				if (typeof value === 'undefined' || value === null) {
 					return '';
@@ -118,11 +122,11 @@
 				}
 				// else assume the given value is already a date
 
-				return applyTimezone($window.moment(value), angularMomentConfig.timezone).calendar();
+				return applyTimezone($window.moment(value), angularMomentConfig.timezone, $log).calendar();
 			};
 		}])
-		.filter('amDateFormat', ['$window', 'angularMomentConfig', function ($window, angularMomentConfig) {
-			
+		.filter('amDateFormat', ['$window', '$log', 'angularMomentConfig', function ($window, $log, angularMomentConfig) {
+
 			return function (value, format) {
 				if (typeof value === 'undefined' || value === null) {
 					return '';
@@ -134,11 +138,11 @@
 				}
 				// else assume the given value is already a date
 
-				return applyTimezone($window.moment(value), angularMomentConfig.timezone).format(format);
+				return applyTimezone($window.moment(value), angularMomentConfig.timezone, $log).format(format);
 			};
 		}])
 		.filter('amDurationFormat', ['$window', function ($window) {
-			
+
 			return function (value, format, suffix) {
 				if (typeof value === 'undefined' || value === null) {
 					return '';
