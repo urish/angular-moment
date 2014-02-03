@@ -107,6 +107,18 @@
 				scope.$on('$destroy', function () {
 					cancelTimer();
 				});
+
+				scope.$on('amMoment:languageChange', function () {
+					updateMoment();
+				});
+			};
+		}])
+		.factory('amMoment', ['$window', '$rootScope', function ($window, $rootScope) {
+			return {
+				changeLanguage: function (lang) {
+					$window.moment.lang(lang);
+					$rootScope.$broadcast('amMoment:languageChange');
+				}
 			};
 		}])
 		.filter('amCalendar', ['$window', '$log', 'angularMomentConfig', function ($window, $log, angularMomentConfig) {
