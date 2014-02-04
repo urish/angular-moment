@@ -1,6 +1,6 @@
 /* angular-moment.js / v0.6.1 / (c) 2013, 2014 Uri Shaked / MIT Licence */
 
-(function(){
+(function () {
 	'use strict';
 
 	/**
@@ -22,9 +22,9 @@
 	}
 
 	angular.module('angularMoment', [])
-		/**
-		* Common configuration of the angularMoment module
-		*/
+	/**
+	 * Common configuration of the angularMoment module
+	 */
 		.constant('angularMomentConfig', {
 			timezone: '' // e.g. 'Europe/London'
 		})
@@ -116,8 +116,11 @@
 		.factory('amMoment', ['$window', '$rootScope', function ($window, $rootScope) {
 			return {
 				changeLanguage: function (lang) {
-					$window.moment.lang(lang);
-					$rootScope.$broadcast('amMoment:languageChange');
+					var result = $window.moment.lang(lang);
+					if (angular.isDefined(lang)) {
+						$rootScope.$broadcast('amMoment:languageChange');
+					}
+					return result;
 				}
 			};
 		}])

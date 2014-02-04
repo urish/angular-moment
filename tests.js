@@ -8,7 +8,7 @@
 
 describe('module angularMoment', function () {
 	var $rootScope, $compile, $window, $filter, amTimeAgoConfig, originalTimeAgoConfig, angularMomentConfig,
-		originalAngularMomentConfig;
+		originalAngularMomentConfig, amMoment;
 
 	beforeEach(module('angularMoment'));
 
@@ -17,10 +17,14 @@ describe('module angularMoment', function () {
 		$compile = $injector.get('$compile');
 		$window = $injector.get('$window');
 		$filter = $injector.get('$filter');
+		amMoment = $injector.get('amMoment');
 		amTimeAgoConfig = $injector.get('amTimeAgoConfig');
 		angularMomentConfig = $injector.get('angularMomentConfig');
 		originalTimeAgoConfig = angular.copy(amTimeAgoConfig);
 		originalAngularMomentConfig = angular.copy(angularMomentConfig);
+
+		// Ensure the language of moment.js is set to english by default
+		$window.moment.lang('en');
 	}));
 
 	afterEach(function () {
@@ -159,6 +163,16 @@ describe('module angularMoment', function () {
 			element = $compile(element)($rootScope);
 			$rootScope.$digest();
 			expect(element.text()).toBe('a few seconds');
+		});
+
+		it('should generate update the text following a language change via amMoment.changeLanguage() method', function () {
+			$rootScope.testDate = new Date();
+			var element = angular.element('<span am-time-ago="testDate"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds ago');
+			amMoment.changeLanguage('fr');
+			expect(element.text()).toBe('il y a quelques secondes');
 		});
 
 		describe('am-without-suffix attribute', function () {
@@ -325,6 +339,32 @@ describe('module angularMoment', function () {
 
 		it('should gracefully handle undefined values for duration', function () {
 			expect(amDurationFormat(undefined, 'minutes')).toBe('');
+		});
+	});
+
+	describe('amMoment service', function () {
+		describe('#changeLanguage', function () {
+			it('should return the current language', function () {
+				expect(amMoment.changeLanguage()).toBe('en');
+			});
+
+			it('should broadcast an angularMoment:languageChange event on the root scope if a language is specified', function () {
+				var eventBroadcasted = false;
+				$rootScope.$on('amMoment:languageChange', function () {
+					eventBroadcasted = true;
+				});
+				amMoment.changeLanguage('fr');
+				expect(eventBroadcasted).toBe(true);
+			});
+
+			it('should not broadcast an angularMoment:languageChange event on the root scope if no language is specified', function () {
+				var eventBroadcasted = false;
+				$rootScope.$on('amMoment:languageChange', function () {
+					eventBroadcasted = true;
+				});
+				amMoment.changeLanguage();
+				expect(eventBroadcasted).toBe(false);
+			});
 		});
 	});
 
