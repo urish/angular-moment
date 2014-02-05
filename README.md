@@ -6,6 +6,7 @@ Angular.JS directive and filters for [Moment.JS](http://www.momentjs.com).
 Copyright (C) 2013, 2014, Uri Shaked <uri@urish.org>
 
 [![Build Status](https://travis-ci.org/urish/angular-moment.png?branch=master)](https://travis-ci.org/urish/angular-moment)
+[![Coverage Status](https://coveralls.io/repos/urish/angular-moment/badge.png)](https://coveralls.io/r/urish/angular-moment)
 
 Installation
 ------------

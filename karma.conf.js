@@ -24,6 +24,10 @@ module.exports = function (config) {
 		preprocessors: {
 			'components/moment/moment.js': 'coverage',
 			'angular-moment.js': 'coverage'
+		},
+		coverageReporter: {
+			type: 'lcov',
+			dir: 'coverage/'
 		}
 	});
 };

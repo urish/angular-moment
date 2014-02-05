@@ -4,3 +4,5 @@ node_js:
 before_script:
   - npm install -g bower@1.2.x grunt-cli
   - bower install
+after_success:
+  - cat ./coverage/*/lcov.info | ./node_modules/coveralls/bin/coveralls.js
