@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.6.2 - TBD
+## 0.6.2 - 2014-02-05
 - Add `amMoment` service with a `changeLanguage()` method ([#32](https://github.com/urish/angular-moment/pull/32), contributed by [Ornthalas](https://github.com/Ornthalas))
 - bower.json: Move `moment-timezone` to devDependencies (fixes [#34](https://github.com/urish/angular-moment/issues/34))
 
