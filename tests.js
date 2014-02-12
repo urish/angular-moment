@@ -278,6 +278,10 @@ describe('module angularMoment', function () {
 				moment.fn.tz = originalMomentTz;
 			}
 		});
+
+		it('should return an empty string for invalid input', function () {
+			expect(amCalendar('blah blah')).toBe('');
+		});
 	});
 
 	describe('amDateFormat filter', function () {
@@ -311,6 +315,10 @@ describe('module angularMoment', function () {
 			angularMomentConfig.timezone = 'Pacific/Tahiti';
 			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
 			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY')).toBe('(02,46,54);01.22.2012');
+		});
+
+		it('should return an empty string for invalid input', function () {
+			expect(amDateFormat('blah blah', '(HH,mm,ss);MM.DD.YYYY')).toBe('');
 		});
 	});
 
