@@ -13,8 +13,8 @@
 		"grunt-contrib-jshint": "~0.8.0",
 		"grunt-karma": "~0.7.2",
 		"karma": "~0.11.10",
-		"karma-coverage": "~0.1.0",
-		"karma-jasmine": "~0.1.5",
+		"karma-coverage": "~0.2.0",
+		"karma-jasmine": "~0.2.1",
 		"karma-phantomjs-launcher": "~0.1.1",
 		"coveralls": "~2.7.1"
 	},

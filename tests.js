@@ -2,7 +2,7 @@
  * Copyright (C) 2013, 2014, Uri Shaked.
  */
 
-/* global describe, inject, module, beforeEach, afterEach, it, expect, waitsFor, runs, spyOn, moment */
+/* global describe, inject, module, beforeEach, afterEach, it, expect, spyOn, moment */
 
 'use strict';
 
@@ -94,21 +94,24 @@ describe('module angularMoment', function () {
 			expect(element.text()).toBe('a few seconds ago');
 		});
 
-		it('should update the span text as time passes', function () {
+		it('should update the span text as time passes', function (done) {
 			$rootScope.testDate = new Date(new Date().getTime() - 44000);
 			var element = angular.element('<div am-time-ago="testDate"></div>');
 			element = $compile(element)($rootScope);
 			$rootScope.$digest();
 			expect(element.text()).toBe('a few seconds ago');
 
-			waitsFor(function () {
-				return (new Date().getTime() - $rootScope.testDate.getTime()) > 45000;
-			}, '$rootScope.date is more than 45 seconds old', 1500);
+			var waitsInterval = setInterval(function () {
+				// Wait until $rootScope.date is more than 45 seconds old
+				if (new Date().getTime() - $rootScope.testDate.getTime() < 45000) {
+					return;
+				}
 
-			runs(function () {
+				clearInterval(waitsInterval);
 				$rootScope.$digest();
 				expect(element.text()).toBe('a minute ago');
-			});
+				done();
+			}, 50);
 		});
 
 		it('should handle undefined data', function () {
@@ -128,7 +131,7 @@ describe('module angularMoment', function () {
 			$rootScope.$digest();
 			expect(element.text()).toBe('a few seconds ago');
 			$rootScope.testDate = '';
-			spyOn($window, 'clearTimeout').andCallThrough();
+			spyOn($window, 'clearTimeout').and.callThrough();
 			$rootScope.$digest();
 			expect($window.clearTimeout).toHaveBeenCalled();
 			expect(element.text()).toBe('');
@@ -151,7 +154,7 @@ describe('module angularMoment', function () {
 			var element = angular.element('<span am-time-ago="testDate"></span>');
 			element = $compile(element)(scope);
 			$rootScope.$digest();
-			spyOn($window, 'clearTimeout').andCallThrough();
+			spyOn($window, 'clearTimeout').and.callThrough();
 			scope.$destroy();
 			expect($window.clearTimeout).toHaveBeenCalled();
 		});
