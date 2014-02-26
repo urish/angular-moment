@@ -28,8 +28,9 @@
 		.constant('angularMomentConfig', {
 			timezone: '' // e.g. 'Europe/London'
 		})
+		.constant('moment', window.moment)
 		.constant('amTimeAgoConfig', { withoutSuffix: false})
-		.directive('amTimeAgo', ['$window', 'amTimeAgoConfig', function ($window, amTimeAgoConfig) {
+		.directive('amTimeAgo', ['$timeout', 'moment', 'amTimeAgoConfig', function ($timeout, moment, amTimeAgoConfig) {
 
 			return function (scope, element, attr) {
 				var activeTimeout = null;
@@ -39,14 +40,14 @@
 
 				function cancelTimer() {
 					if (activeTimeout) {
-						$window.clearTimeout(activeTimeout);
+						$timeout.cancel(activeTimeout);
 						activeTimeout = null;
 					}
 				}
 
 				function updateTime(momentInstance) {
 					element.text(momentInstance.fromNow(withoutSuffix));
-					var howOld = $window.moment().diff(momentInstance, 'minute');
+					var howOld = moment().diff(momentInstance, 'minute');
 					var secondsUntilUpdate = 3600;
 					if (howOld < 1) {
 						secondsUntilUpdate = 1;
@@ -56,14 +57,14 @@
 						secondsUntilUpdate = 300;
 					}
 
-					activeTimeout = $window.setTimeout(function () {
+					activeTimeout = $timeout(function () {
 						updateTime(momentInstance);
 					}, secondsUntilUpdate * 1000);
 				}
 
 				function updateMoment() {
 					cancelTimer();
-					updateTime($window.moment(currentValue, currentFormat));
+					updateTime(moment(currentValue, currentFormat));
 				}
 
 				scope.$watch(attr.amTimeAgo, function (value) {
@@ -113,10 +114,10 @@
 				});
 			};
 		}])
-		.factory('amMoment', ['$window', '$rootScope', function ($window, $rootScope) {
+		.factory('amMoment', ['moment', '$rootScope', function (moment, $rootScope) {
 			return {
 				changeLanguage: function (lang) {
-					var result = $window.moment.lang(lang);
+					var result = moment.lang(lang);
 					if (angular.isDefined(lang)) {
 						$rootScope.$broadcast('amMoment:languageChange');
 					}
@@ -124,7 +125,7 @@
 				}
 			};
 		}])
-		.filter('amCalendar', ['$window', '$log', 'angularMomentConfig', function ($window, $log, angularMomentConfig) {
+		.filter('amCalendar', ['moment', '$log', 'angularMomentConfig', function (moment, $log, angularMomentConfig) {
 
 			return function (value) {
 				if (typeof value === 'undefined' || value === null) {
@@ -136,15 +137,15 @@
 					value = new Date(parseInt(value, 10));
 				}
 
-				var moment = $window.moment(value);
-				if (!moment.isValid()) {
+				var date = moment(value);
+				if (!date.isValid()) {
 					return '';
 				}
 
-				return applyTimezone(moment, angularMomentConfig.timezone, $log).calendar();
+				return applyTimezone(date, angularMomentConfig.timezone, $log).calendar();
 			};
 		}])
-		.filter('amDateFormat', ['$window', '$log', 'angularMomentConfig', function ($window, $log, angularMomentConfig) {
+		.filter('amDateFormat', ['moment', '$log', 'angularMomentConfig', function (moment, $log, angularMomentConfig) {
 
 			return function (value, format) {
 				if (typeof value === 'undefined' || value === null) {
@@ -156,15 +157,15 @@
 					value = new Date(parseInt(value, 10));
 				}
 
-				var moment = $window.moment(value);
-				if (!moment.isValid()) {
+				var date = moment(value);
+				if (!date.isValid()) {
 					return '';
 				}
 
-				return applyTimezone(moment, angularMomentConfig.timezone, $log).format(format);
+				return applyTimezone(date, angularMomentConfig.timezone, $log).format(format);
 			};
 		}])
-		.filter('amDurationFormat', ['$window', function ($window) {
+		.filter('amDurationFormat', ['moment', function (moment) {
 
 			return function (value, format, suffix) {
 				if (typeof value === 'undefined' || value === null) {
@@ -172,7 +173,7 @@
 				}
 
 				// else assume the given value is already a duration in a format (miliseconds, etc)
-				return $window.moment.duration(value, format).humanize(suffix);
+				return moment.duration(value, format).humanize(suffix);
 			};
 		}]);
 
