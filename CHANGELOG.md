@@ -2,6 +2,7 @@
 
 ## 0.7.0 - TBD
 - Use `moment` as an injectable constant instead of relying on `$window.moment` ([#35](https://github.com/urish/angular-moment/pull/35), contributed by [just-boris](https://github.com/just-boris))
+- Require.js support ([#36](https://github.com/urish/angular-moment/issues/36))
 - Enable support for AngularJS 1.3.x in bower.json
 
 ## 0.6.2 - 2014-02-05
