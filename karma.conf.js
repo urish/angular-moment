@@ -13,11 +13,11 @@ module.exports = function (config) {
 		autoWatch: true,
 		reporters: ['dots', 'coverage'],
 		files: [
-			'components/angular/angular.js',
-			'components/angular-mocks/angular-mocks.js',
-			'components/moment/moment.js',
-			'components/moment/lang/fr.js',
-			'components/moment-timezone/moment-timezone.js',
+			'bower_components/angular/angular.js',
+			'bower_components/angular-mocks/angular-mocks.js',
+			'bower_components/moment/moment.js',
+			'bower_components/moment/lang/fr.js',
+			'bower_components/moment-timezone/moment-timezone.js',
 			'angular-moment.js',
 			'tests.js'
 		],
