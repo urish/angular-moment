@@ -30,7 +30,7 @@
 		})
 		.constant('moment', window.moment)
 		.constant('amTimeAgoConfig', { withoutSuffix: false})
-		.directive('amTimeAgo', ['$timeout', 'moment', 'amTimeAgoConfig', function ($timeout, moment, amTimeAgoConfig) {
+		.directive('amTimeAgo', ['$window', 'moment', 'amTimeAgoConfig', function ($window, moment, amTimeAgoConfig) {
 
 			return function (scope, element, attr) {
 				var activeTimeout = null;
@@ -40,7 +40,7 @@
 
 				function cancelTimer() {
 					if (activeTimeout) {
-						$timeout.cancel(activeTimeout);
+						$window.clearTimeout(activeTimeout);
 						activeTimeout = null;
 					}
 				}
@@ -57,7 +57,7 @@
 						secondsUntilUpdate = 300;
 					}
 
-					activeTimeout = $timeout(function () {
+					activeTimeout = $window.setTimeout(function () {
 						updateTime(momentInstance);
 					}, secondsUntilUpdate * 1000);
 				}
