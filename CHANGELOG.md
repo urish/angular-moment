@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0 - TBD
+- Use `moment` as an injectable constant instead of relying on `$window.moment` ([#35](https://github.com/urish/angular-moment/pull/35), contributed by [just-boris](https://github.com/just-boris))
+- Enable support for AngularJS 1.3.x in bower.json
+
 ## 0.6.2 - 2014-02-05
 - Add `amMoment` service with a `changeLanguage()` method ([#32](https://github.com/urish/angular-moment/pull/32), contributed by [Ornthalas](https://github.com/Ornthalas))
 - bower.json: Move `moment-timezone` to devDependencies (fixes [#34](https://github.com/urish/angular-moment/issues/34))
