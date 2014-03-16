@@ -22,7 +22,6 @@ module.exports = function (config) {
 			'tests.js'
 		],
 		preprocessors: {
-			'components/moment/moment.js': 'coverage',
 			'angular-moment.js': 'coverage'
 		},
 		coverageReporter: {
