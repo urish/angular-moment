@@ -2,12 +2,12 @@
  * Copyright (C) 2013, 2014, Uri Shaked.
  */
 
-/* global describe, inject, module, beforeEach, afterEach, it, expect, spyOn, moment */
+/* global describe, inject, module, beforeEach, afterEach, it, expect */
 
 'use strict';
 
 describe('module angularMoment', function () {
-	var $rootScope, $compile, $window, $filter, amTimeAgoConfig, originalTimeAgoConfig, angularMomentConfig,
+	var $rootScope, $compile, $filter, $timeout, moment, amTimeAgoConfig, originalTimeAgoConfig, angularMomentConfig,
 		originalAngularMomentConfig, amMoment;
 
 	beforeEach(module('angularMoment'));
@@ -15,8 +15,9 @@ describe('module angularMoment', function () {
 	beforeEach(inject(function ($injector) {
 		$rootScope = $injector.get('$rootScope');
 		$compile = $injector.get('$compile');
-		$window = $injector.get('$window');
 		$filter = $injector.get('$filter');
+		$timeout = $injector.get('$timeout');
+		moment = $injector.get('moment');
 		amMoment = $injector.get('amMoment');
 		amTimeAgoConfig = $injector.get('amTimeAgoConfig');
 		angularMomentConfig = $injector.get('angularMomentConfig');
@@ -24,7 +25,13 @@ describe('module angularMoment', function () {
 		originalAngularMomentConfig = angular.copy(angularMomentConfig);
 
 		// Ensure the language of moment.js is set to english by default
-		$window.moment.lang('en');
+		moment.lang('en');
+		// Add a sample timezone for tests
+		moment.tz.add({
+			zones: {
+				'Pacific/Tahiti': ['-9:58:16 - LMT 1912_9 -9:58:16', '-10 - TAHT']
+			}
+		});
 	}));
 
 	afterEach(function () {
@@ -33,12 +40,6 @@ describe('module angularMoment', function () {
 		angular.copy(originalAngularMomentConfig, angularMomentConfig);
 	});
 
-	// Add a sample timezone for tests
-	moment.tz.add({
-		zones: {
-			'Pacific/Tahiti': ['-9:58:16 - LMT 1912_9 -9:58:16', '-10 - TAHT']
-		}
-	});
 
 	describe('am-time-ago directive', function () {
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
@@ -98,7 +99,7 @@ describe('module angularMoment', function () {
 			$rootScope.testDate = new Date(new Date().getTime() - 44000);
 			var element = angular.element('<div am-time-ago="testDate"></div>');
 			element = $compile(element)($rootScope);
-			$rootScope.$digest();
+			$timeout.flush();
 			expect(element.text()).toBe('a few seconds ago');
 
 			var waitsInterval = setInterval(function () {
@@ -108,7 +109,7 @@ describe('module angularMoment', function () {
 				}
 
 				clearInterval(waitsInterval);
-				$rootScope.$digest();
+				$timeout.flush();
 				expect(element.text()).toBe('a minute ago');
 				done();
 			}, 50);
@@ -128,12 +129,11 @@ describe('module angularMoment', function () {
 			$rootScope.testDate = new Date().getTime();
 			var element = angular.element('<div am-time-ago="testDate"></div>');
 			element = $compile(element)($rootScope);
-			$rootScope.$digest();
+			$timeout.flush();
 			expect(element.text()).toBe('a few seconds ago');
 			$rootScope.testDate = '';
-			spyOn($window, 'clearTimeout').and.callThrough();
 			$rootScope.$digest();
-			expect($window.clearTimeout).toHaveBeenCalled();
+			$timeout.verifyNoPendingTasks();
 			expect(element.text()).toBe('');
 		});
 
@@ -141,7 +141,7 @@ describe('module angularMoment', function () {
 			$rootScope.testDate = null;
 			var element = angular.element('<div am-time-ago="testDate">Initial text</div>');
 			element = $compile(element)($rootScope);
-			$rootScope.$digest();
+			$timeout.flush();
 			expect(element.text()).toBe('Initial text');
 			$rootScope.testDate = new Date().getTime();
 			$rootScope.$digest();
@@ -153,10 +153,9 @@ describe('module angularMoment', function () {
 			$rootScope.testDate = new Date();
 			var element = angular.element('<span am-time-ago="testDate"></span>');
 			element = $compile(element)(scope);
-			$rootScope.$digest();
-			spyOn($window, 'clearTimeout').and.callThrough();
+			$timeout.flush();
 			scope.$destroy();
-			expect($window.clearTimeout).toHaveBeenCalled();
+			$timeout.verifyNoPendingTasks();
 		});
 
 		it('should generate a time string without suffix when configured to do so', function () {
