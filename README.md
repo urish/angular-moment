@@ -64,6 +64,13 @@ The user will initially see "a few seconds ago", and about a minute
 after the span will automatically update with the text "a minute ago",
 etc.
 
+### TimeagoUTC directive
+Exactly the same as the Timeago directive, but with UTC timestamps:
+
+```html
+<span am-time-ago-utc="message.time"></span>
+```
+
 ### amDateFormat filter
 Format dates using moment.js format() method. Example:
 
