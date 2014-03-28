@@ -31,6 +31,7 @@
 		 * Common configuration of the angularMoment module
 		 */
 			.constant('angularMomentConfig', {
+				preprocess: null, // e.g. 'unix', 'utc', ...
 				timezone: '' // e.g. 'Europe/London'
 			})
 
@@ -47,13 +48,16 @@
 		/**
 		 * amTimeAgo directive
 		 */
-			.directive('amTimeAgo', ['$window', 'moment', 'amTimeAgoConfig', function ($window, moment, amTimeAgoConfig) {
+			.directive('amTimeAgo', ['$window', 'moment', 'amTimeAgoConfig', 'angularMomentConfig', function ($window, moment, amTimeAgoConfig, angularMomentConfig) {
 
 				return function (scope, element, attr) {
 					var activeTimeout = null;
 					var currentValue;
 					var currentFormat;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
+					var preprocess = angularMomentConfig.preprocess;
+					
+					if (attr.amPreprocess) preprocess = attr.amPreprocess;
 
 					function cancelTimer() {
 						if (activeTimeout) {
@@ -94,7 +98,9 @@
 							return;
 						}
 
-						if (angular.isNumber(value)) {
+						if (preprocess) {
+							value = eval("moment." + preprocess + "(value)");
+						} else if (angular.isNumber(value)) {
 							// Milliseconds since the epoch
 							value = new Date(value);
 						}
@@ -144,11 +150,15 @@
 
 			.filter('amCalendar', ['moment', '$log', 'angularMomentConfig', function (moment, $log, angularMomentConfig) {
 				return function (value) {
+					var preprocess = angularMomentConfig.preprocess;
+					
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
 
-					if (!isNaN(parseFloat(value)) && isFinite(value)) {
+					if (preprocess) {
+						value = eval("moment." + preprocess + "(value)");
+					} else if (!isNaN(parseFloat(value)) && isFinite(value)) {
 						// Milliseconds since the epoch
 						value = new Date(parseInt(value, 10));
 					}
@@ -164,11 +174,15 @@
 
 			.filter('amDateFormat', ['moment', '$log', 'angularMomentConfig', function (moment, $log, angularMomentConfig) {
 				return function (value, format) {
+					var preprocess = angularMomentConfig.preprocess;
+					
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
 
-					if (!isNaN(parseFloat(value)) && isFinite(value)) {
+					if (preprocess) {
+						value = eval("moment." + preprocess + "(value)");
+					} else if (!isNaN(parseFloat(value)) && isFinite(value)) {
 						// Milliseconds since the epoch
 						value = new Date(parseInt(value, 10));
 					}
