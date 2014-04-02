@@ -42,6 +42,22 @@ describe('module angularMoment', function () {
 
 
 	describe('am-time-ago directive', function () {
+		it('should change the text of the element to "a few seconds ago" when given unix timestamp', function () {
+			$rootScope.testDate = new Date().getTime()/1000;
+			var element = angular.element('<span am-time-ago="testDate" am-preprocess="unix"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds ago');
+		});
+		
+		it('should change the text of the element to "a few seconds ago" when given utc', function () {
+			$rootScope.testDate = new Date().toUTCString();
+			var element = angular.element('<span am-time-ago="testDate" am-preprocess="utc"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('a few seconds ago');
+		});
+		
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
 			$rootScope.testDate = new Date();
 			var element = angular.element('<span am-time-ago="testDate"></span>');
@@ -389,6 +405,9 @@ describe('module angularMoment', function () {
 	describe('angularMomentConfig constant', function () {
 		it('should have an empty timezone value by default', function () {
 			expect(angularMomentConfig.timezone).toBe('');
+		});
+		it('should have an empty preprocess value by default', function () {
+			expect(angularMomentConfig.preprocess).toBe(null);
 		});
 	});
 });

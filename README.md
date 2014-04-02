@@ -43,12 +43,23 @@ Than trigger global moment.js language (e.g. in your app's run() callback):
 ```html
 $window.moment.lang('de');
 ```
+### Configuration
+
+Parameter `preprocess`(e.g: `unix`, `utc`) would pre-execute before. 
+
+```js
+angular.module('myapp').constant('angularMomentConfig', {
+	preprocess: 'unix', // optional
+	timezone: 'Europe/London' // optional
+});
+```
 
 ### Timeago directive
 Use am-time-ago directive to format your relative timestamps. For example:
 
 ```html
 <span am-time-ago="message.time"></span>
+<span am-time-ago="message.time" am-preprocess="unix"></span>
 ```
 
 angular-moment will dynamically update the span to indicate how much time
