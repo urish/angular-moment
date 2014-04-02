@@ -57,7 +57,9 @@
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					var preprocess = angularMomentConfig.preprocess;
 					
-					if (attr.amPreprocess) preprocess = attr.amPreprocess;
+					if (attr.amPreprocess) {
+						preprocess = attr.amPreprocess;
+					}
 
 					function cancelTimer() {
 						if (activeTimeout) {
@@ -99,7 +101,7 @@
 						}
 
 						if (preprocess) {
-							value = eval("moment." + preprocess + "(value)");
+							value = moment[preprocess](value);
 						} else if (angular.isNumber(value)) {
 							// Milliseconds since the epoch
 							value = new Date(value);
@@ -157,7 +159,7 @@
 					}
 
 					if (preprocess) {
-						value = eval("moment." + preprocess + "(value)");
+						value = moment[preprocess](value);
 					} else if (!isNaN(parseFloat(value)) && isFinite(value)) {
 						// Milliseconds since the epoch
 						value = new Date(parseInt(value, 10));
@@ -181,7 +183,7 @@
 					}
 
 					if (preprocess) {
-						value = eval("moment." + preprocess + "(value)");
+						value = moment[preprocess](value);
 					} else if (!isNaN(parseFloat(value)) && isFinite(value)) {
 						// Milliseconds since the epoch
 						value = new Date(parseInt(value, 10));
