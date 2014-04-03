@@ -43,13 +43,13 @@ describe('module angularMoment', function () {
 
 	describe('am-time-ago directive', function () {
 		it('should change the text of the element to "a few seconds ago" when given unix timestamp', function () {
-			$rootScope.testDate = new Date().getTime()/1000;
+			$rootScope.testDate = new Date().getTime() / 1000;
 			var element = angular.element('<span am-time-ago="testDate" am-preprocess="unix"></span>');
 			element = $compile(element)($rootScope);
 			$rootScope.$digest();
 			expect(element.text()).toBe('a few seconds ago');
 		});
-		
+
 		it('should change the text of the element to "a few seconds ago" when given utc', function () {
 			$rootScope.testDate = new Date().toUTCString();
 			var element = angular.element('<span am-time-ago="testDate" am-preprocess="utc"></span>');
@@ -57,7 +57,7 @@ describe('module angularMoment', function () {
 			$rootScope.$digest();
 			expect(element.text()).toBe('a few seconds ago');
 		});
-		
+
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
 			$rootScope.testDate = new Date();
 			var element = angular.element('<span am-time-ago="testDate"></span>');
@@ -393,6 +393,29 @@ describe('module angularMoment', function () {
 				amMoment.changeLanguage();
 				expect(eventBroadcasted).toBe(false);
 			});
+		});
+
+		describe('#preprocessDate', function () {
+			it('should call a custom preprocessor that was registered on amMoment.preprocessors', function () {
+				var testDate = new Date(2013, 0, 22, 12, 46, 54);
+				var meeting = {
+					name: 'Budget plan',
+					date: testDate
+				};
+
+				amMoment.preprocessors.foobar = function (value) {
+					return value.date;
+				};
+				
+				expect(amMoment.preprocessDate(meeting, 'foobar')).toEqual(testDate);
+			});
+
+			it('should issue a warning if an unsupported preprocessor is used and fall-back to default processing', inject(function ($log) {
+				var testDate = new Date(2014, 0, 22, 12, 46, 54);
+				spyOn($log, 'warn');
+				expect(amMoment.preprocessDate(testDate.getTime(), 'blabla')).toEqual(testDate);
+				expect($log.warn).toHaveBeenCalledWith('angular-moment: Ignoring unsupported value for preprocess: blabla');
+			}));
 		});
 	});
 
