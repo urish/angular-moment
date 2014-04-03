@@ -5,24 +5,6 @@
 (function () {
 	'use strict';
 
-	/**
-	 * Apply a timezone onto a given moment object - if moment-timezone.js is included
-	 * Otherwise, it'll not apply any timezone shift.
-	 * @param {Moment} aMoment
-	 * @param {string} timezone
-	 * @returns {Moment}
-	 */
-	function applyTimezone(aMoment, timezone, $log) {
-		if (aMoment && timezone) {
-			if (aMoment.tz) {
-				aMoment = aMoment.tz(timezone);
-			} else {
-				$log.warn('angular-moment: timezone specified but moment.tz() is undefined. Did you forget to include moment-timezone.js?');
-			}
-		}
-		return aMoment;
-	}
-
 	function angularMoment(angular, moment) {
 
 		return angular.module('angularMoment', [])
@@ -48,7 +30,7 @@
 		/**
 		 * amTimeAgo directive
 		 */
-			.directive('amTimeAgo', ['$window', 'moment', 'amTimeAgoConfig', 'angularMomentConfig', function ($window, moment, amTimeAgoConfig, angularMomentConfig) {
+			.directive('amTimeAgo', ['$window', 'moment', 'amMoment', 'amTimeAgoConfig', 'angularMomentConfig', function ($window, moment, amMoment, amTimeAgoConfig, angularMomentConfig) {
 
 				return function (scope, element, attr) {
 					var activeTimeout = null;
@@ -56,7 +38,7 @@
 					var currentFormat;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					var preprocess = angularMomentConfig.preprocess;
-					
+
 					if (attr.amPreprocess) {
 						preprocess = attr.amPreprocess;
 					}
@@ -100,15 +82,7 @@
 							return;
 						}
 
-						if (preprocess) {
-							value = moment[preprocess](value);
-						} else if (angular.isNumber(value)) {
-							// Milliseconds since the epoch
-							value = new Date(value);
-						}
-						// else assume the given value is already a date
-
-						currentValue = value;
+						currentValue = amMoment.preprocessDate(value, preprocess);
 						updateMoment();
 					});
 
@@ -140,7 +114,12 @@
 				};
 			}])
 
-			.service('amMoment', ['moment', '$rootScope', function (moment, $rootScope) {
+			.service('amMoment', ['moment', '$rootScope', '$log', 'angularMomentConfig', function (moment, $rootScope, $log, angularMomentConfig) {
+				this.preprocessors = {
+					utc: moment.utc,
+					unix: moment.unix
+				};
+
 				this.changeLanguage = function (lang) {
 					var result = moment.lang(lang);
 					if (angular.isDefined(lang)) {
@@ -148,53 +127,70 @@
 					}
 					return result;
 				};
-			}])
 
-			.filter('amCalendar', ['moment', '$log', 'angularMomentConfig', function (moment, $log, angularMomentConfig) {
-				return function (value) {
-					var preprocess = angularMomentConfig.preprocess;
-					
-					if (typeof value === 'undefined' || value === null) {
-						return '';
+				this.preprocessDate = function (value, preprocess) {
+					if (this.preprocessors[preprocess]) {
+						return this.preprocessors[preprocess](value);
 					}
-
 					if (preprocess) {
-						value = moment[preprocess](value);
-					} else if (!isNaN(parseFloat(value)) && isFinite(value)) {
+						$log.warn('angular-moment: Ignoring unsupported value for preprocess: ' + preprocess);
+					}
+					if (!isNaN(parseFloat(value)) && isFinite(value)) {
 						// Milliseconds since the epoch
-						value = new Date(parseInt(value, 10));
+						return new Date(parseInt(value, 10));
 					}
+					// else just returns the value as-is.
+					return value;
+				};
 
-					var date = moment(value);
-					if (!date.isValid()) {
-						return '';
+				/**
+				 * Apply a timezone onto a given moment object - if moment-timezone.js is included
+				 * Otherwise, it'll not apply any timezone shift.
+				 * @param {Moment} aMoment a moment() instance to apply the timezone shift to
+				 * @returns {Moment} The given moment with the timezone shift applied
+				 */
+				this.applyTimezone = function (aMoment) {
+					var timezone = angularMomentConfig.timezone;
+					if (aMoment && timezone) {
+						if (aMoment.tz) {
+							aMoment = aMoment.tz(timezone);
+						} else {
+							$log.warn('angular-moment: timezone specified but moment.tz() is undefined. Did you forget to include moment-timezone.js?');
+						}
 					}
-
-					return applyTimezone(date, angularMomentConfig.timezone, $log).calendar();
+					return aMoment;
 				};
 			}])
 
-			.filter('amDateFormat', ['moment', '$log', 'angularMomentConfig', function (moment, $log, angularMomentConfig) {
-				return function (value, format) {
-					var preprocess = angularMomentConfig.preprocess;
-					
+			.filter('amCalendar', ['moment', 'amMoment', function (moment, amMoment) {
+				return function (value, preprocess) {
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
 
-					if (preprocess) {
-						value = moment[preprocess](value);
-					} else if (!isNaN(parseFloat(value)) && isFinite(value)) {
-						// Milliseconds since the epoch
-						value = new Date(parseInt(value, 10));
-					}
-
+					value = amMoment.preprocessDate(value, preprocess);
 					var date = moment(value);
 					if (!date.isValid()) {
 						return '';
 					}
 
-					return applyTimezone(date, angularMomentConfig.timezone, $log).format(format);
+					return amMoment.applyTimezone(date).calendar();
+				};
+			}])
+
+			.filter('amDateFormat', ['moment', 'amMoment', function (moment, amMoment) {
+				return function (value, format, preprocess) {
+					if (typeof value === 'undefined' || value === null) {
+						return '';
+					}
+
+					value = amMoment.preprocessDate(value, preprocess);
+					var date = moment(value);
+					if (!date.isValid()) {
+						return '';
+					}
+
+					return amMoment.applyTimezone(date).format(format);
 				};
 			}])
 
@@ -204,7 +200,6 @@
 						return '';
 					}
 
-					// else assume the given value is already a duration in a format (miliseconds, etc)
 					return moment.duration(value, format).humanize(suffix);
 				};
 			}]);
