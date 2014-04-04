@@ -89,6 +89,14 @@
 			.directive('amTimeAgo', ['$window', 'moment', 'amMoment', 'amTimeAgoConfig', 'angularMomentConfig', function ($window, moment, amMoment, amTimeAgoConfig, angularMomentConfig) {
 
 				return {
+          replace: true,
+          template: '<time datetime="{{datetime}}"></time>',
+          scope: {
+            datetime: '=amTimeAgo',
+            preprocess: '=amPreprocess',
+            withoutSuffix: '=amWithoutSuffix',
+            format: '=amFormat'
+          },
           link: function (scope, element, attr) {
             var activeTimeout = null;
             var currentValue;
@@ -96,8 +104,8 @@
             var withoutSuffix = amTimeAgoConfig.withoutSuffix;
             var preprocess = angularMomentConfig.preprocess;
 
-            if (attr.amPreprocess) {
-              preprocess = attr.amPreprocess;
+            if (scope.preprocess) {
+              preprocess = scope.preprocess;
             }
 
             function cancelTimer() {
@@ -129,7 +137,7 @@
               updateTime(moment(currentValue, currentFormat));
             }
 
-            scope.$watch(attr.amTimeAgo, function (value) {
+            scope.$watch('datetime', function (value) {
               if ((typeof value === 'undefined') || (value === null) || (value === '')) {
                 cancelTimer();
                 if (currentValue) {
@@ -143,8 +151,8 @@
               updateMoment();
             });
 
-            if (angular.isDefined(attr.amWithoutSuffix)) {
-              scope.$watch(attr.amWithoutSuffix, function (value) {
+            if (angular.isDefined(scope.withoutSuffix)) {
+              scope.$watch('withoutSuffix', function (value) {
                 if (typeof value === 'boolean') {
                   withoutSuffix = value;
                   updateMoment();
@@ -154,8 +162,8 @@
               });
             }
 
-            attr.$observe('amFormat', function (format) {
-              currentFormat = format;
+            scope.$watch('format', function (value) {
+              currentFormat = value;
               if (currentValue) {
                 updateMoment();
               }
