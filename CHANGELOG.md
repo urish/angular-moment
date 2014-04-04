@@ -65,10 +65,10 @@
 - Add new `amDateFormat` filter ([#12](https://github.com/urish/angular-moment/issues/12))
 - Add changelog file
 
-### 0.1.1 - 2013-06-08
+## 0.1.1 - 2013-06-08
 
 - Fix to support iOS ([#2](https://github.com/urish/angular-moment/pull/2), contributed by [giuseppeaiello](https://github.com/giuseppeaiello))
 
-### 0.1.0 - 2013-05-27
+## 0.1.0 - 2013-05-27
 
 - Initial release
