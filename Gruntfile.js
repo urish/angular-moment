@@ -31,6 +31,17 @@ module.exports = function (grunt) {
 					'angular-moment.min.js': 'angular-moment.js'
 				}
 			}
+		},
+		ngdocs: {
+			options: {
+				startPage: '/',
+				title: false,
+				html5Mode: false
+			},
+			api: {
+				src: 'angular-moment.js',
+				title: 'angular-moment API Documentation'
+			}
 		}
 	});
 

@@ -1,27 +1,28 @@
 {
-	"name": "angular-moment",
-	"version": "0.6.2",
-	"repository": {
-		"type": "git",
-		"url": "http://github.com/urish/angular-moment.git"
-	},
-	"dependencies": {},
-	"devDependencies": {
-		"matchdep": "~0.3.0",
-		"grunt": "~0.4.1",
-		"grunt-contrib-uglify": "~0.4.0",
-		"grunt-contrib-jshint": "~0.9.2",
-		"grunt-karma": "~0.8.2",
-		"karma": "~0.12.0",
-		"karma-coverage": "~0.2.0",
-		"karma-jasmine": "~0.2.1",
-		"karma-phantomjs-launcher": "~0.1.1",
-		"coveralls": "~2.8.0"
-	},
-	"engines": {
-		"node": ">=0.10.0"
-	},
-	"scripts": {
-		"test": "grunt test"
-	}
+  "name": "angular-moment",
+  "version": "0.6.2",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/urish/angular-moment.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "matchdep": "~0.3.0",
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-jshint": "~0.9.2",
+    "grunt-karma": "~0.8.2",
+    "karma": "~0.12.0",
+    "karma-coverage": "~0.2.0",
+    "karma-jasmine": "~0.2.1",
+    "karma-phantomjs-launcher": "~0.1.1",
+    "coveralls": "~2.8.0",
+    "grunt-ngdocs": "^0.2.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
 }

@@ -7,28 +7,84 @@
 
 	function angularMoment(angular, moment) {
 
+		/**
+		 * @ngdoc overview
+		 * @name angularMoment
+		 *
+		 * @description
+		 * angularMoment module provides moment.js functionality for angular.js apps.
+		 */
 		return angular.module('angularMoment', [])
 
 		/**
+		 * @ngdoc object
+		 * @name angularMoment.config:angularMomentConfig
+		 *
+		 * @description
 		 * Common configuration of the angularMoment module
 		 */
 			.constant('angularMomentConfig', {
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.angularMomentConfig#preprocess
+				 * @propertyOf angularMoment.config:angularMomentConfig
+				 * @returns {string} The default preprocessor to apply
+				 *
+				 * @description
+				 * Defines a default preprocessor to apply (e.g. 'unix', 'etc', ...). The default value is null,
+				 * i.e. no preprocessor will be applied.
+				 */
 				preprocess: null, // e.g. 'unix', 'utc', ...
-				timezone: '' // e.g. 'Europe/London'
+
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.angularMomentConfig#timezone
+				 * @propertyOf angularMoment.config:angularMomentConfig
+				 * @returns {string} The default timezone
+				 *
+				 * @description
+				 * The default timezone (e.g. 'Europe/London'). Empty string by default (does not apply
+				 * any timezone shift).
+				 */
+				timezone: ''
 			})
 
 		/**
-		 * moment.js global
+		 * @ngdoc object
+		 * @name angularMoment.object:moment
+		 *
+		 * @description
+		 * moment global (as provided by the moment.js library)
 		 */
 			.constant('moment', moment)
 
 		/**
+		 * @ngdoc object
+		 * @name angularMoment.config:amTimeAgoConfig
+		 * @module angularMoment
+		 *
+		 * @description
 		 * configuration specific to the amTimeAgo directive
 		 */
-			.constant('amTimeAgoConfig', { withoutSuffix: false})
+			.constant('amTimeAgoConfig', {
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.amTimeAgoConfig#withoutSuffix
+				 * @propertyOf angularMoment.config:amTimeAgoConfig
+				 * @returns {boolean} Whether to include a suffix in am-time-ago directive
+				 *
+				 * @description
+				 * Defaults to false.
+				 */
+				withoutSuffix: false
+			})
 
 		/**
-		 * amTimeAgo directive
+		 * @ngdoc directive
+		 * @name angularMoment.directive:amTimeAgo
+		 * @module angularMoment
+		 *
+		 * @restrict A
 		 */
 			.directive('amTimeAgo', ['$window', 'moment', 'amMoment', 'amTimeAgoConfig', 'angularMomentConfig', function ($window, moment, amMoment, amTimeAgoConfig, angularMomentConfig) {
 
@@ -114,12 +170,37 @@
 				};
 			}])
 
+		/**
+		 * @ngdoc service
+		 * @name angularMoment.service.amMoment
+		 * @module angularMoment
+		 */
 			.service('amMoment', ['moment', '$rootScope', '$log', 'angularMomentConfig', function (moment, $rootScope, $log, angularMomentConfig) {
+				/**
+				 * @ngdoc property
+				 * @name angularMoment:amMoment#preprocessors
+				 * @module angularMoment
+				 *
+				 * @description
+				 * Defines the preprocessors for the preprocessDate method. By default, the following preprocessors
+				 * are defined: utc, unix.
+				 */
 				this.preprocessors = {
 					utc: moment.utc,
 					unix: moment.unix
 				};
 
+				/**
+				 * @ngdoc function
+				 * @name angularMoment.service.amMoment#changeLanguage
+				 * @methodOf angularMoment.service.amMoment
+				 *
+				 * @description
+				 * Changes the language for moment.js and updates all the am-time-ago directive instances
+				 * with the new language.
+				 *
+				 * @param {string} lang 2-letter language code (e.g. en, es, ru, etc.)
+				 */
 				this.changeLanguage = function (lang) {
 					var result = moment.lang(lang);
 					if (angular.isDefined(lang)) {
@@ -128,6 +209,19 @@
 					return result;
 				};
 
+				/**
+				 * @ngdoc function
+				 * @name angularMoment.service.amMoment#preprocessDate
+				 * @methodOf angularMoment.service.amMoment
+				 *
+				 * @description
+				 * Preprocess a given value and convert it into a date format appropriate for use in the
+				 * am-time-ago directive and the filters.
+				 *
+				 * @param {*} value The value to be preprocessed
+				 * @param {string} preprocess The name of the preprocessor the apply (e.g. utc, unix)
+				 * @return {Date|string|Moment} A value that can be parsed by the moment library
+				 */
 				this.preprocessDate = function (value, preprocess) {
 					if (this.preprocessors[preprocess]) {
 						return this.preprocessors[preprocess](value);
@@ -144,8 +238,14 @@
 				};
 
 				/**
+				 * @ngdoc function
+				 * @name angularMoment.service.amMoment#applyTimezone
+				 * @methodOf angularMoment.service.amMoment
+				 *
+				 * @description
 				 * Apply a timezone onto a given moment object - if moment-timezone.js is included
 				 * Otherwise, it'll not apply any timezone shift.
+				 *
 				 * @param {Moment} aMoment a moment() instance to apply the timezone shift to
 				 * @returns {Moment} The given moment with the timezone shift applied
 				 */
@@ -162,6 +262,11 @@
 				};
 			}])
 
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amCalendar
+		 * @module angularMoment
+		 */
 			.filter('amCalendar', ['moment', 'amMoment', function (moment, amMoment) {
 				return function (value, preprocess) {
 					if (typeof value === 'undefined' || value === null) {
@@ -178,6 +283,12 @@
 				};
 			}])
 
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amDateFormat
+		 * @module angularMoment
+		 * @function
+		 */
 			.filter('amDateFormat', ['moment', 'amMoment', function (moment, amMoment) {
 				return function (value, format, preprocess) {
 					if (typeof value === 'undefined' || value === null) {
@@ -194,6 +305,12 @@
 				};
 			}])
 
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amDurationFormat
+		 * @module angularMoment
+		 * @function
+		 */
 			.filter('amDurationFormat', ['moment', function (moment) {
 				return function (value, format, suffix) {
 					if (typeof value === 'undefined' || value === null) {
