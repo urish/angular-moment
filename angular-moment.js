@@ -88,85 +88,87 @@
 		 */
 			.directive('amTimeAgo', ['$window', 'moment', 'amMoment', 'amTimeAgoConfig', 'angularMomentConfig', function ($window, moment, amMoment, amTimeAgoConfig, angularMomentConfig) {
 
-				return function (scope, element, attr) {
-					var activeTimeout = null;
-					var currentValue;
-					var currentFormat;
-					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
-					var preprocess = angularMomentConfig.preprocess;
+				return {
+          link: function (scope, element, attr) {
+            var activeTimeout = null;
+            var currentValue;
+            var currentFormat;
+            var withoutSuffix = amTimeAgoConfig.withoutSuffix;
+            var preprocess = angularMomentConfig.preprocess;
 
-					if (attr.amPreprocess) {
-						preprocess = attr.amPreprocess;
-					}
+            if (attr.amPreprocess) {
+              preprocess = attr.amPreprocess;
+            }
 
-					function cancelTimer() {
-						if (activeTimeout) {
-							$window.clearTimeout(activeTimeout);
-							activeTimeout = null;
-						}
-					}
+            function cancelTimer() {
+              if (activeTimeout) {
+                $window.clearTimeout(activeTimeout);
+                activeTimeout = null;
+              }
+            }
 
-					function updateTime(momentInstance) {
-						element.text(momentInstance.fromNow(withoutSuffix));
-						var howOld = moment().diff(momentInstance, 'minute');
-						var secondsUntilUpdate = 3600;
-						if (howOld < 1) {
-							secondsUntilUpdate = 1;
-						} else if (howOld < 60) {
-							secondsUntilUpdate = 30;
-						} else if (howOld < 180) {
-							secondsUntilUpdate = 300;
-						}
+            function updateTime(momentInstance) {
+              element.text(momentInstance.fromNow(withoutSuffix));
+              var howOld = moment().diff(momentInstance, 'minute');
+              var secondsUntilUpdate = 3600;
+              if (howOld < 1) {
+                secondsUntilUpdate = 1;
+              } else if (howOld < 60) {
+                secondsUntilUpdate = 30;
+              } else if (howOld < 180) {
+                secondsUntilUpdate = 300;
+              }
 
-						activeTimeout = $window.setTimeout(function () {
-							updateTime(momentInstance);
-						}, secondsUntilUpdate * 1000);
-					}
+              activeTimeout = $window.setTimeout(function () {
+                updateTime(momentInstance);
+              }, secondsUntilUpdate * 1000);
+            }
 
-					function updateMoment() {
-						cancelTimer();
-						updateTime(moment(currentValue, currentFormat));
-					}
+            function updateMoment() {
+              cancelTimer();
+              updateTime(moment(currentValue, currentFormat));
+            }
 
-					scope.$watch(attr.amTimeAgo, function (value) {
-						if ((typeof value === 'undefined') || (value === null) || (value === '')) {
-							cancelTimer();
-							if (currentValue) {
-								element.text('');
-								currentValue = null;
-							}
-							return;
-						}
+            scope.$watch(attr.amTimeAgo, function (value) {
+              if ((typeof value === 'undefined') || (value === null) || (value === '')) {
+                cancelTimer();
+                if (currentValue) {
+                  element.text('');
+                  currentValue = null;
+                }
+                return;
+              }
 
-						currentValue = amMoment.preprocessDate(value, preprocess);
-						updateMoment();
-					});
+              currentValue = amMoment.preprocessDate(value, preprocess);
+              updateMoment();
+            });
 
-					if (angular.isDefined(attr.amWithoutSuffix)) {
-						scope.$watch(attr.amWithoutSuffix, function (value) {
-							if (typeof value === 'boolean') {
-								withoutSuffix = value;
-								updateMoment();
-							} else {
-								withoutSuffix = amTimeAgoConfig.withoutSuffix;
-							}
-						});
-					}
+            if (angular.isDefined(attr.amWithoutSuffix)) {
+              scope.$watch(attr.amWithoutSuffix, function (value) {
+                if (typeof value === 'boolean') {
+                  withoutSuffix = value;
+                  updateMoment();
+                } else {
+                  withoutSuffix = amTimeAgoConfig.withoutSuffix;
+                }
+              });
+            }
 
-					attr.$observe('amFormat', function (format) {
-						currentFormat = format;
-						if (currentValue) {
-							updateMoment();
-						}
-					});
+            attr.$observe('amFormat', function (format) {
+              currentFormat = format;
+              if (currentValue) {
+                updateMoment();
+              }
+            });
 
-					scope.$on('$destroy', function () {
-						cancelTimer();
-					});
+            scope.$on('$destroy', function () {
+              cancelTimer();
+            });
 
-					scope.$on('amMoment:languageChange', function () {
-						updateMoment();
-					});
+            scope.$on('amMoment:languageChange', function () {
+              updateMoment();
+            });
+          }
 				};
 			}])
 
