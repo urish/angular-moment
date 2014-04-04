@@ -97,7 +97,7 @@
             withoutSuffix: '=amWithoutSuffix',
             format: '=amFormat'
           },
-          link: function (scope, element, attr) {
+          link: function (scope, element) {
             var activeTimeout = null;
             var currentValue;
             var currentFormat;
