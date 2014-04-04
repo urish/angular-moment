@@ -98,15 +98,11 @@
             format: '=amFormat'
           },
           link: function (scope, element) {
-            var activeTimeout = null;
-            var currentValue;
-            var currentFormat;
-            var withoutSuffix = amTimeAgoConfig.withoutSuffix;
-            var preprocess = angularMomentConfig.preprocess;
-
-            if (scope.preprocess) {
-              preprocess = scope.preprocess;
-            }
+            var activeTimeout = null,
+                currentValue,
+                currentFormat,
+                withoutSuffix = amTimeAgoConfig.withoutSuffix,
+                preprocess = scope.preprocess || angularMomentConfig.preprocess;
 
             function cancelTimer() {
               if (activeTimeout) {
@@ -116,9 +112,9 @@
             }
 
             function updateTime(momentInstance) {
-              element.text(momentInstance.fromNow(withoutSuffix));
-              var howOld = moment().diff(momentInstance, 'minute');
-              var secondsUntilUpdate = 3600;
+              var howOld = moment().diff(momentInstance, 'minute'),
+                  secondsUntilUpdate = 3600;
+
               if (howOld < 1) {
                 secondsUntilUpdate = 1;
               } else if (howOld < 60) {
@@ -127,7 +123,9 @@
                 secondsUntilUpdate = 300;
               }
 
-              activeTimeout = $window.setTimeout(function () {
+              element.text(momentInstance.fromNow(withoutSuffix));
+
+              activeTimeout = $window.setTimeout(function() {
                 updateTime(momentInstance);
               }, secondsUntilUpdate * 1000);
             }
