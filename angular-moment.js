@@ -95,10 +95,6 @@
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					var preprocess = angularMomentConfig.preprocess;
 
-					if (attr.amPreprocess) {
-						preprocess = attr.amPreprocess;
-					}
-
 					function cancelTimer() {
 						if (activeTimeout) {
 							$window.clearTimeout(activeTimeout);
@@ -125,7 +121,9 @@
 
 					function updateMoment() {
 						cancelTimer();
-						updateTime(moment(currentValue, currentFormat));
+						if (currentValue) {
+							updateTime(amMoment.preprocessDate(currentValue, preprocess, currentFormat));
+						}
 					}
 
 					scope.$watch(attr.amTimeAgo, function (value) {
@@ -138,7 +136,7 @@
 							return;
 						}
 
-						currentValue = amMoment.preprocessDate(value, preprocess);
+						currentValue = value;
 						updateMoment();
 					});
 
@@ -155,9 +153,12 @@
 
 					attr.$observe('amFormat', function (format) {
 						currentFormat = format;
-						if (currentValue) {
-							updateMoment();
-						}
+						updateMoment();
+					});
+
+					attr.$observe('amPreprocess', function (newValue) {
+						preprocess = newValue;
+						updateMoment();
 					});
 
 					scope.$on('$destroy', function () {
@@ -215,26 +216,27 @@
 				 * @methodOf angularMoment.service.amMoment
 				 *
 				 * @description
-				 * Preprocess a given value and convert it into a date format appropriate for use in the
+				 * Preprocess a given value and convert it into a Moment instance appropriate for use in the
 				 * am-time-ago directive and the filters.
 				 *
 				 * @param {*} value The value to be preprocessed
 				 * @param {string} preprocess The name of the preprocessor the apply (e.g. utc, unix)
-				 * @return {Date|string|Moment} A value that can be parsed by the moment library
+				 * @param {string=} format Specifies how to parse the value (see {@link http://momentjs.com/docs/#/parsing/string-format/})
+				 * @return {Moment} A value that can be parsed by the moment library
 				 */
-				this.preprocessDate = function (value, preprocess) {
+				this.preprocessDate = function (value, preprocess, format) {
 					if (this.preprocessors[preprocess]) {
-						return this.preprocessors[preprocess](value);
+						return this.preprocessors[preprocess](value, format);
 					}
 					if (preprocess) {
 						$log.warn('angular-moment: Ignoring unsupported value for preprocess: ' + preprocess);
 					}
 					if (!isNaN(parseFloat(value)) && isFinite(value)) {
 						// Milliseconds since the epoch
-						return new Date(parseInt(value, 10));
+						return moment(parseInt(value, 10));
 					}
 					// else just returns the value as-is.
-					return value;
+					return moment(value, format);
 				};
 
 				/**

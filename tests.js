@@ -404,16 +404,16 @@ describe('module angularMoment', function () {
 				};
 
 				amMoment.preprocessors.foobar = function (value) {
-					return value.date;
+					return moment(value.date);
 				};
 				
-				expect(amMoment.preprocessDate(meeting, 'foobar')).toEqual(testDate);
+				expect(amMoment.preprocessDate(meeting, 'foobar').valueOf()).toEqual(testDate.getTime());
 			});
 
 			it('should issue a warning if an unsupported preprocessor is used and fall-back to default processing', inject(function ($log) {
 				var testDate = new Date(2014, 0, 22, 12, 46, 54);
 				spyOn($log, 'warn');
-				expect(amMoment.preprocessDate(testDate.getTime(), 'blabla')).toEqual(testDate);
+				expect(amMoment.preprocessDate(testDate.getTime(), 'blabla').valueOf()).toEqual(testDate.getTime());
 				expect($log.warn).toHaveBeenCalledWith('angular-moment: Ignoring unsupported value for preprocess: blabla');
 			}));
 		});
