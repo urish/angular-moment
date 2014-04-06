@@ -50,14 +50,6 @@ describe('module angularMoment', function () {
 			expect(element.text()).toBe('a few seconds ago');
 		});
 
-		it('should change the text of the element to "a few seconds ago" when given utc', function () {
-			$rootScope.testDate = new Date().toUTCString();
-			var element = angular.element('<span am-time-ago="testDate" am-preprocess="utc"></span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds ago');
-		});
-
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
 			$rootScope.testDate = new Date();
 			var element = angular.element('<span am-time-ago="testDate"></span>');
