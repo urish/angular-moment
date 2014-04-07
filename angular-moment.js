@@ -93,9 +93,9 @@
           template: '<time datetime="{{datetime}}"></time>',
           scope: {
             datetime: '=amTimeAgo',
-            preprocess: '=amPreprocess',
+            format: '=amFormat',
             withoutSuffix: '=amWithoutSuffix',
-            format: '=amFormat'
+            preprocess: '@amPreprocess'
           },
           link: function (scope, element) {
             var activeTimeout = null,
@@ -151,6 +151,13 @@
               updateMoment();
             });
 
+            if (angular.isDefined(scope.format)) {
+              scope.$watch('format', function (value) {
+                currentFormat = value;
+                updateMoment();
+              });
+            }
+
             if (angular.isDefined(scope.withoutSuffix)) {
               scope.$watch('withoutSuffix', function (value) {
                 if (typeof value === 'boolean') {
@@ -162,15 +169,12 @@
               });
             }
 
-            scope.$watch('format', function (value) {
-              currentFormat = value;
-              updateMoment();
-            });
-
-            scope.$watch('preprocess', function (newValue) {
-              preprocess = newValue;
-              updateMoment();
-            });
+            if (angular.isDefined(scope.preprocess)) {
+              scope.$watch('preprocess', function (newValue) {
+                preprocess = newValue;
+                updateMoment();
+              });
+            }
 
             scope.$on('$destroy', function () {
               cancelTimer();
