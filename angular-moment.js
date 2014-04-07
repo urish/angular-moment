@@ -90,7 +90,8 @@
 
 				return {
           replace: true,
-          template: '<time datetime="{{datetime}}"></time>',
+          template: '<time datetime="{{datetime}}" ng-transclude></time>',
+          transclude: true,
           scope: {
             datetime: '=amTimeAgo',
             format: '=amFormat',
