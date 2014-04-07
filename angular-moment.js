@@ -94,7 +94,7 @@
           transclude: true,
           scope: {
             datetime: '=amTimeAgo',
-            format: '=amFormat',
+            format: '@amFormat',
             withoutSuffix: '=amWithoutSuffix',
             preprocess: '@amPreprocess'
           },
