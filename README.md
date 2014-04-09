@@ -113,7 +113,9 @@ angular.module('myapp').constant('angularMomentConfig', {
 ```
 
 Remember to include `moment-timezone.js` in your project, otherwise the custom timezone
-functionality will not be available.
+functionality will not be available. You will also need to include a timezone data file that
+you can create using the [Timezone Data Builder](http://momentjs.com/timezone/data/)
+or simply download from [here](https://rawgithub.com/qw4n7y/7282780/raw/6ae3b334b295f93047e8f3ad300db6bc4387e235/moment-timezone-data.js).
 
 License
 ----
