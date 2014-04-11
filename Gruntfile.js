@@ -5,8 +5,8 @@
 'use strict';
 
 module.exports = function (grunt) {
-	// load all grunt tasks
-	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+	// Load grunt tasks automatically
+	require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig({
 		karma: {
