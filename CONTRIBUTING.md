@@ -44,12 +44,12 @@ the development process. The following grunt tasks are provided:
 #### grunt test
 
 `grunt test` executes (as you might thought) the unit tests, which are located
-in `test.js`. The task uses the **karma** test runner to executes the tests with
+in `tests.js`. The task uses the **karma** test runner to executes the tests with
 the **jasmine testing framework**. This task also checks the coding using **jshint**.
 
 #### grunt build
 
-This task updates the minified version of the code (angular-moment.min.js). It also
+`grunt build` updates the minified version of the code (angular-moment.min.js). It also
 checks the code using **jshint**.
 
 ## Contributing/Submitting changes
