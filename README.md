@@ -38,11 +38,14 @@ If you need internationalization support, load specified moment.js locale file f
 <script src="components/moment/lang/de.js"></script>
 ```
 
-Than trigger global moment.js language (e.g. in your app's run() callback):
+Then call the `amMoment.changeLanguage()` method (e.g. inside your app's run() callback):
 
-```html
-$window.moment.lang('de');
+```js
+myapp.run(function(amMoment) {
+	amMoment.changeLanguage('de');
+});
 ```
+
 ### Configuration
 
 Parameter `preprocess`(e.g: `unix`, `utc`) would pre-execute before. 
