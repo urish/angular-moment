@@ -14,11 +14,15 @@ module.exports = function (config) {
 		reporters: ['dots', 'coverage'],
 		files: [
 			'bower_components/angular/angular.js',
-			'bower_components/angular-mocks/angular-mocks.js',
 			'bower_components/moment/moment.js',
 			'bower_components/moment/lang/fr.js',
 			'bower_components/moment-timezone/moment-timezone.js',
 			'angular-moment.js',
+
+			// angular-mocks defines a global variable named 'module' which confuses moment-timezone.js.
+			// Therefore, it must be included after moment-timezone.js.
+			'bower_components/angular-mocks/angular-mocks.js',
+
 			'tests.js'
 		],
 		preprocessors: {
