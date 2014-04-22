@@ -88,103 +88,89 @@
 		 */
 			.directive('amTimeAgo', ['$window', 'moment', 'amMoment', 'amTimeAgoConfig', 'angularMomentConfig', function ($window, moment, amMoment, amTimeAgoConfig, angularMomentConfig) {
 
-				return {
-          replace: true,
-          template: '<time datetime="{{datetime}}" ng-transclude></time>',
-          transclude: true,
-          scope: {
-            datetime: '=amTimeAgo',
-            format: '@amFormat',
-            withoutSuffix: '=amWithoutSuffix',
-            preprocess: '@amPreprocess'
-          },
-          link: function (scope, element) {
-            var activeTimeout = null,
-                currentValue,
-                currentFormat,
-                withoutSuffix = amTimeAgoConfig.withoutSuffix,
-                preprocess = scope.preprocess || angularMomentConfig.preprocess;
+				return function (scope, element, attr) {
+					var activeTimeout = null;
+					var currentValue;
+					var currentFormat;
+					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
+					var preprocess = angularMomentConfig.preprocess;
 
-            function cancelTimer() {
-              if (activeTimeout) {
-                $window.clearTimeout(activeTimeout);
-                activeTimeout = null;
-              }
+					if (attr.amPreprocess) {
+						preprocess = attr.amPreprocess;
+					}
+
+					function cancelTimer() {
+						if (activeTimeout) {
+							$window.clearTimeout(activeTimeout);
+							activeTimeout = null;
+						}
+					}
+
+					function updateTime(momentInstance) {
+						element.text(momentInstance.fromNow(withoutSuffix));
+						var howOld = moment().diff(momentInstance, 'minute');
+						var secondsUntilUpdate = 3600;
+						if (howOld < 1) {
+							secondsUntilUpdate = 1;
+						} else if (howOld < 60) {
+							secondsUntilUpdate = 30;
+						} else if (howOld < 180) {
+							secondsUntilUpdate = 300;
+						}
+
+						activeTimeout = $window.setTimeout(function () {
+							updateTime(momentInstance);
+						}, secondsUntilUpdate * 1000);
+					}
+
+					function updateMoment() {
+						cancelTimer();
+						updateTime(moment(currentValue, currentFormat));
+					}
+
+					scope.$watch(attr.amTimeAgo, function (value) {
+            if ('TIME' === element[0].nodeName) {
+              element.attr('datetime', value);
             }
 
-            function updateTime(momentInstance) {
-              var howOld = moment().diff(momentInstance, 'minute'),
-                  secondsUntilUpdate = 3600;
+						if ((typeof value === 'undefined') || (value === null) || (value === '')) {
+							cancelTimer();
+							if (currentValue) {
+								element.text('');
+								currentValue = null;
+							}
+							return;
+						}
 
-              if (howOld < 1) {
-                secondsUntilUpdate = 1;
-              } else if (howOld < 60) {
-                secondsUntilUpdate = 30;
-              } else if (howOld < 180) {
-                secondsUntilUpdate = 300;
-              }
+						currentValue = amMoment.preprocessDate(value, preprocess);
+						updateMoment();
+					});
 
-              element.text(momentInstance.fromNow(withoutSuffix));
+					if (angular.isDefined(attr.amWithoutSuffix)) {
+						scope.$watch(attr.amWithoutSuffix, function (value) {
+							if (typeof value === 'boolean') {
+								withoutSuffix = value;
+								updateMoment();
+							} else {
+								withoutSuffix = amTimeAgoConfig.withoutSuffix;
+							}
+						});
+					}
 
-              activeTimeout = $window.setTimeout(function() {
-                updateTime(momentInstance);
-              }, secondsUntilUpdate * 1000);
-            }
+					attr.$observe('amFormat', function (format) {
+						currentFormat = format;
+						if (currentValue) {
+							updateMoment();
+						}
+					});
 
-            function updateMoment() {
-              cancelTimer();
-              if (currentValue) {
-                updateTime(amMoment.preprocessDate(currentValue, preprocess, currentFormat));
-              }
-            }
+					scope.$on('$destroy', function () {
+						cancelTimer();
+					});
 
-            scope.$watch('datetime', function (value) {
-              if ((typeof value === 'undefined') || (value === null) || (value === '')) {
-                cancelTimer();
-                if (currentValue) {
-                  element.text('');
-                  currentValue = null;
-                }
-                return;
-              }
-
-              currentValue = value;
-              updateMoment();
-            });
-
-            if (angular.isDefined(scope.format)) {
-              scope.$watch('format', function (value) {
-                currentFormat = value;
-                updateMoment();
-              });
-            }
-
-            if (angular.isDefined(scope.withoutSuffix)) {
-              scope.$watch('withoutSuffix', function (value) {
-                if (typeof value === 'boolean') {
-                  withoutSuffix = value;
-                  updateMoment();
-                } else {
-                  withoutSuffix = amTimeAgoConfig.withoutSuffix;
-                }
-              });
-            }
-
-            if (angular.isDefined(scope.preprocess)) {
-              scope.$watch('preprocess', function (newValue) {
-                preprocess = newValue;
-                updateMoment();
-              });
-            }
-
-            scope.$on('$destroy', function () {
-              cancelTimer();
-            });
-
-            scope.$on('amMoment:languageChange', function () {
-              updateMoment();
-            });
-          }
+					scope.$on('amMoment:languageChange', function () {
+						updateMoment();
+					});
 				};
 			}])
 
@@ -233,27 +219,26 @@
 				 * @methodOf angularMoment.service.amMoment
 				 *
 				 * @description
-				 * Preprocess a given value and convert it into a Moment instance appropriate for use in the
+				 * Preprocess a given value and convert it into a date format appropriate for use in the
 				 * am-time-ago directive and the filters.
 				 *
 				 * @param {*} value The value to be preprocessed
 				 * @param {string} preprocess The name of the preprocessor the apply (e.g. utc, unix)
-				 * @param {string=} format Specifies how to parse the value (see {@link http://momentjs.com/docs/#/parsing/string-format/})
-				 * @return {Moment} A value that can be parsed by the moment library
+				 * @return {Date|string|Moment} A value that can be parsed by the moment library
 				 */
-				this.preprocessDate = function (value, preprocess, format) {
+				this.preprocessDate = function (value, preprocess) {
 					if (this.preprocessors[preprocess]) {
-						return this.preprocessors[preprocess](value, format);
+						return this.preprocessors[preprocess](value);
 					}
 					if (preprocess) {
 						$log.warn('angular-moment: Ignoring unsupported value for preprocess: ' + preprocess);
 					}
 					if (!isNaN(parseFloat(value)) && isFinite(value)) {
 						// Milliseconds since the epoch
-						return moment(parseInt(value, 10));
+						return new Date(parseInt(value, 10));
 					}
 					// else just returns the value as-is.
-					return moment(value, format);
+					return value;
 				};
 
 				/**
