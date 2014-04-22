@@ -14,7 +14,7 @@ Installation
 You can choose your preferred method of installation:
 * Through bower: `bower install angular-moment --save`
 * Through npm: `npm install angular-moment --save`
-* From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/0.6.2/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.6.2/angular-moment.min.js)
+* From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/0.7.0/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.7.0/angular-moment.min.js)
 * Download from github: [angular-moment.min.js](https://raw.github.com/urish/angular-moment/master/angular-moment.min.js)
 
 Usage
@@ -38,11 +38,14 @@ If you need internationalization support, load specified moment.js locale file f
 <script src="components/moment/lang/de.js"></script>
 ```
 
-Than trigger global moment.js language (e.g. in your app's run() callback):
+Then call the `amMoment.changeLanguage()` method (e.g. inside your app's run() callback):
 
-```html
-$window.moment.lang('de');
+```js
+myapp.run(function(amMoment) {
+	amMoment.changeLanguage('de');
+});
 ```
+
 ### Configuration
 
 Parameter `preprocess`(e.g: `unix`, `utc`) would pre-execute before. 
@@ -113,7 +116,9 @@ angular.module('myapp').constant('angularMomentConfig', {
 ```
 
 Remember to include `moment-timezone.js` in your project, otherwise the custom timezone
-functionality will not be available.
+functionality will not be available. You will also need to include a timezone data file that
+you can create using the [Timezone Data Builder](http://momentjs.com/timezone/data/)
+or simply download from [here](https://rawgithub.com/qw4n7y/7282780/raw/6ae3b334b295f93047e8f3ad300db6bc4387e235/moment-timezone-data.js).
 
 License
 ----

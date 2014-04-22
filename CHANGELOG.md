@@ -1,11 +1,12 @@
 # Changelog
 
-## 0.7.0 - TBD
+## 0.7.0 - 2014-04-19
 - Use `moment` as an injectable constant instead of relying on `$window.moment` ([#35](https://github.com/urish/angular-moment/pull/35), contributed by [just-boris](https://github.com/just-boris))
 - Require.js support ([#36](https://github.com/urish/angular-moment/issues/36))
 - Add am-preprocess attribute to support unix and utc timestamps ([#38](https://github.com/urish/angular-moment/pull/38), contributed by [jspaper](https://github.com/jspaper))
 - NGDoc documentation ([#40](https://github.com/urish/angular-moment/issues/40))
 - Enable support for AngularJS 1.3.x in bower.json
+- Support moment.js v2.6.0. See [here](https://gist.github.com/ichernev/10544682) for changelog.
 
 ## 0.6.2 - 2014-02-05
 - Add `amMoment` service with a `changeLanguage()` method ([#32](https://github.com/urish/angular-moment/pull/32), contributed by [Ornthalas](https://github.com/Ornthalas))
