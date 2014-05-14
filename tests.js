@@ -285,6 +285,16 @@ describe('module angularMoment', function () {
 			expect(amCalendar(Date.UTC(2012, 0, 22, 23, 59, 59), 'utc')).toBe('01/22/2012');
 		});
 
+		it('should apply the "unix" preprocessor if angularMomentConfig.preprocess is set to "unix" and no preprocessor is given', function () {
+			angularMomentConfig.preprocess = 'unix';
+			expect(amCalendar(100000)).toBe('01/02/1970');
+		});
+
+		it('should ignore the default preprocessor if we explicity give it null in the second argument', function () {
+			angularMomentConfig.preprocess = 'unix';
+			expect(amCalendar(100000, null)).toBe('01/01/1970');
+		});
+
 		it('should gracefully handle the case where timezone is given but moment-timezone is not loaded', function () {
 			angularMomentConfig.timezone = 'Pacific/Tahiti';
 			var originalMomentTz = moment.fn.tz;

@@ -225,6 +225,9 @@
 				 * @return {Moment} A value that can be parsed by the moment library
 				 */
 				this.preprocessDate = function (value, preprocess, format) {
+					if (angular.isUndefined(preprocess)) {
+						preprocess = angularMomentConfig.preprocess;
+					}
 					if (this.preprocessors[preprocess]) {
 						return this.preprocessors[preprocess](value, format);
 					}

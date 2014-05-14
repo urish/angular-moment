@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.1 - not released yet
+- bugfix: Preprocess set in configuration not used by filters ([#49](https://github.com/urish/angular-moment/issues/49))
+
 ## 0.7.0 - 2014-04-19
 - Use `moment` as an injectable constant instead of relying on `$window.moment` ([#35](https://github.com/urish/angular-moment/pull/35), contributed by [just-boris](https://github.com/just-boris))
 - Require.js support ([#36](https://github.com/urish/angular-moment/issues/36))
