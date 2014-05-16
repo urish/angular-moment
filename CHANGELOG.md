@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.2 - TBD
+- Generate source map for the minified version ([#50](https://github.com/urish/angular-moment/issues/50))
+
 ## 0.7.1 - 2014-05-16
 - bugfix: Preprocess set in configuration not used by filters ([#49](https://github.com/urish/angular-moment/issues/49))
 

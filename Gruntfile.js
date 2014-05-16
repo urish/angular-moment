@@ -27,6 +27,9 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			dist: {
+				options: {
+					sourceMap: true
+				},
 				files: {
 					'angular-moment.min.js': 'angular-moment.js'
 				}
