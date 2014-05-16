@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.1 - not released yet
+## 0.7.1 - 2014-05-16
 - bugfix: Preprocess set in configuration not used by filters ([#49](https://github.com/urish/angular-moment/issues/49))
 
 ## 0.7.0 - 2014-04-19
