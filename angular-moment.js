@@ -76,7 +76,19 @@
 				 * @description
 				 * Defaults to false.
 				 */
-				withoutSuffix: false
+				withoutSuffix: false,
+                
+                /**
+				 * @ngdoc property
+				 * @name angularMoment.config.amTimeAgoConfig#serverTime
+				 * @propertyOf angularMoment.config:amTimeAgoConfig
+				 * @returns {numeric} Date in milliseconds.
+				 *
+				 * @description
+                 * When you need to use the time of your server.
+				 * Defaults to null. Local time will be used.
+				 */
+                serverTime: null
 			})
 
 		/**
@@ -93,8 +105,23 @@
 					var currentValue;
 					var currentFormat;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
-					var preprocess = angularMomentConfig.preprocess;
+                    var localDate = new Date().getTime();
 
+					var preprocess = angularMomentConfig.preprocess;
+                    
+					function getNow() {
+                        var now;
+                        if (amTimeAgoConfig.serverTime) {
+                            var localNow = new Date().getTime();
+                            var nowMillis = localNow - localDate + amTimeAgoConfig.serverTime;
+                            now = moment(nowMillis);
+                        }
+                        else {
+                            now = moment();
+                        }
+                        return now;
+                    }
+                    
 					function cancelTimer() {
 						if (activeTimeout) {
 							$window.clearTimeout(activeTimeout);
@@ -103,8 +130,8 @@
 					}
 
 					function updateTime(momentInstance) {
-						element.text(momentInstance.fromNow(withoutSuffix));
-						var howOld = moment().diff(momentInstance, 'minute');
+					    element.text(momentInstance.from(getNow(), withoutSuffix));
+						var howOld = getNow().diff(momentInstance, 'minute');
 						var secondsUntilUpdate = 3600;
 						if (howOld < 1) {
 							secondsUntilUpdate = 1;
