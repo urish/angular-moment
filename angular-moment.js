@@ -46,7 +46,20 @@
 				 * The default timezone (e.g. 'Europe/London'). Empty string by default (does not apply
 				 * any timezone shift).
 				 */
-				timezone: ''
+				timezone: '',
+
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.angularMomentConfig#format
+				 * @propertyOf angularMoment.config:angularMomentConfig
+				 * @returns {string} The pre-conversion format of the date
+				 *
+				 * @description
+				 * Specify the format of the input date. Essentially it's a
+				 * default and saves you from specifying a format in every
+				 * element. Overridden by element attr. Null by default.
+				 */
+				format: null
 			})
 
 		/**
@@ -91,7 +104,7 @@
 				return function (scope, element, attr) {
 					var activeTimeout = null;
 					var currentValue;
-					var currentFormat;
+					var currentFormat = angularMomentConfig.format;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					var preprocess = angularMomentConfig.preprocess;
 
@@ -152,8 +165,10 @@
 					}
 
 					attr.$observe('amFormat', function (format) {
-						currentFormat = format;
-						updateMoment();
+						if(typeof format !== 'undefined') {
+							currentFormat = format;
+							updateMoment();
+						}
 					});
 
 					attr.$observe('amPreprocess', function (newValue) {
@@ -333,3 +348,4 @@
 		angularMoment(angular, window.moment);
 	}
 })();
+

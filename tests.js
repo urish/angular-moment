@@ -248,6 +248,28 @@ describe('module angularMoment', function () {
 				expect(element.text()).toBe('a month ago');
 			});
 		});
+
+		describe('format config property', function () {
+			it('should be used when no `am-format` attribute is found', function () {
+				angularMomentConfig.format = 'MM@YYYY@DD';
+				var today = new Date();
+				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + today.getDate();
+				var element = angular.element('<span am-time-ago="testDate"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a month ago');
+			});
+
+			it('should be overridable by `am-format` attribute', function () {
+				angularMomentConfig.format = 'YYYY@MM@@DD';
+				var today = new Date();
+				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + today.getDate();
+				var element = angular.element('<span am-format="MM@YYYY@DD" am-time-ago="testDate"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a month ago');
+			});
+		});
 	});
 
 	describe('amCalendar filter', function () {
@@ -413,7 +435,7 @@ describe('module angularMoment', function () {
 				amMoment.preprocessors.foobar = function (value) {
 					return moment(value.date);
 				};
-				
+
 				expect(amMoment.preprocessDate(meeting, 'foobar').valueOf()).toEqual(testDate.getTime());
 			});
 
