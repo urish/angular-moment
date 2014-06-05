@@ -89,7 +89,19 @@
 				 * @description
 				 * Defaults to false.
 				 */
-				withoutSuffix: false
+				withoutSuffix: false,
+
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.amTimeAgoConfig#serverTime
+				 * @propertyOf angularMoment.config:amTimeAgoConfig
+				 * @returns {numeric} Date in milliseconds.
+				 *
+				 * @description
+				 * When you need to use the time of your server.
+				 * Defaults to null. Local time will be used.
+				 */
+				serverTime: null
 			})
 
 		/**
@@ -106,10 +118,24 @@
 					var currentValue;
 					var currentFormat = angularMomentConfig.format;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
+					var localDate = new Date().getTime();
 					var preprocess = angularMomentConfig.preprocess;
-                    var modelName = attr.amTimeAgo.replace(/^::/, '');
-                    var isBindOnce = (attr.amTimeAgo.indexOf('::') === 0);
-                    var unwatchChanges;
+					var modelName = attr.amTimeAgo.replace(/^::/, '');
+					var isBindOnce = (attr.amTimeAgo.indexOf('::') === 0);
+					var unwatchChanges;
+
+					function getNow() {
+						var now;
+						if (amTimeAgoConfig.serverTime) {
+							var localNow = new Date().getTime();
+							var nowMillis = localNow - localDate + amTimeAgoConfig.serverTime;
+							now = moment(nowMillis);
+						}
+						else {
+							now = moment();
+						}
+						return now;
+					}
 
 					function cancelTimer() {
 						if (activeTimeout) {
@@ -119,22 +145,23 @@
 					}
 
 					function updateTime(momentInstance) {
-						element.text(momentInstance.fromNow(withoutSuffix));
-                        if(!isBindOnce) {
-                            var howOld = moment().diff(momentInstance, 'minute');
-                            var secondsUntilUpdate = 3600;
-                            if (howOld < 1) {
-                                secondsUntilUpdate = 1;
-                            } else if (howOld < 60) {
-                                secondsUntilUpdate = 30;
-                            } else if (howOld < 180) {
-                                secondsUntilUpdate = 300;
-                            }
+						element.text(momentInstance.from(getNow(), withoutSuffix));
+						if (!isBindOnce) {
 
-                            activeTimeout = $window.setTimeout(function () {
-                                updateTime(momentInstance);
-                            }, secondsUntilUpdate * 1000);
-                        }
+							var howOld = getNow().diff(momentInstance, 'minute');
+							var secondsUntilUpdate = 3600;
+							if (howOld < 1) {
+								secondsUntilUpdate = 1;
+							} else if (howOld < 60) {
+								secondsUntilUpdate = 30;
+							} else if (howOld < 180) {
+								secondsUntilUpdate = 300;
+							}
+
+							activeTimeout = $window.setTimeout(function () {
+								updateTime(momentInstance);
+							}, secondsUntilUpdate * 1000);
+						}
 					}
 
 					function updateMoment() {
@@ -144,7 +171,7 @@
 						}
 					}
 
-                    unwatchChanges = scope.$watch(modelName, function (value) {
+					unwatchChanges = scope.$watch(modelName, function (value) {
 						if ((typeof value === 'undefined') || (value === null) || (value === '')) {
 							cancelTimer();
 							if (currentValue) {
@@ -157,9 +184,9 @@
 						currentValue = value;
 						updateMoment();
 
-                        if(value !== undefined && isBindOnce) {
-                            unwatchChanges();
-                        }
+						if (value !== undefined && isBindOnce) {
+							unwatchChanges();
+						}
 					});
 
 					if (angular.isDefined(attr.amWithoutSuffix)) {
@@ -174,7 +201,7 @@
 					}
 
 					attr.$observe('amFormat', function (format) {
-						if(typeof format !== 'undefined') {
+						if (typeof format !== 'undefined') {
 							currentFormat = format;
 							updateMoment();
 						}
