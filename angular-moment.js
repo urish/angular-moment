@@ -107,6 +107,9 @@
 					var currentFormat = angularMomentConfig.format;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					var preprocess = angularMomentConfig.preprocess;
+                    var modelName = attr.amTimeAgo.replace(/^::/, '');
+                    var isBindOnce = (attr.amTimeAgo.indexOf('::') === 0);
+                    var unwatchChanges;
 
 					function cancelTimer() {
 						if (activeTimeout) {
@@ -117,19 +120,21 @@
 
 					function updateTime(momentInstance) {
 						element.text(momentInstance.fromNow(withoutSuffix));
-						var howOld = moment().diff(momentInstance, 'minute');
-						var secondsUntilUpdate = 3600;
-						if (howOld < 1) {
-							secondsUntilUpdate = 1;
-						} else if (howOld < 60) {
-							secondsUntilUpdate = 30;
-						} else if (howOld < 180) {
-							secondsUntilUpdate = 300;
-						}
+                        if(!isBindOnce) {
+                            var howOld = moment().diff(momentInstance, 'minute');
+                            var secondsUntilUpdate = 3600;
+                            if (howOld < 1) {
+                                secondsUntilUpdate = 1;
+                            } else if (howOld < 60) {
+                                secondsUntilUpdate = 30;
+                            } else if (howOld < 180) {
+                                secondsUntilUpdate = 300;
+                            }
 
-						activeTimeout = $window.setTimeout(function () {
-							updateTime(momentInstance);
-						}, secondsUntilUpdate * 1000);
+                            activeTimeout = $window.setTimeout(function () {
+                                updateTime(momentInstance);
+                            }, secondsUntilUpdate * 1000);
+                        }
 					}
 
 					function updateMoment() {
@@ -139,7 +144,7 @@
 						}
 					}
 
-					scope.$watch(attr.amTimeAgo, function (value) {
+                    unwatchChanges = scope.$watch(modelName, function (value) {
 						if ((typeof value === 'undefined') || (value === null) || (value === '')) {
 							cancelTimer();
 							if (currentValue) {
@@ -151,6 +156,10 @@
 
 						currentValue = value;
 						updateMoment();
+
+                        if(value !== undefined && isBindOnce) {
+                            unwatchChanges();
+                        }
 					});
 
 					if (angular.isDefined(attr.amWithoutSuffix)) {
