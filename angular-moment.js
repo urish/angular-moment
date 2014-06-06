@@ -122,6 +122,7 @@
 					var preprocess = angularMomentConfig.preprocess;
 					var modelName = attr.amTimeAgo.replace(/^::/, '');
 					var isBindOnce = (attr.amTimeAgo.indexOf('::') === 0);
+					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
 					var unwatchChanges;
 
 					function getNow() {
@@ -164,10 +165,18 @@
 						}
 					}
 
+					function updateDateTimeAttr(value) {
+						if (isTimeElement) {
+							element.attr('datetime', value);
+						}
+					}
+
 					function updateMoment() {
 						cancelTimer();
 						if (currentValue) {
-							updateTime(amMoment.preprocessDate(currentValue, preprocess, currentFormat));
+							var momentValue = amMoment.preprocessDate(currentValue, preprocess, currentFormat);
+							updateTime(momentValue);
+							updateDateTimeAttr(momentValue.toISOString());
 						}
 					}
 
@@ -176,6 +185,7 @@
 							cancelTimer();
 							if (currentValue) {
 								element.text('');
+								updateDateTimeAttr('');
 								currentValue = null;
 							}
 							return;
