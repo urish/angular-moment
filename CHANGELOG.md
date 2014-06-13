@@ -1,11 +1,12 @@
 # Changelog
 
-## 0.7.2 - TBD
+## 0.8.0 - TBD
 - Generate source map for the minified version ([#50](https://github.com/urish/angular-moment/issues/50))
 - Add support HTML `<time>` element - set the `datetime` attribute ([#41](https://github.com/urish/angular-moment/pull/41), contributed by [gsklee](https://github.com/gsklee))
 - Add default format (angularMomentConfig.format config property) ([#52](https://github.com/urish/angular-moment/pull/52), contributed by [otang](https://github.com/otang))
 - #53 (TBD)
 - #54 (TBD)
+- Support moment.js v2.7.0. See [here](https://gist.github.com/ichernev/b0a3d456d5a84c9901d7) for changelog.
 
 ## 0.7.1 - 2014-05-16
 - bugfix: Preprocess set in configuration not used by filters ([#49](https://github.com/urish/angular-moment/issues/49))
