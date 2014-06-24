@@ -27,11 +27,7 @@ describe('module angularMoment', function () {
 		// Ensure the language of moment.js is set to english by default
 		moment.lang('en');
 		// Add a sample timezone for tests
-		moment.tz.add({
-			zones: {
-				'Pacific/Tahiti': ['-9:58:16 - LMT 1912_9 -9:58:16', '-10 - TAHT']
-			}
-		});
+		moment.tz.add('Pacific/Tahiti|LMT TAHT|9W.g a0|01|-2joe1.I');
 	}));
 
 	afterEach(function () {

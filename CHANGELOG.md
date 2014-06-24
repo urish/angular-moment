@@ -7,6 +7,7 @@
 - #53 (TBD)
 - #54 (TBD)
 - Support moment.js v2.7.0. See [here](https://gist.github.com/ichernev/b0a3d456d5a84c9901d7) for changelog.
+- Support moment-timezone v0.1.0. See [here](https://github.com/moment/moment-timezone/blob/develop/changelog.md#010-2014-06-23) for changelog.
 
 ## 0.7.1 - 2014-05-16
 - bugfix: Preprocess set in configuration not used by filters ([#49](https://github.com/urish/angular-moment/issues/49))
