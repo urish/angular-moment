@@ -95,11 +95,11 @@
 				 * @ngdoc property
 				 * @name angularMoment.config.amTimeAgoConfig#serverTime
 				 * @propertyOf angularMoment.config:amTimeAgoConfig
-				 * @returns {numeric} Date in milliseconds.
+				 * @returns {number} Server time in milliseconds since the epoch
 				 *
 				 * @description
-				 * When you need to use the time of your server.
-				 * Defaults to null. Local time will be used.
+				 * If set, time ago will be calculated relative to the given value.
+				 * If null, local time will be used. Defaults to null.
 				 */
 				serverTime: null
 			})
