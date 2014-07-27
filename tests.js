@@ -264,6 +264,14 @@ describe('module angularMoment', function () {
 			expect(element.text()).toBe('il y a quelques secondes');
 		});
 
+		it('should update the `datetime` attr if applied to a TIME element', function () {
+			$rootScope.testDate = Date.UTC(2012, 8, 20, 15, 20, 12);
+			var element = angular.element('<time am-time-ago="testDate"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.attr('datetime')).toBe('2012-09-20T15:20:12.000Z');
+		});
+
 		describe('am-without-suffix attribute', function () {
 			it('should generate a time string without suffix when true', function () {
 				$rootScope.testDate = new Date();
