@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.8.0 - TBD
+## 0.8.0 - 2014-07-26
 - Generate source map for the minified version ([#50](https://github.com/urish/angular-moment/issues/50))
 - Add support HTML `<time>` element - set the `datetime` attribute ([#41](https://github.com/urish/angular-moment/pull/41), contributed by [gsklee](https://github.com/gsklee))
 - Add default format (angularMomentConfig.format config property) ([#52](https://github.com/urish/angular-moment/pull/52), contributed by [otang](https://github.com/otang))
