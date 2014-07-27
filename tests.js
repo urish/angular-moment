@@ -119,85 +119,54 @@ describe('module angularMoment', function () {
 			}, 50);
 		});
 
-		it('should change the text of the element to "a few seconds ago" when given unix timestamp with one time binding', function () {
-			$rootScope.testDate = new Date().getTime() / 1000;
-			var element = angular.element('<span am-time-ago="::testDate" am-preprocess="unix"></span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds ago');
-		});
+		describe('bindonce', function () {
+			it('should change the text of the div to "3 minutes ago" when given a date 3 minutes ago with one time binding', function () {
+				$rootScope.testDate = new Date(new Date().getTime() - 3 * 60 * 1000);
+				var element = angular.element('<div am-time-ago="::testDate"></div>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('3 minutes ago');
+			});
 
-		it('should change the text of the element to "a few seconds ago" when given current time with one time binding', function () {
-			$rootScope.testDate = new Date();
-			var element = angular.element('<span am-time-ago="::testDate"></span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds ago');
-		});
-
-		it('should change the text of the div to "3 minutes ago" when given a date 3 minutes ago with one time binding', function () {
-			$rootScope.testDate = new Date(new Date().getTime() - 3 * 60 * 1000);
-			var element = angular.element('<div am-time-ago="::testDate"></div>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('3 minutes ago');
-		});
-
-		it('should change the text of the div to "2 hours ago" when given a date 2 hours ago with one time binding', function () {
-			$rootScope.testDate = new Date(new Date().getTime() - 2 * 60 * 60 * 1000);
-			var element = angular.element('<div am-time-ago="::testDate"></div>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('2 hours ago');
-		});
-
-		it('should change the text of the div to "one year ago" when given a date one year ago with one time binding', function () {
-			var today = new Date();
-			$rootScope.testDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-			var element = angular.element('<div am-time-ago="::testDate"></div>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a year ago');
-		});
-
-		it('should parse correctly numeric dates as milliseconds since the epoch with one time binding', function () {
-			$rootScope.testDate = new Date().getTime();
-			var element = angular.element('<div am-time-ago="::testDate"></div>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds ago');
-		});
-
-		it('should not update the value if date changes on scope when using one time binding', function () {
-			var today = new Date();
-			$rootScope.testDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()).getTime();
-			var element = angular.element('<div am-time-ago="::testDate"></div>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a year ago');
-			$rootScope.testDate = new Date();
-			$rootScope.$digest();
-			expect(element.text()).toBe('a year ago');
-		});
-
-		it('should not update the span text as time passes when using one time binding', function (done) {
-			$rootScope.testDate = new Date(new Date().getTime() - 44000);
-			var element = angular.element('<div am-time-ago="::testDate"></div>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds ago');
-
-			var waitsInterval = setInterval(function () {
-				// Wait until $rootScope.date is more than 45 seconds old
-				if (new Date().getTime() - $rootScope.testDate.getTime() < 45000) {
-					return;
-				}
-
-				clearInterval(waitsInterval);
+			it('should parse correctly numeric dates as milliseconds since the epoch with one time binding', function () {
+				$rootScope.testDate = new Date().getTime();
+				var element = angular.element('<div am-time-ago="::testDate"></div>');
+				element = $compile(element)($rootScope);
 				$rootScope.$digest();
 				expect(element.text()).toBe('a few seconds ago');
-				done();
-			}, 50);
+			});
+
+			it('should not update the value if date changes on scope when using one time binding', function () {
+				var today = new Date();
+				$rootScope.testDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()).getTime();
+				var element = angular.element('<div am-time-ago="::testDate"></div>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a year ago');
+				$rootScope.testDate = new Date();
+				$rootScope.$digest();
+				expect(element.text()).toBe('a year ago');
+			});
+
+			it('should not update the span text as time passes when using one time binding', function (done) {
+				$rootScope.testDate = new Date(new Date().getTime() - 44000);
+				var element = angular.element('<div am-time-ago="::testDate"></div>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('a few seconds ago');
+
+				var waitsInterval = setInterval(function () {
+					// Wait until $rootScope.date is more than 45 seconds old
+					if (new Date().getTime() - $rootScope.testDate.getTime() < 45000) {
+						return;
+					}
+
+					clearInterval(waitsInterval);
+					$rootScope.$digest();
+					expect(element.text()).toBe('a few seconds ago');
+					done();
+				}, 50);
+			});
 		});
 
 		it('should handle undefined data', function () {
