@@ -5,7 +5,7 @@
 - Add support HTML `<time>` element - set the `datetime` attribute ([#41](https://github.com/urish/angular-moment/pull/41), contributed by [gsklee](https://github.com/gsklee))
 - Add default format (angularMomentConfig.format config property) ([#52](https://github.com/urish/angular-moment/pull/52), contributed by [otang](https://github.com/otang))
 - #53 (TBD)
-- #54 (TBD)
+- Add `serverTime` configuration option ([#54](https://github.com/urish/angular-moment/pull/54), contributed by [Ephi Gabay](https://github.com/ephigabay))
 - Support moment.js v2.7.0. See [here](https://gist.github.com/ichernev/b0a3d456d5a84c9901d7) for changelog.
 - Support moment-timezone v0.1.0. See [here](https://github.com/moment/moment-timezone/blob/develop/changelog.md#010-2014-06-23) for changelog.
 

@@ -355,6 +355,17 @@ describe('module angularMoment', function () {
 				expect(element.text()).toBe('a month ago');
 			});
 		});
+
+		describe('serverTime configuration', function () {
+			it('should calculate time ago in respect to the configured server time', function () {
+				amTimeAgoConfig.serverTime = Date.UTC(2014, 5, 12, 5, 22, 11);
+				$rootScope.testDate = Date.UTC(2014, 5, 12, 9, 22, 11);
+				var element = angular.element('<span am-time-ago="testDate"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.text()).toBe('in 4 hours');
+			});
+		});
 	});
 
 	describe('amCalendar filter', function () {
