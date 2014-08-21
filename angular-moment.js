@@ -264,7 +264,7 @@
 				 * @param {string} lang 2-letter language code (e.g. en, es, ru, etc.)
 				 */
 				this.changeLanguage = function (lang) {
-					var result = moment.lang(lang);
+					var result = moment.locale(lang);
 					if (angular.isDefined(lang)) {
 						$rootScope.$broadcast('amMoment:languageChange');
 					}
