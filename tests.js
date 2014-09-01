@@ -2,7 +2,7 @@
  * Copyright (C) 2013, 2014, Uri Shaked.
  */
 
-/* global describe, inject, module, beforeEach, afterEach, it, expect, spyOn */
+/* global describe, inject, module, beforeEach, afterEach, it, expect, spyOn, jasmine */
 
 'use strict';
 
@@ -34,6 +34,7 @@ describe('module angularMoment', function () {
 		// Restore original configuration after each test
 		angular.copy(originalTimeAgoConfig, amTimeAgoConfig);
 		angular.copy(originalAngularMomentConfig, angularMomentConfig);
+		jasmine.clock().uninstall();
 	});
 
 
@@ -117,6 +118,16 @@ describe('module angularMoment', function () {
 				expect(element.text()).toBe('a minute ago');
 				done();
 			}, 50);
+		});
+
+		it('should schedule the update timer to one hour ahead for date in the far future (#73)', function () {
+			$rootScope.testDate = new Date(new Date().getTime() + 86400000);
+			jasmine.clock().install();
+			spyOn($window, 'setTimeout');
+			var element = angular.element('<div am-time-ago="testDate"></div>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect($window.setTimeout).toHaveBeenCalledWith(jasmine.any(Function), 3600000);
 		});
 
 		describe('bindonce', function () {

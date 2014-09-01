@@ -3,6 +3,7 @@
 ## 0.8.1 - TBD
 - Support moment.js v2.8.0. See [here](https://gist.github.com/ichernev/ac3899324a5fa6c8c9b4) for changelog.
 - Support moment-timezone v0.2.1. See [here](https://github.com/moment/moment-timezone/blob/develop/changelog.md#021-2014-08-02) for changelog.
+- Bugfix: `updateTime()` is called too often for future dates ([#73](https://github.com/urish/angular-moment/issues/73)) 
 
 ## 0.8.0 - 2014-07-26
 - Generate source map for the minified version ([#50](https://github.com/urish/angular-moment/issues/50))

@@ -149,7 +149,7 @@
 						element.text(momentInstance.from(getNow(), withoutSuffix));
 						if (!isBindOnce) {
 
-							var howOld = getNow().diff(momentInstance, 'minute');
+							var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));
 							var secondsUntilUpdate = 3600;
 							if (howOld < 1) {
 								secondsUntilUpdate = 1;
