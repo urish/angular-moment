@@ -25,7 +25,7 @@ describe('module angularMoment', function () {
 		originalAngularMomentConfig = angular.copy(angularMomentConfig);
 
 		// Ensure the language of moment.js is set to english by default
-		moment.lang('en');
+		moment.locale('en');
 		// Add a sample timezone for tests
 		moment.tz.add('Pacific/Tahiti|LMT TAHT|9W.g a0|01|-2joe1.I');
 	}));
