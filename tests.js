@@ -501,7 +501,7 @@ describe('module angularMoment', function () {
 		});
 		
 		
-		describe('#changeLocale', function () {
+		describe('#changeLanguage', function () {
 			it('should issue a warning about changeLanguage() deprecation', inject(function ($log) {
 				amMoment.changeLocale('fr');
 				spyOn($log, 'warn');
