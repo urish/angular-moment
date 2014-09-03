@@ -285,7 +285,7 @@
 				 * @param {string} lang 2-letter language code (e.g. en, es, ru, etc.)
 				 */
 				this.changeLanguage = function (lang) {
-					console.warn('Usage of angular-moment.changeLanguage() is deprecated. Please use changeLocale()')
+					console.warn('Usage of angular-moment.changeLanguage() is deprecated. Please use changeLocale()');
 					return that.changeLocale(lang);
 				};
 
