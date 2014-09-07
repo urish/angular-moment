@@ -481,18 +481,18 @@ describe('module angularMoment', function () {
 				expect(amMoment.changeLocale()).toBe('en');
 			});
 
-			it('should broadcast an angularMoment:languageChange event on the root scope if a locale is specified', function () {
+			it('should broadcast an angularMoment:localeChanged event on the root scope if a locale is specified', function () {
 				var eventBroadcasted = false;
-				$rootScope.$on('amMoment:languageChange', function () {
+				$rootScope.$on('amMoment:localeChanged', function () {
 					eventBroadcasted = true;
 				});
 				amMoment.changeLocale('fr');
 				expect(eventBroadcasted).toBe(true);
 			});
 
-			it('should not broadcast an angularMoment:languageChange event on the root scope if no locale is specified', function () {
+			it('should not broadcast an angularMoment:localeChanged event on the root scope if no locale is specified', function () {
 				var eventBroadcasted = false;
-				$rootScope.$on('amMoment:languageChange', function () {
+				$rootScope.$on('amMoment:localeChanged', function () {
 					eventBroadcasted = true;
 				});
 				amMoment.changeLocale();

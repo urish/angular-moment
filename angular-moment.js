@@ -226,7 +226,7 @@
 						cancelTimer();
 					});
 
-					scope.$on('amMoment:languageChange', function () {
+					scope.$on('amMoment:localeChanged', function () {
 						updateMoment();
 					});
 				};
@@ -260,13 +260,17 @@
 				 *
 				 * @description
 				 * Changes the locale for moment.js and updates all the am-time-ago directive instances
-				 * with the new locale.
+				 * with the new locale. Also broadcasts a `amMoment:localeChanged` event on $rootScope.
 				 *
-				 * @param {string} lang 2-letter language code (e.g. en, es, ru, etc.)
+				 * @param {string} locale 2-letter language code (e.g. en, es, ru, etc.)
 				 */
-				this.changeLocale = function (lang) {
-					var result = (moment.locale||moment.lang)(lang);
-					if (angular.isDefined(lang)) {
+				this.changeLocale = function (locale) {
+					var result = (moment.locale||moment.lang)(locale);
+					if (angular.isDefined(locale)) {
+						$rootScope.$broadcast('amMoment:localeChanged');
+
+						// The following event is deprecated and will be removed in an upcoming
+						// major release.
 						$rootScope.$broadcast('amMoment:languageChange');
 					}
 					return result;
