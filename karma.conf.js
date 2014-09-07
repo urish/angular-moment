@@ -15,7 +15,7 @@ module.exports = function (config) {
 		files: [
 			'bower_components/angular/angular.js',
 			'bower_components/moment/moment.js',
-			'bower_components/moment/locale/fr.js',
+			'bower_components/moment/{locale,lang}/fr.js',
 			'bower_components/moment-timezone/moment-timezone.js',
 			'angular-moment.js',
 
