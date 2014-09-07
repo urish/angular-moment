@@ -25,7 +25,7 @@ describe('module angularMoment', function () {
 		originalAngularMomentConfig = angular.copy(angularMomentConfig);
 
 		// Ensure the locale of moment.js is set to en by default
-		moment.lang('en');
+		(moment.locale || moment.lang)('en');
 		// Add a sample timezone for tests
 		moment.tz.add('Pacific/Tahiti|LMT TAHT|9W.g a0|01|-2joe1.I');
 	}));
@@ -499,16 +499,14 @@ describe('module angularMoment', function () {
 				expect(eventBroadcasted).toBe(false);
 			});
 		});
-		
-		
+
 		describe('#changeLanguage', function () {
 			it('should issue a warning about changeLanguage() deprecation', inject(function ($log) {
-				amMoment.changeLocale('fr');
 				spyOn($log, 'warn');
-				expect($log.warn).toHaveBeenCalledWith('angular-moment: Usage of changeLanguage() is deprecated. Please use changeLocale()');
+				amMoment.changeLanguage('fr');
+				expect($log.warn).toHaveBeenCalledWith('angular-moment: Usage of amMoment.changeLanguage() is deprecated. Please use changeLocale()');
 			}));
 		});
-		
 
 		describe('#preprocessDate', function () {
 			it('should call a custom preprocessor that was registered on amMoment.preprocessors', function () {

@@ -271,21 +271,18 @@
 					}
 					return result;
 				};
-				
+
 				/**
 				 * @ngdoc function
 				 * @name angularMoment.service.amMoment#changeLanguage
 				 * @methodOf angularMoment.service.amMoment
+				 * @deprecated Please use changeLocale() instead.
 				 *
 				 * @description
-				 * Deprecated. Please use changeLocale()
-				 * Changes the language for moment.js and updates all the am-time-ago directive instances
-				 * with the new language.
-				 *
-				 * @param {string} lang 2-letter language code (e.g. en, es, ru, etc.)
+				 * Deprecated. Please use changeLocale() instead.
 				 */
 				this.changeLanguage = function (lang) {
-					$log.warn('angular-moment: Usage of angular-moment.changeLanguage() is deprecated. Please use changeLocale()');
+					$log.warn('angular-moment: Usage of amMoment.changeLanguage() is deprecated. Please use changeLocale()');
 					return that.changeLocale(lang);
 				};
 
