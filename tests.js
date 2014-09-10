@@ -253,7 +253,16 @@ describe('module angularMoment', function () {
 		});
 
 		describe('setting the element title', function() {
-			it('should not change the title of the element if the element already has a title', function () {
+			it('should not set the title attribute of the element to the date by default', function () {
+				$rootScope.testDate = new Date().getTime() / 1000;
+				var element = angular.element('<span am-time-ago="testDate"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.attr('title')).toBeUndefined();
+			});
+
+			it('should not change the title attribute of the element if the element already has a title', function () {
+				amTimeAgoConfig.titleFormat = 'MMMM Do YYYY, h:mm:ss a';
 				$rootScope.testDate = new Date().getTime() / 1000;
 				var element = angular.element('<span am-time-ago="testDate" title="test"></span>');
 				element = $compile(element)($rootScope);
@@ -261,22 +270,13 @@ describe('module angularMoment', function () {
 				expect(element.attr('title')).toBe('test');
 			});
 
-			it('should set the title of the element to the date with the default config', function () {
+			it('should set the title attribute of the element to the formatted date as per the config', function () {
+				amTimeAgoConfig.titleFormat = 'MMMM Do YYYY, h:mm:ss a';
 				$rootScope.testDate = new Date().getTime() / 1000;
 				var element = angular.element('<span am-time-ago="testDate"></span>');
 				element = $compile(element)($rootScope);
 				$rootScope.$digest();
-				var testDateWithDefaultFormatting = moment($rootScope.testDate).format();
-				expect(element.attr('title')).toBe(testDateWithDefaultFormatting);
-			});
-
-			it('should set the title of the element to the formatted date as per the config', function () {
-				amTimeAgoConfig.format = 'MMMM Do YYYY, h:mm:ss a';
-				$rootScope.testDate = new Date().getTime() / 1000;
-				var element = angular.element('<span am-time-ago="testDate"></span>');
-				element = $compile(element)($rootScope);
-				$rootScope.$digest();
-				var testDateWithCustomFormatting = moment($rootScope.testDate).format(amTimeAgoConfig.format);
+				var testDateWithCustomFormatting = moment($rootScope.testDate).format(amTimeAgoConfig.titleFormat);
 				expect(element.attr('title')).toBe(testDateWithCustomFormatting);
 			});
 		});

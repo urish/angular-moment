@@ -107,12 +107,13 @@
 				 * @ngdoc property
 				 * @name angularMoment.config.amTimeAgoConfig#format
 				 * @propertyOf angularMoment.config:amTimeAgoConfig
-				 * @returns {string} The format of the date to be displayed
+				 * @returns {string} The format of the date to be displayed in the title of the element. If null,
+				 * 		the directive set the title of the element.
 				 *
 				 * @description
-				 * Specify the format of the date when displayed. Null by default.
+				 * Specify the format of the date when displayed. null by default.
 				 */
-				format: null
+				titleFormat: null
 			})
 
 		/**
@@ -129,6 +130,7 @@
 					var currentValue;
 					var currentFormat = angularMomentConfig.format;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
+					var titleFormat = amTimeAgoConfig.titleFormat;
 					var localDate = new Date().getTime();
 					var preprocess = angularMomentConfig.preprocess;
 					var modelName = attr.amTimeAgo.replace(/^::/, '');
@@ -159,8 +161,8 @@
 					function updateTime(momentInstance) {
 						element.text(momentInstance.from(getNow(), withoutSuffix));
 
-						if (!element.attr('title')) {
-							element.attr('title', momentInstance.local().format(amTimeAgoConfig.format));
+						if (titleFormat && !element.attr('title')) {
+							element.attr('title', momentInstance.local().format(titleFormat));
 						}
 
 						if (!isBindOnce) {

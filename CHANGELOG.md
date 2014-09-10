@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8.3 - TBD
+- Show formatted time as element title ([#78](https://github.com/urish/angular-moment/pull/78), contributed by [ctesene](https://github.com/ctesene))
+
 ## 0.8.2 - 2014-09-07
 - `amMoment.changeLanguage()` was deprecated in favor of `amMoment.changeLocale()` (following [a change](http://momentjs.com/docs/#/i18n/changing-locale/) introduced in moment v2.8.1)
 - Bugfix: changing the locale emitted a deprecation warning (see [#76](https://github.com/urish/angular-moment/issues/76) for details).
