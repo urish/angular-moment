@@ -101,7 +101,18 @@
 				 * If set, time ago will be calculated relative to the given value.
 				 * If null, local time will be used. Defaults to null.
 				 */
-				serverTime: null
+				serverTime: null,
+
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.amTimeAgoConfig#format
+				 * @propertyOf angularMoment.config:amTimeAgoConfig
+				 * @returns {string} The format of the date to be displayed
+				 *
+				 * @description
+				 * Specify the format of the date when displayed. Null by default.
+				 */
+				format: null
 			})
 
 		/**
@@ -147,6 +158,11 @@
 
 					function updateTime(momentInstance) {
 						element.text(momentInstance.from(getNow(), withoutSuffix));
+
+						if (!element.attr('title')) {
+							element.attr('title', momentInstance.local().format(amTimeAgoConfig.format));
+						}
+
 						if (!isBindOnce) {
 
 							var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));

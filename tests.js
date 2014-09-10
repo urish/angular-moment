@@ -252,6 +252,35 @@ describe('module angularMoment', function () {
 			expect(element.attr('datetime')).toBe('2012-09-20T15:20:12.000Z');
 		});
 
+		describe('setting the element title', function() {
+			it('should not change the title of the element if the element already has a title', function () {
+				$rootScope.testDate = new Date().getTime() / 1000;
+				var element = angular.element('<span am-time-ago="testDate" title="test"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				expect(element.attr('title')).toBe('test');
+			});
+
+			it('should set the title of the element to the date with the default config', function () {
+				$rootScope.testDate = new Date().getTime() / 1000;
+				var element = angular.element('<span am-time-ago="testDate"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				var testDateWithDefaultFormatting = moment($rootScope.testDate).format();
+				expect(element.attr('title')).toBe(testDateWithDefaultFormatting);
+			});
+
+			it('should set the title of the element to the formatted date as per the config', function () {
+				amTimeAgoConfig.format = 'MMMM Do YYYY, h:mm:ss a';
+				$rootScope.testDate = new Date().getTime() / 1000;
+				var element = angular.element('<span am-time-ago="testDate"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				var testDateWithCustomFormatting = moment($rootScope.testDate).format(amTimeAgoConfig.format);
+				expect(element.attr('title')).toBe(testDateWithCustomFormatting);
+			});
+		});
+
 		describe('am-without-suffix attribute', function () {
 			it('should generate a time string without suffix when true', function () {
 				$rootScope.testDate = new Date();
