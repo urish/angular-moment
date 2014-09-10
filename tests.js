@@ -276,8 +276,8 @@ describe('module angularMoment', function () {
 				var element = angular.element('<span am-time-ago="testDate"></span>');
 				element = $compile(element)($rootScope);
 				$rootScope.$digest();
-				var testDateWithDefaultFormatting = moment($rootScope.testDate).format(amTimeAgoConfig.format);
-				expect(element.attr('title')).toBe(testDateWithDefaultFormatting);
+				var testDateWithCustomFormatting = moment($rootScope.testDate).format(amTimeAgoConfig.format);
+				expect(element.attr('title')).toBe(testDateWithCustomFormatting);
 			});
 		});
 
