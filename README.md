@@ -35,7 +35,7 @@ var myapp = angular.module('myapp', ['angularMoment']);
 If you need internationalization support, load specified moment.js locale file first:
 
 ```html
-<script src="components/moment/lang/de.js"></script>
+<script src="components/moment/locale/de.js"></script>
 ```
 
 Then call the `amMoment.changeLocale()` method (e.g. inside your app's run() callback):
