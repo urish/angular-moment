@@ -1,6 +1,8 @@
 /* angular-moment.js / v0.8.2 / (c) 2013, 2014 Uri Shaked / MIT Licence */
 
-/* global define */
+'format global'; /* global define */
+'deps angular';
+'deps moment';
 
 (function () {
 	'use strict';
