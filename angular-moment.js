@@ -188,8 +188,9 @@
 					function updateTime(momentInstance) {
 						var maxDistanceExceeded = false;
 						
-						if( maxDistanceTracking )
+						if( maxDistanceTracking ) {
 							maxDistanceExceeded = (Math.abs(momentInstance.diff(getNow(), 'days')) > maxDistanceTracking);
+						}
 
 						if( maxDistanceExceeded ) {
 							element.text(momentInstance.local().format(maxDistanceFormat));
