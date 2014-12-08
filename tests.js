@@ -504,6 +504,34 @@ describe('module angularMoment', function () {
 		});
 	});
 
+
+	describe('amTimeAgo filter', function () {
+		var amTimeAgo;
+
+		beforeEach(function () {
+			amTimeAgo = $filter('amTimeAgo');
+		});
+
+		it('should support return the time ago as text', function () {
+			var date = new Date();
+			expect(amTimeAgo(date)).toBe('a few seconds ago');
+		});
+
+		it('should remove suffix from the result if the third parameter (suffix) is true', function () {
+			var date = new Date();
+			expect(amTimeAgo(date, null, true)).toBe('a few seconds');
+		});
+
+		it('should gracefully handle undefined values', function () {
+			expect(amTimeAgo()).toBe('');
+		});
+
+		it('should gracefully handle invalid input', function () {
+			expect(amTimeAgo('noDate')).toBe('');
+		});
+
+	});
+
 	describe('amMoment service', function () {
 		describe('#changeLocale', function () {
 			it('should return the current locale', function () {

@@ -424,7 +424,29 @@
 
 					return moment.duration(value, format).humanize(suffix);
 				};
-			}]);
+			}])
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amTimeAgo
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('amTimeAgo', ['moment', 'amMoment', function (moment, amMoment) {
+					return function (value, preprocess, suffix) {
+						if (typeof value === 'undefined' || value === null) {
+							return '';
+						}
+
+						value = amMoment.preprocessDate(value, preprocess);
+						var date = moment(value);
+						if (!date.isValid()) {
+							return '';
+						}
+
+						return amMoment.applyTimezone(date).fromNow(suffix);
+					};
+				}]);
 	}
 
 	if (typeof define === 'function' && define.amd) {
