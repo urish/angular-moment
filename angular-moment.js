@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.8.2 / (c) 2013, 2014 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.8.3 / (c) 2013, 2014 Uri Shaked / MIT Licence */
 
 'format global'; /* global define */
 'deps angular';
