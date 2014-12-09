@@ -9,6 +9,11 @@
 
 	function angularMoment(angular, moment) {
 
+		//#79 if we're loaded by a node based browser, fetch moment using require.
+		if (typeof moment === 'undefined' && typeof require !== 'undefined') {
+			moment = require('moment');
+		}
+
 		/**
 		 * @ngdoc overview
 		 * @name angularMoment
@@ -457,4 +462,3 @@
 		angularMoment(angular, window.moment);
 	}
 })();
-
