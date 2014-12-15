@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <id>Angular.Moment</id>
+        <id>angular-moment</id>
         <version>0.8.3</version>
         <title>Angular Moment</title>
         <authors>urish</authors>
@@ -12,12 +12,13 @@
         <releaseNotes />
         <copyright />
         <dependencies>
-            <dependency id="Moment.js" version="2.0.0" />
+            <dependency id="Moment.js" version="2.8.4" />
         </dependencies>
         <tags>AngularJS MomentJS Moment</tags>
     </metadata>
     <files>
         <file src="angular-moment.js" target="content\Scripts\angular-moment.js" />
         <file src="angular-moment.min.js" target="content\Scripts\angular-moment.min.js" />
+        <file src="angular-moment.min.js.map" target="content\Scripts\angular-moment.min.js.map" />
     </files>
 </package>
