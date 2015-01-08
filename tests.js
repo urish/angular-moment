@@ -533,6 +533,7 @@ describe('module angularMoment', function () {
 	});
 
 	describe('amMoment service', function () {
+		describe('#changeLocale', function () {
 			it('should convert today date to custom calendar form', function () {
 				var today = new Date();
 				amMoment.changeLocale('en', {calendar: {sameDay : '[Today]'}});
