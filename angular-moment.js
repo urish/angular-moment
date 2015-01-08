@@ -300,10 +300,11 @@
 				 * @param {object} values object of locale settings
 				 */
 				this.changeLocale = function (locale, values) {
+					var result;
 					if (typeof(values) !== 'undefined') {
-						var result = (moment.locale || moment.lang)(locale, values);
+						result = (moment.locale || moment.lang)(locale, values);
 					} else {
-						var result = (moment.locale || moment.lang)(locale);
+						result = (moment.locale || moment.lang)(locale);
 					}
 					if (angular.isDefined(locale)) {
 						$rootScope.$broadcast('amMoment:localeChanged');
