@@ -1,5 +1,5 @@
 /* License: MIT.
- * Copyright (C) 2013, 2014, Uri Shaked.
+ * Copyright (C) 2013, 2014, 2015, Uri Shaked.
  */
 
 /* global describe, inject, module, beforeEach, afterEach, it, expect, spyOn, jasmine */
@@ -555,14 +555,6 @@ describe('module angularMoment', function () {
 				amMoment.changeLocale();
 				expect(eventBroadcasted).toBe(false);
 			});
-		});
-
-		describe('#changeLanguage', function () {
-			it('should issue a warning about changeLanguage() deprecation', inject(function ($log) {
-				spyOn($log, 'warn');
-				amMoment.changeLanguage('fr');
-				expect($log.warn).toHaveBeenCalledWith('angular-moment: Usage of amMoment.changeLanguage() is deprecated. Please use changeLocale()');
-			}));
 		});
 
 		describe('#preprocessDate', function () {

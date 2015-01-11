@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.8.3 / (c) 2013, 2014 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.9.0 / (c) 2013, 2014, 2015 Uri Shaked / MIT Licence */
 
 'format global';
 /* global define */
@@ -272,7 +272,6 @@
 		 * @module angularMoment
 		 */
 			.service('amMoment', ['moment', '$rootScope', '$log', 'angularMomentConfig', function (moment, $rootScope, $log, angularMomentConfig) {
-				var that = this;
 				/**
 				 * @ngdoc property
 				 * @name angularMoment:amMoment#preprocessors
@@ -296,32 +295,15 @@
 				 * Changes the locale for moment.js and updates all the am-time-ago directive instances
 				 * with the new locale. Also broadcasts a `amMoment:localeChanged` event on $rootScope.
 				 *
-				 * @param {string} locale 2-letter language code (e.g. en, es, ru, etc.)
+				 * @param {string} locale Locale code (e.g. en, es, ru, pt-br, etc.)
 				 */
 				this.changeLocale = function (locale) {
-					var result = (moment.locale || moment.lang)(locale);
+					var result = moment.locale(locale);
 					if (angular.isDefined(locale)) {
 						$rootScope.$broadcast('amMoment:localeChanged');
 
-						// The following event is deprecated and will be removed in an upcoming
-						// major release.
-						$rootScope.$broadcast('amMoment:languageChange');
 					}
 					return result;
-				};
-
-				/**
-				 * @ngdoc function
-				 * @name angularMoment.service.amMoment#changeLanguage
-				 * @methodOf angularMoment.service.amMoment
-				 * @deprecated Please use changeLocale() instead.
-				 *
-				 * @description
-				 * Deprecated. Please use changeLocale() instead.
-				 */
-				this.changeLanguage = function (lang) {
-					$log.warn('angular-moment: Usage of amMoment.changeLanguage() is deprecated. Please use changeLocale()');
-					return that.changeLocale(lang);
 				};
 
 				/**

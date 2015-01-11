@@ -1,13 +1,13 @@
 {
   "name": "angular-moment",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "main": "angular-moment.js",
   "repository": {
     "type": "git",
     "url": "http://github.com/urish/angular-moment.git"
   },
   "dependencies": {
-    "moment": ">=2.0.0 <2.9.0"
+    "moment": ">=2.8.0 <2.10.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -1,9 +1,9 @@
 angular-moment
 ==============
 
-Angular.JS directive and filters for [Moment.JS](http://www.momentjs.com).
+AngularJS directive and filters for [Moment.JS](http://www.momentjs.com).
 
-Copyright (C) 2013, 2014, Uri Shaked <uri@urish.org>
+Copyright (C) 2013, 2014, 2015, Uri Shaked <uri@urish.org>
 
 [![Build Status](https://travis-ci.org/urish/angular-moment.png?branch=master)](https://travis-ci.org/urish/angular-moment)
 [![Coverage Status](https://coveralls.io/repos/urish/angular-moment/badge.png)](https://coveralls.io/r/urish/angular-moment)
@@ -15,7 +15,7 @@ You can choose your preferred method of installation:
 * Through bower: `bower install angular-moment --save`
 * Through npm: `npm install angular-moment --save`
 * Through NuGet: `Install-Package angular-moment`
-* From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/0.8.3/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.8.3/angular-moment.min.js)
+* From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/0.9.0/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js)
 * Download from github: [angular-moment.min.js](https://raw.github.com/urish/angular-moment/master/angular-moment.min.js)
 
 Usage

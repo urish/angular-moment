@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0 - 2015-01-11
+- Support moment.js v2.9.0. See [here](https://gist.github.com/ichernev/0c9a9b49951111a27ce7) for changelog.
+- Removed support for older moment.js versions. Only 2.8.0 and newer versions are now supported.
+- Removed deprecated method: `amMoment.changeLanguage()`. Use `amMoment.changeLocale() instead.
+- Removed deprecated event: `amMoment:languageChange`. Listen for `amMoment:localeChange` instead.
+- Filters are now stateful by default (fixes [#97](https://github.com/urish/angular-moment/issues/97)).
+- The project is now available on [NuGet](https://www.nuget.org/packages/angular-moment/) ([#99](https://github.com/urish/angular-moment/pull/99), contributed by [markvp](https://github.com/markvp)).
+
 ## 0.8.3 - 2014-12-08
 - `amTimeAgo` filter ([#96](https://github.com/urish/angular-moment/pull/96), contributed by [maxklenk](https://github.com/maxklenk))
 - Show formatted time as element title ([#78](https://github.com/urish/angular-moment/pull/78), contributed by [ctesene](https://github.com/ctesene))

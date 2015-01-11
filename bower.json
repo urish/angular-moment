@@ -1,7 +1,7 @@
 {
 	"name": "angular-moment",
-	"version": "0.8.3",
-	"description": "Moment.JS directives & filters for Angular.JS (timeago alternative)",
+	"version": "0.9.0",
+	"description": "Moment.JS directives & filters for AngularJS (timeago alternative)",
 	"author": "Uri Shaked",
 	"license": "MIT",
 	"homepage": "http://github.com/urish/angular-moment",
@@ -10,11 +10,11 @@
 	],
 	"dependencies": {
 		"angular": ">=1.0.0 <1.4.0",
-		"moment": ">=2.0.0 <2.9.0"
+		"moment": ">=2.8.0 <2.10.0"
 	},
 	"devDependencies": {
 		"angular-mocks": "1.2.x",
-		"moment-timezone": "0.2.1"
+		"moment-timezone": "0.2.5"
 	},
 	"repository": {
 		"type": "git",

@@ -2,17 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>angular-moment</id>
-        <version>0.8.3</version>
+        <version>0.9.0</version>
         <title>Angular Moment</title>
         <authors>urish</authors>
         <projectUrl>https://github.com/urish/angular-moment</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Moment.JS directives for Angular.JS (timeago and more)</description>
-        <summary>Moment.JS directives for Angular.JS (timeago and more).</summary>
+        <description>Moment.JS directives for AngularJS (timeago and more)</description>
+        <summary>Moment.JS directives for AngularJS (timeago and more).</summary>
         <releaseNotes />
         <copyright />
         <dependencies>
-            <dependency id="Moment.js" version="2.8.4" />
+            <dependency id="Moment.js" version="2.9.0" />
         </dependencies>
         <tags>AngularJS MomentJS Moment</tags>
     </metadata>
