@@ -534,14 +534,14 @@ describe('module angularMoment', function () {
 
 	describe('amMoment service', function () {
 		describe('#changeLocale', function () {
-			it('should convert today date to custom calendar form', function () {
+			it('should convert today\'s date to custom calendar format', function () {
 				var today = new Date();
-				amMoment.changeLocale('en', {calendar: {sameDay : '[Today]'}});
+				amMoment.changeLocale('en', {calendar: {sameDay : '[This Day]'}});
 				var amCalendar = $filter('amCalendar');
 				var testDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13, 33, 33);
-				expect(amCalendar(testDate)).toBe('Today');
+				expect(amCalendar(testDate)).toBe('This Day');
 			});
-			
+
 			it('should return the current locale', function () {
 				expect(amMoment.changeLocale()).toBe('en');
 			});
