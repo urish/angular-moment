@@ -296,9 +296,10 @@
 				 * with the new locale. Also broadcasts a `amMoment:localeChanged` event on $rootScope.
 				 *
 				 * @param {string} locale Locale code (e.g. en, es, ru, pt-br, etc.)
+				 * @param {object} values object of locale settings
 				 */
-				this.changeLocale = function (locale) {
-					var result = moment.locale(locale);
+				this.changeLocale = function (locale, values) {
+					var result = moment.locale(locale, values);
 					if (angular.isDefined(locale)) {
 						$rootScope.$broadcast('amMoment:localeChanged');
 
