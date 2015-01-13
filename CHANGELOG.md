@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.9.1 - TBD
+- Add support for locale strings customization ([#102](https://github.com/urish/angular-moment/pull/102), contributed by [vosi](https://github.com/vosi))
+
 ## 0.9.0 - 2015-01-11
 - Support moment.js v2.9.0. See [here](https://gist.github.com/ichernev/0c9a9b49951111a27ce7) for changelog.
 - Removed support for older moment.js versions. Only 2.8.0 and newer versions are now supported.
