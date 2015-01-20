@@ -14,11 +14,6 @@ on you machine:
 - npm
 - Git
 
-If you install node through the binary installation file, **npm** will be already there.
-When **npm** is installed, use it to install the needed npm packages:
-
-`npm install -g grunt-cli bower`
-
 ## Installation
 
 To get the source of `angular-moment` clone the git repository via:
@@ -30,10 +25,6 @@ and install all needed dependencies via **npm**:
 
 `npm install`
 
-Then install all the needed client-side dependencies via **bower**:
-
-`bower install`
-
 `angular-moment` is now installed and ready to be built.
 
 ## Building
@@ -43,13 +34,13 @@ the development process. The following grunt tasks are provided:
 
 #### grunt test
 
-`grunt test` executes (as you might thought) the unit tests, which are located
+`npm test` executes (as you might thought) the unit tests, which are located
 in `tests.js`. The task uses the **karma** test runner to executes the tests with
 the **jasmine testing framework**. This task also checks the coding using **jshint**.
 
 #### grunt build
 
-`grunt build` updates the minified version of the code (angular-moment.min.js). It also
+`npm run build` updates the minified version of the code (angular-moment.min.js). It also
 checks the code using **jshint**.
 
 ## Contributing/Submitting changes
@@ -62,7 +53,7 @@ checks the code using **jshint**.
   - Use one branch per fix/feature
 - Make your changes
   - Make sure to provide a spec for unit tests (in `tests.js`)
-  - Run your tests with `grunt test`
+  - Run your tests with `npm test`
   - When all tests pass, everything's fine
 - Commit your changes
   - Please provide a git message which explains what you've done
