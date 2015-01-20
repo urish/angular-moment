@@ -29,6 +29,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "test": "grunt test"
+    "test": "grunt test",
+    "build": "grunt build"
   }
 }
