@@ -47,7 +47,7 @@
 				 *
 				 * @description
 				 * The default timezone (e.g. 'Europe/London'). Empty string by default (does not apply
-				 * any timezone shift).
+				 * any timezone shift). Can also be a function that returns a timezone.
 				 */
 				timezone: '',
 
@@ -353,6 +353,12 @@
 				 */
 				this.applyTimezone = function (aMoment) {
 					var timezone = angularMomentConfig.timezone;
+
+					// Adding this check to be able to set the timezone from a function
+					if (typeof timezone === 'function') {
+						timezone = timezone();
+					}
+
 					if (aMoment && timezone) {
 						if (aMoment.tz) {
 							aMoment = aMoment.tz(timezone);
