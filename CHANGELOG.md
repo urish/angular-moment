@@ -2,6 +2,7 @@
 
 ## 0.9.1 - TBD
 - Add support for locale strings customization ([#102](https://github.com/urish/angular-moment/pull/102), contributed by [vosi](https://github.com/vosi))
+- Support for changing the timezone via `amMoment.changeTimezone()` ([#92](https://github.com/urish/angular-moment/issues/92))
 - Support for AngularJS 1.4.x
 
 ## 0.9.0 - 2015-01-11

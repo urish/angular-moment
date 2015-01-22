@@ -293,7 +293,7 @@
 				 *
 				 * @description
 				 * Changes the locale for moment.js and updates all the am-time-ago directive instances
-				 * with the new locale. Also broadcasts a `amMoment:localeChanged` event on $rootScope.
+				 * with the new locale. Also broadcasts an `amMoment:localeChanged` event on $rootScope.
 				 *
 				 * @param {string} locale Locale code (e.g. en, es, ru, pt-br, etc.)
 				 * @param {object} customization object of locale strings to override
@@ -305,6 +305,22 @@
 
 					}
 					return result;
+				};
+
+				/**
+				 * @ngdoc function
+				 * @name angularMoment.service.amMoment#changeTimezone
+				 * @methodOf angularMoment.service.amMoment
+				 *
+				 * @description
+				 * Changes the default timezone for amCalendar, amDateFormat and amTimeAgo. Also broadcasts an
+				 * `amMoment:timezoneChanged` event on $rootScope.
+				 *
+				 * @param {string} timezone Timezone name (e.g. UTC)
+				 */
+				this.changeTimezone = function (timezone) {
+					angularMomentConfig.timezone = timezone;
+					$rootScope.$broadcast('amMoment:timezoneChanged');
 				};
 
 				/**

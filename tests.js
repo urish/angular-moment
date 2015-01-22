@@ -26,7 +26,8 @@ describe('module angularMoment', function () {
 
 		// Ensure the locale of moment.js is set to en by default
 		(moment.locale || moment.lang)('en');
-		// Add a sample timezone for tests
+		// Add a sample timezones for tests
+		moment.tz.add('UTC|UTC|0|0|');
 		moment.tz.add('Pacific/Tahiti|LMT TAHT|9W.g a0|01|-2joe1.I');
 	}));
 
@@ -562,6 +563,25 @@ describe('module angularMoment', function () {
 				});
 				amMoment.changeLocale();
 				expect(eventBroadcasted).toBe(false);
+			});
+		});
+
+		describe('#changeTimezone', function () {
+			it('Should update the current timezone', function () {
+				amMoment.changeTimezone('UTC');
+				expect(amMoment.applyTimezone(moment()).utcOffset()).toBe(0);
+
+				amMoment.changeTimezone('Pacific/Tahiti');
+				expect(amMoment.applyTimezone(moment()).utcOffset()).toBe(-600);
+			});
+
+			it('should broadcast an angularMoment:timezoneChanged event on the root scope with the new timezone value', function () {
+				var eventBroadcasted = false;
+				$rootScope.$on('amMoment:timezoneChanged', function () {
+					eventBroadcasted = true;
+				});
+				amMoment.changeTimezone('UTC');
+				expect(eventBroadcasted).toBe(true);
 			});
 		});
 
