@@ -67,7 +67,7 @@ Use am-time-ago directive to format your relative timestamps. For example:
 ```
 
 angular-moment will dynamically update the span to indicate how much time
-passed since the message was created. So, if you controller contains the following
+passed since the message was created. So, if your controller contains the following
 code:
 ```js
 $scope.message = {
