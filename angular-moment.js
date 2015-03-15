@@ -132,6 +132,28 @@
 				titleFormat: null
 			})
 
+        	/**
+		 * @ngdoc object
+		 * @name angularMoment.config:amNowConfig
+		 * @module angularMoment
+		 *
+		 * @description
+		 * configuration specific to the amNow directive
+		 */
+			.constant('amNowConfig', {
+			    /**
+				 * @ngdoc property
+				 * @name angularMoment.config.amNowConfig#format
+				 * @propertyOf angularMoment.config:amNowConfig
+				 * @returns {string} The format of the date to be displayed in the title of the element. If null,
+				 *        the directive set the title of the element.
+				 *
+				 * @description
+				 * Specify the format of the date when displayed. null by default.
+				 */
+			    titleFormat: null
+			})
+
 		/**
 		 * @ngdoc directive
 		 * @name angularMoment.directive:amTimeAgo
@@ -182,7 +204,6 @@
 						}
 
 						if (!isBindOnce) {
-
 							var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));
 							var secondsUntilUpdate = 3600;
 							if (howOld < 1) {
@@ -266,6 +287,80 @@
 				};
 			}])
 
+        	/**
+		 * @ngdoc directive
+		 * @name angularMoment.directive:amNow
+		 * @module angularMoment
+		 *
+		 * @restrict A
+		 */
+			.directive('amNow', ['$window', 'moment', 'amMoment', 'amNowConfig', function ($window, moment, amMoment, amNowConfig) {
+
+			    return function (scope, element, attr) {
+			        var activeTimeout = null;
+			        var titleFormat = amNowConfig.titleFormat;
+			        var outputFormat = null;
+			        var isBindOnce = (attr.amNow.indexOf('::') === 0);
+			        var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
+
+			        function getNow() {
+			            return amMoment.applyTimezone(moment());
+			        }
+
+			        function cancelTimer() {
+			            if (activeTimeout) {
+			                $window.clearTimeout(activeTimeout);
+			                activeTimeout = null;
+			            }
+			        }
+
+			        function updateTime() {
+			            var momentInstance = getNow();
+			            updateDateTimeAttr(momentInstance.toISOString());
+			            
+			            element.text(momentInstance.format(outputFormat));
+
+			            if (titleFormat && !element.attr('title')) {
+			                element.attr('title', momentInstance.local().format(titleFormat));
+			            }
+
+			            if (!isBindOnce) {
+			                var secondsUntilUpdate = 1;
+
+			                activeTimeout = $window.setTimeout(function () {
+			                    updateTime(momentInstance);
+			                }, secondsUntilUpdate * 1000);
+			            }
+			        }
+
+			        function updateDateTimeAttr(value) {
+			            if (isTimeElement) {
+			                element.attr('datetime', value);
+			            }
+			        }
+
+			        function updateMoment() {
+			            cancelTimer();			            
+			            updateTime();
+			        }
+
+			        attr.$observe('amNow', function (format) {
+			            if (typeof format !== 'undefined') {
+			                outputFormat = format;
+			                updateMoment();
+			            }
+			        });
+
+			        scope.$on('$destroy', function () {
+			            cancelTimer();
+			        });
+
+			        scope.$on('amMoment:localeChanged', function () {
+			            updateMoment();
+			        });
+			    };
+			}])
+
 		/**
 		 * @ngdoc service
 		 * @name angularMoment.service.amMoment
@@ -292,7 +387,7 @@
 				 * @methodOf angularMoment.service.amMoment
 				 *
 				 * @description
-				 * Changes the locale for moment.js and updates all the am-time-ago directive instances
+				 * Changes the locale for moment.js and updates all the am-time-ago & am-now directive instances
 				 * with the new locale. Also broadcasts an `amMoment:localeChanged` event on $rootScope.
 				 *
 				 * @param {string} locale Locale code (e.g. en, es, ru, pt-br, etc.)
@@ -302,7 +397,6 @@
 					var result = moment.locale(locale, customization);
 					if (angular.isDefined(locale)) {
 						$rootScope.$broadcast('amMoment:localeChanged');
-
 					}
 					return result;
 				};

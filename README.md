@@ -80,6 +80,16 @@ The user will initially see "a few seconds ago", and about a minute
 after the span will automatically update with the text "a minute ago",
 etc.
 
+### Now directive
+Use `am-now` directive to show the current time. For example:
+
+```html
+<time am-now></time>
+<time am-now="HH:ss"></time>
+```
+
+angular-moment will dynamically update the time stamp every 1 second. Any [moment.js supported format](http://momentjs.com/docs/#/displaying/format/) can be used to format the time stamp.
+
 ### amDateFormat filter
 Format dates using moment.js format() method. Example:
 
