@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.9.1 - TBD
+## 0.9.1 - 2015-03-17
 - Add support for locale strings customization ([#102](https://github.com/urish/angular-moment/pull/102), contributed by [vosi](https://github.com/vosi))
 - Add `amDifference` filter ([#120](https://github.com/urish/angular-moment/pull/120), contributed by [ajhodges](https://github.com/ajhodges))
 - Support for changing the timezone via `amMoment.changeTimezone()` ([#92](https://github.com/urish/angular-moment/issues/92))
