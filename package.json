@@ -28,8 +28,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "postinstall": "bower install",
-    "test": "grunt test",
-    "build": "grunt build"
+    "bower": "node_modules/.bin/bower install",
+    "test": "node_modules/.bin/grunt test",
+    "build": "node_modules/.bin/grunt build"
   }
 }

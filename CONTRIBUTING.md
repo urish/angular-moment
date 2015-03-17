@@ -25,7 +25,12 @@ and install all needed dependencies via **npm**:
 
 `npm install`
 
-`angular-moment` is now installed and ready to be built.
+To complete the installation, install the frontend (bower) dependencies by running the 
+following command:
+
+`npm run bower`
+
+Well done! angular-moment is now installed and ready to be built.
 
 ## Building
 
