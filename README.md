@@ -49,7 +49,7 @@ myapp.run(function(amMoment) {
 
 ### Configuration
 
-Parameter `preprocess`(e.g: `unix`, `utc`) would pre-execute before. 
+Parameter `preprocess`(e.g: `unix`, `utc`) would pre-execute before.
 
 ```js
 angular.module('myapp').constant('angularMomentConfig', {
@@ -105,6 +105,20 @@ This snippet will format the given time as e.g. "Today 2:30 AM" or "Last Monday 
 For more information about Moment.JS calendar time format, see the
 [docs for the calendar() function](http://momentjs.com/docs/#/displaying/calendar-time/).
 
+### amDifference filter
+
+Get the difference between two dates in milliseconds.
+Parameters are date, units and usePrecision. Date defaults to current date. Example:
+
+```html
+<span>Scheduled {{message.createdAt | amDifference : null : 'days' }} days from now</span>
+```
+
+This snippet will return the number of days between the current date and the date filtered.
+
+For more information about Moment.JS difference function, see the
+[docs for the diff() function](http://momentjs.com/docs/#/displaying/difference/).
+
 ### Time zone support
 
 The `amDateFormat` and `amCalendar` filters can be configured to display dates aligned
@@ -144,5 +158,3 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
