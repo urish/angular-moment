@@ -253,7 +253,7 @@ describe('module angularMoment', function () {
 			expect(element.attr('datetime')).toBe('2012-09-20T15:20:12.000Z');
 		});
 
-		describe('setting the element title', function() {
+		describe('setting the element title', function () {
 			it('should not set the title attribute of the element to the date by default', function () {
 				$rootScope.testDate = new Date().getTime() / 1000;
 				var element = angular.element('<span am-time-ago="testDate"></span>');
@@ -462,12 +462,12 @@ describe('module angularMoment', function () {
 			expect(amDifference(testDate3, test, 'days')).toBe(1);
 		});
 
-    it('should allow rounding to be disabled via parameter', function () {
+		it('should allow rounding to be disabled via parameter', function () {
 			var test = new Date(2012, 0, 22, 4, 46, 54);
 			var testDate1 = new Date(test.getFullYear() + 1, test.getMonth() + 6, test.getDate());
 			expect(amDifference(testDate1, test, 'years')).toBe(1);
 			expect(amDifference(testDate1, test, 'years', true)).toBeCloseTo(1.5);
-    });
+		});
 
 		it('dates from the future should return negative values', function () {
 			var today = new Date(2012, 0, 22, 4, 46, 54);
@@ -484,8 +484,8 @@ describe('module angularMoment', function () {
 		});
 
 		it('should apply the "utc" preprocessor when the string "utc" is given as a preprocessor argument', function () {
-			expect(amDifference(Date.UTC(2012, 0, 22, 0, 0, 1), Date(2012, 0, 22, 0, 0, 0), null, null, 'utc')).toBe(1000);
-			expect(amDifference(Date(2012, 0, 22, 0, 0, 1), Date.UTC(2012, 0, 22, 0, 0, 0), null, null, null, 'utc')).toBe(1000);
+			expect(amDifference([2012, 0, 22, 0, 0, 1], Date.UTC(2012, 0, 22, 0, 0, 0), null, null, 'utc')).toBe(1000);
+			expect(amDifference(Date.UTC(2012, 0, 22, 0, 0, 1), [2012, 0, 22, 0, 0, 0], null, null, null, 'utc')).toBe(1000);
 		});
 
 		it('should apply the "unix" preprocessor if angularMomentConfig.preprocess is set to "unix" and no preprocessor is given', function () {
@@ -596,7 +596,7 @@ describe('module angularMoment', function () {
 		describe('#changeLocale', function () {
 			it('should convert today\'s date to custom calendar format', function () {
 				var today = new Date();
-				amMoment.changeLocale('en', {calendar: {sameDay : '[This Day]'}});
+				amMoment.changeLocale('en', {calendar: {sameDay: '[This Day]'}});
 				var amCalendar = $filter('amCalendar');
 				var testDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13, 33, 33);
 				expect(amCalendar(testDate)).toBe('This Day');

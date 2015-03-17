@@ -428,7 +428,7 @@
 					if (typeof otherValue === 'undefined' || otherValue === null) {
 						date2 = moment();
 					} else {
-						value = amMoment.preprocessDate(otherValue, preprocessOtherValue);
+						otherValue = amMoment.preprocessDate(otherValue, preprocessOtherValue);
 						date2 = moment(otherValue);
 						if (!date2.isValid()) {
 							return '';
