@@ -424,15 +424,15 @@
 						return '';
 					}
 
-          var date2;
+					var date2;
 					if (typeof otherValue === 'undefined' || otherValue === null) {
 						date2 = moment();
 					} else {
-					  value = amMoment.preprocessDate(otherValue, preprocessOtherValue);
-					  date2 = moment(otherValue);
-					  if (!date2.isValid()) {
-						  return '';
-					  }
+						value = amMoment.preprocessDate(otherValue, preprocessOtherValue);
+						date2 = moment(otherValue);
+						if (!date2.isValid()) {
+							return '';
+						}
 					}
 
 					return amMoment.applyTimezone(date).diff(amMoment.applyTimezone(date2), unit, usePrecision);
