@@ -439,6 +439,65 @@ describe('module angularMoment', function () {
 		});
 	});
 
+	describe('amDifference filter', function () {
+		var amDifference;
+
+		beforeEach(function () {
+			amDifference = $filter('amDifference');
+		});
+
+		it('should take the difference of two dates in milliseconds', function () {
+			var today = new Date(2012, 0, 22, 0, 0, 0);
+			var testDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13, 33, 33);
+			expect(amDifference(testDate, today)).toBe(48813000);
+		});
+
+		it('should support passing "years", "months", "days", etc as a units parameter', function () {
+			var test = new Date(2012, 0, 22, 4, 46, 54);
+			var testDate1 = new Date(2013, 0, 22, 4, 46, 54);
+			expect(amDifference(testDate1, test, 'years')).toBe(1);
+			var testDate2 = new Date(2012, 1, 22, 4, 46, 54);
+			expect(amDifference(testDate2, test, 'months')).toBe(1);
+			var testDate3 = new Date(2012, 0, 23, 4, 46, 54);
+			expect(amDifference(testDate3, test, 'days')).toBe(1);
+		});
+
+    it('should allow rounding to be disabled via parameter', function () {
+			var test = new Date(2012, 0, 22, 4, 46, 54);
+			var testDate1 = new Date(test.getFullYear() + 1, test.getMonth() + 6, test.getDate());
+			expect(amDifference(testDate1, test, 'years')).toBe(1);
+			expect(amDifference(testDate1, test, 'years', true)).toBeCloseTo(1.5);
+    });
+
+		it('dates from the future should return negative values', function () {
+			var today = new Date(2012, 0, 22, 4, 46, 54);
+			var testDate = new Date(2013, 0, 22, 4, 46, 54);
+			expect(String(amDifference(today, testDate))).toContain('-');
+		});
+
+		it('should gracefully handle undefined values', function () {
+			expect(amDifference()).toBe('');
+		});
+
+		it('should accept a numeric unix timestamp (milliseconds since the epoch) as input', function () {
+			expect(amDifference(new Date(2012, 0, 22, 4, 46, 55).getTime(), new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe(1000);
+		});
+
+		it('should apply the "utc" preprocessor when the string "utc" is given as a preprocessor argument', function () {
+			expect(amDifference(Date.UTC(2012, 0, 22, 0, 0, 1), Date(2012, 0, 22, 0, 0, 0), null, null, 'utc')).toBe(1000);
+			expect(amDifference(Date(2012, 0, 22, 0, 0, 1), Date.UTC(2012, 0, 22, 0, 0, 0), null, null, null, 'utc')).toBe(1000);
+		});
+
+		it('should apply the "unix" preprocessor if angularMomentConfig.preprocess is set to "unix" and no preprocessor is given', function () {
+			angularMomentConfig.preprocess = 'unix';
+			expect(amDifference(100001, 100000)).toBe(1000);
+		});
+
+		it('should return an empty string for invalid input', function () {
+			expect(amDifference('blah blah')).toBe('');
+		});
+	});
+
 	describe('amDateFormat filter', function () {
 		var amDateFormat;
 
