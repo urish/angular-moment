@@ -129,7 +129,30 @@
 				 * @description
 				 * Specify the format of the date when displayed. null by default.
 				 */
-				titleFormat: null
+				titleFormat: null,
+				
+		                /**
+		                 * @ngdoc property
+		                 * @name angularMoment.config.amTimeAgoConfig#maxDistanceTracking
+		                 * @propertyOf angularMoment.config:amTimeAgoConfig
+		                 * @returns {integer} Maximum days ago to display "time ago" formatting, null for unlimited
+		                 *
+		                 * @description
+		                 * Defaults to null.
+		                 */
+		                maxDistanceTracking: null,
+		                
+		                /**
+		                 * @ngdoc property
+		                 * @name angularMoment.config.amTimeAgoConfig#maxDistanceFormat
+		                 * @propertyOf angularMoment.config:amTimeAgoConfig
+		                 * @returns {string} Format for date display if date exceeds max distance tracking value
+		                 *
+		                 * @description
+		                 * Defaults to 'll'.
+		                 */
+		                maxDistanceFormat: 'll'
+
 			})
 
 		/**
@@ -147,6 +170,8 @@
 					var currentFormat = angularMomentConfig.format;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					var titleFormat = amTimeAgoConfig.titleFormat;
+					var maxDistanceTracking = amTimeAgoConfig.maxDistanceTracking;
+					var maxDistanceFormat = amTimeAgoConfig.maxDistanceFormat;
 					var localDate = new Date().getTime();
 					var preprocess = angularMomentConfig.preprocess;
 					var modelName = attr.amTimeAgo.replace(/^::/, '');
@@ -175,13 +200,24 @@
 					}
 
 					function updateTime(momentInstance) {
-						element.text(momentInstance.from(getNow(), withoutSuffix));
+						var maxDistanceExceeded = false;
+						
+						if( maxDistanceTracking ) {
+							maxDistanceExceeded = (Math.abs(momentInstance.diff(getNow(), 'days')) > maxDistanceTracking);
+						}
+
+						if( maxDistanceExceeded ) {
+							element.text(momentInstance.local().format(maxDistanceFormat));
+						}
+						else {
+							element.text(momentInstance.from(getNow(), withoutSuffix));
+						}
 
 						if (titleFormat && !element.attr('title')) {
 							element.attr('title', momentInstance.local().format(titleFormat));
 						}
 
-						if (!isBindOnce) {
+						if (!isBindOnce && !maxDistanceExceeded) {
 
 							var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));
 							var secondsUntilUpdate = 3600;
