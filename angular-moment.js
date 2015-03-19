@@ -149,10 +149,8 @@
 					var titleFormat = amTimeAgoConfig.titleFormat;
 					var localDate = new Date().getTime();
 					var preprocess = angularMomentConfig.preprocess;
-					var modelName = attr.amTimeAgo.replace(/^::/, '');
-					var isBindOnce = (attr.amTimeAgo.indexOf('::') === 0);
+					var modelName = attr.amTimeAgo;
 					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
-					var unwatchChanges;
 
 					function getNow() {
 						var now;
@@ -181,22 +179,19 @@
 							element.attr('title', momentInstance.local().format(titleFormat));
 						}
 
-						if (!isBindOnce) {
-
-							var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));
-							var secondsUntilUpdate = 3600;
-							if (howOld < 1) {
-								secondsUntilUpdate = 1;
-							} else if (howOld < 60) {
-								secondsUntilUpdate = 30;
-							} else if (howOld < 180) {
-								secondsUntilUpdate = 300;
-							}
-
-							activeTimeout = $window.setTimeout(function () {
-								updateTime(momentInstance);
-							}, secondsUntilUpdate * 1000);
+						var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));
+						var secondsUntilUpdate = 3600;
+						if (howOld < 1) {
+							secondsUntilUpdate = 1;
+						} else if (howOld < 60) {
+							secondsUntilUpdate = 30;
+						} else if (howOld < 180) {
+							secondsUntilUpdate = 300;
 						}
+
+						activeTimeout = $window.setTimeout(function () {
+							updateTime(momentInstance);
+						}, secondsUntilUpdate * 1000);
 					}
 
 					function updateDateTimeAttr(value) {
@@ -214,7 +209,7 @@
 						}
 					}
 
-					unwatchChanges = scope.$watch(modelName, function (value) {
+					scope.$watch(modelName, function (value) {
 						if ((typeof value === 'undefined') || (value === null) || (value === '')) {
 							cancelTimer();
 							if (currentValue) {
@@ -227,10 +222,6 @@
 
 						currentValue = value;
 						updateMoment();
-
-						if (value !== undefined && isBindOnce) {
-							unwatchChanges();
-						}
 					});
 
 					if (angular.isDefined(attr.amWithoutSuffix)) {

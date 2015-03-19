@@ -159,26 +159,6 @@ describe('module angularMoment', function () {
 				$rootScope.$digest();
 				expect(element.text()).toBe('a year ago');
 			});
-
-			it('should not update the span text as time passes when using one time binding', function (done) {
-				$rootScope.testDate = new Date(new Date().getTime() - 44000);
-				var element = angular.element('<div am-time-ago="::testDate"></div>');
-				element = $compile(element)($rootScope);
-				$rootScope.$digest();
-				expect(element.text()).toBe('a few seconds ago');
-
-				var waitsInterval = setInterval(function () {
-					// Wait until $rootScope.date is more than 45 seconds old
-					if (new Date().getTime() - $rootScope.testDate.getTime() < 45000) {
-						return;
-					}
-
-					clearInterval(waitsInterval);
-					$rootScope.$digest();
-					expect(element.text()).toBe('a few seconds ago');
-					done();
-				}, 50);
-			});
 		});
 
 		it('should handle undefined data', function () {
