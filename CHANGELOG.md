@@ -2,6 +2,7 @@
 
 ## 0.10.0 - 2015-03-17
 - Breaking change: removed one-time binding for `am-time-ago` in favor of AngularJS 1.3's one time binding ([#122](https://github.com/urish/angular-moment/issues/122))
+- Remove support for AngularJS 1.0.x and 1.1.x.
 
 ## 0.9.2 - 2015-03-17
 - Critical fix: npm install angular-moment fails ([#121](https://github.com/urish/angular-moment/issues/121))
