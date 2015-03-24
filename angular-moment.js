@@ -511,6 +511,7 @@
 		define(['angular', 'moment'], angularMoment);
 	} else if (typeof module !== 'undefined' && module && module.exports) {
 		angularMoment(angular, require('moment'));
+		module.exports = 'angularMoment';
 	} else {
 		angularMoment(angular, window.moment);
 	}
