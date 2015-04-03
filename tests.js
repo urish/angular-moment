@@ -277,7 +277,7 @@ describe('module angularMoment', function () {
 					var element = angular.element('<span am-time-ago="testDate"></span>');
 					element = $compile(element)($rootScope);
 					$rootScope.$digest();
-					expect(element.text()).toBe('2012-06-05T00:00:00+03:00');
+					expect(element.text()).toMatch(/^2012-06-05T00:00:00\+\d\d:\d\d$/);
 				});
 
 				it('should display full time using the given format', function () {
