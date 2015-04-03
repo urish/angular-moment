@@ -3,6 +3,7 @@
 ## 0.10.0 - TBD
 - Breaking change: removed one-time binding for `am-time-ago` in favor of AngularJS 1.3's one time binding ([#122](https://github.com/urish/angular-moment/issues/122))
 - Remove support for AngularJS 1.0.x and 1.1.x.
+- Support for displaying full dates in `am-time-ago` (see [#75](https://github.com/urish/angular-moment/issues/75)) 
 - Support Angular Core's style CommonJS standard ([#123](https://github.com/urish/angular-moment/pull/123), contributed by [seanhealy](https://github.com/seanhealy))
 
 ## 0.9.2 - 2015-03-17

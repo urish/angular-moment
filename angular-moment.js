@@ -121,15 +121,38 @@
 
 				/**
 				 * @ngdoc property
-				 * @name angularMoment.config.amTimeAgoConfig#format
+				 * @name angularMoment.config.amTimeAgoConfig#titleFormat
 				 * @propertyOf angularMoment.config:amTimeAgoConfig
 				 * @returns {string} The format of the date to be displayed in the title of the element. If null,
 				 *        the directive set the title of the element.
 				 *
 				 * @description
-				 * Specify the format of the date when displayed. null by default.
+				 * The format of the date used for the title of the element. null by default.
 				 */
-				titleFormat: null
+				titleFormat: null,
+
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.amTimeAgoConfig#fullDateThreshold
+				 * @propertyOf angularMoment.config:amTimeAgoConfig
+				 * @returns {number} The minimum number of days for showing a full date instead of relative time
+				 *
+				 * @description
+				 * The threshold for displaying a full date. The default is null, which means the date will always
+				 * be relative, and full date will never be displayed.
+				 */
+				fullDateThreshold: null,
+
+				/**
+				 * @ngdoc property
+				 * @name angularMoment.config.amTimeAgoConfig#fullDateFormat
+				 * @propertyOf angularMoment.config:amTimeAgoConfig
+				 * @returns {string} The format to use when displaying a full date.
+				 *
+				 * @description
+				 * Specify the format of the date when displayed as full date. null by default.
+				 */
+				fullDateFormat: null
 			})
 
 		/**
@@ -147,6 +170,8 @@
 					var currentFormat = angularMomentConfig.format;
 					var withoutSuffix = amTimeAgoConfig.withoutSuffix;
 					var titleFormat = amTimeAgoConfig.titleFormat;
+					var fullDateThreshold = amTimeAgoConfig.fullDateThreshold;
+					var fullDateFormat = amTimeAgoConfig.fullDateFormat;
 					var localDate = new Date().getTime();
 					var preprocess = angularMomentConfig.preprocess;
 					var modelName = attr.amTimeAgo;
@@ -173,25 +198,34 @@
 					}
 
 					function updateTime(momentInstance) {
-						element.text(momentInstance.from(getNow(), withoutSuffix));
+						var daysAgo = getNow().diff(momentInstance, 'day');
+						var showFullDate = fullDateThreshold && daysAgo >= fullDateThreshold;
+
+						if (showFullDate) {
+							element.text(momentInstance.format(fullDateFormat));
+						} else {
+							element.text(momentInstance.from(getNow(), withoutSuffix));
+						}
 
 						if (titleFormat && !element.attr('title')) {
 							element.attr('title', momentInstance.local().format(titleFormat));
 						}
 
-						var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));
-						var secondsUntilUpdate = 3600;
-						if (howOld < 1) {
-							secondsUntilUpdate = 1;
-						} else if (howOld < 60) {
-							secondsUntilUpdate = 30;
-						} else if (howOld < 180) {
-							secondsUntilUpdate = 300;
-						}
+						if (!showFullDate) {
+							var howOld = Math.abs(getNow().diff(momentInstance, 'minute'));
+							var secondsUntilUpdate = 3600;
+							if (howOld < 1) {
+								secondsUntilUpdate = 1;
+							} else if (howOld < 60) {
+								secondsUntilUpdate = 30;
+							} else if (howOld < 180) {
+								secondsUntilUpdate = 300;
+							}
 
-						activeTimeout = $window.setTimeout(function () {
-							updateTime(momentInstance);
-						}, secondsUntilUpdate * 1000);
+							activeTimeout = $window.setTimeout(function () {
+								updateTime(momentInstance);
+							}, secondsUntilUpdate * 1000);
+						}
 					}
 
 					function updateDateTimeAttr(value) {
@@ -244,6 +278,16 @@
 
 					attr.$observe('amPreprocess', function (newValue) {
 						preprocess = newValue;
+						updateMoment();
+					});
+
+					attr.$observe('amFullDateThreshold', function (newValue) {
+						fullDateThreshold = newValue;
+						updateMoment();
+					});
+
+					attr.$observe('amFullDateFormat', function (newValue) {
+						fullDateFormat = newValue;
 						updateMoment();
 					});
 

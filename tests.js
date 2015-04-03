@@ -260,6 +260,58 @@ describe('module angularMoment', function () {
 				var testDateWithCustomFormatting = moment($rootScope.testDate).format(amTimeAgoConfig.titleFormat);
 				expect(element.attr('title')).toBe(testDateWithCustomFormatting);
 			});
+
+			describe('full date support', function () {
+				it('should display relative time if the date is recent', function () {
+					amTimeAgoConfig.fullDateThreshold = 7;
+					$rootScope.testDate = new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000);
+					var element = angular.element('<span am-time-ago="testDate"></span>');
+					element = $compile(element)($rootScope);
+					$rootScope.$digest();
+					expect(element.text()).toBe('2 days ago');
+				});
+
+				it('should display full time if the date is past the threshold', function () {
+					amTimeAgoConfig.fullDateThreshold = 7;
+					$rootScope.testDate = new Date(2012, 5, 5);
+					var element = angular.element('<span am-time-ago="testDate"></span>');
+					element = $compile(element)($rootScope);
+					$rootScope.$digest();
+					expect(element.text()).toBe('2012-06-05T00:00:00+03:00');
+				});
+
+				it('should display full time using the given format', function () {
+					amTimeAgoConfig.fullDateThreshold = 7;
+					amTimeAgoConfig.fullDateFormat = 'YYYY,DD,MM';
+					$rootScope.testDate = new Date(2010, 1, 8);
+					var element = angular.element('<span am-time-ago="testDate"></span>');
+					element = $compile(element)($rootScope);
+					$rootScope.$digest();
+					expect(element.text()).toBe('2010,08,02');
+				});
+
+				it('should support changing the full date threshold through attribute', function () {
+					$rootScope.threshold = 7;
+					$rootScope.testDate = new Date(new Date().getTime() - 12 * 24 * 60 * 60 * 1000);
+					var element = angular.element('<span am-time-ago="testDate" am-full-date-threshold="{{threshold}}"></span>');
+					element = $compile(element)($rootScope);
+					$rootScope.$digest();
+					expect(element.text()).toBe(moment($rootScope.testDate).format());
+
+					$rootScope.threshold = 20;
+					$rootScope.$digest();
+					expect(element.text()).toBe('12 days ago');
+				});
+
+				it('should support setting the full date format through attribute', function () {
+					amTimeAgoConfig.fullDateThreshold = 7;
+					$rootScope.testDate =  new Date(2013, 11, 15);
+					var element = angular.element('<span am-time-ago="testDate" am-full-date-format="YYYY-MM-DD"></span>');
+					element = $compile(element)($rootScope);
+					$rootScope.$digest();
+					expect(element.text()).toBe('2013-12-15');
+				});
+			});
 		});
 
 		describe('am-without-suffix attribute', function () {
