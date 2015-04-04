@@ -485,7 +485,7 @@
 		 * @function
 		 */
 			.filter('amDateFormat', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
-				function amDateFormatFilter(value, format, preprocess) {
+				function amDateFormatFilter(value, format, preprocess, timezone) {
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
@@ -494,6 +494,10 @@
 					var date = moment(value);
 					if (!date.isValid()) {
 						return '';
+					}
+
+					if (timezone) {
+					    return date.tz(timezone).format(format);
 					}
 
 					return amMoment.applyTimezone(date).format(format);
