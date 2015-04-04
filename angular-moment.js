@@ -400,10 +400,13 @@
 				 * Otherwise, it'll not apply any timezone shift.
 				 *
 				 * @param {Moment} aMoment a moment() instance to apply the timezone shift to
+				 * @param {string=} timezone The timezone to apply. If none given, will apply the timezone
+				 * 		configured in angularMomentConfig.timezone.
+				 *
 				 * @returns {Moment} The given moment with the timezone shift applied
 				 */
-				this.applyTimezone = function (aMoment) {
-					var timezone = angularMomentConfig.timezone;
+				this.applyTimezone = function (aMoment, timezone) {
+					timezone = timezone || angularMomentConfig.timezone;
 					if (aMoment && timezone) {
 						if (aMoment.tz) {
 							aMoment = aMoment.tz(timezone);
@@ -496,11 +499,7 @@
 						return '';
 					}
 
-					if (timezone) {
-					    return date.tz(timezone).format(format);
-					}
-
-					return amMoment.applyTimezone(date).format(format);
+					return amMoment.applyTimezone(date, timezone).format(format);
 				}
 
 				amDateFormatFilter.$stateful = angularMomentConfig.statefulFilters;
