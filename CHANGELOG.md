@@ -5,6 +5,7 @@
 - Remove support for AngularJS 1.0.x and 1.1.x.
 - Support for displaying full dates in `am-time-ago` (see [#75](https://github.com/urish/angular-moment/issues/75)) 
 - Support Angular Core's style CommonJS standard ([#123](https://github.com/urish/angular-moment/pull/123), contributed by [seanhealy](https://github.com/seanhealy))
+- Added an optional timezone parameter to amDateFormat ([#90](https://github.com/urish/angular-moment/pull/90), contributed by [robertbrooker](https://github.com/robertbrooker))
 
 ## 0.9.2 - 2015-03-17
 - Critical fix: npm install angular-moment fails ([#121](https://github.com/urish/angular-moment/issues/121))
