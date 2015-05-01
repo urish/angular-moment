@@ -1,4 +1,4 @@
-/* angular-moment.js / v0.10.0 / (c) 2013, 2014, 2015 Uri Shaked / MIT Licence */
+/* angular-moment.js / v0.10.1 / (c) 2013, 2014, 2015 Uri Shaked / MIT Licence */
 
 'format amd';
 /* global define */

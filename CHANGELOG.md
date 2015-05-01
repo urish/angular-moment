@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.10.1 - 2015-05-01
+- Fix broken SystemJS/JSPM support (see [#104](https://github.com/urish/angular-moment/issues/104))
+
 ## 0.10.0 - 2015-04-10
 - Breaking change: removed one-time binding for `am-time-ago` in favor of AngularJS 1.3's one time binding ([#122](https://github.com/urish/angular-moment/issues/122))
 - Remove support for AngularJS 1.0.x and 1.1.x.
