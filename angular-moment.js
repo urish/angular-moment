@@ -558,6 +558,6 @@
 		angularMoment(angular, require('moment'));
 		module.exports = 'angularMoment';
 	} else {
-		angularMoment(angular, window.moment);
+		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
 	}
 })();
