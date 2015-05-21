@@ -81,10 +81,9 @@
 		 * @name angularMoment.object:moment
 		 *
 		 * @description
-		 * moment global (as provided by the moment.js library). In node this is attached to the
-                 * global object; in standard js this is attached to the window object.
+		 * moment global (as provided by the moment.js library)
 		 */
-			.constant('moment', (typeof global !== 'undefined' ? global : window).moment)
+			.constant('moment', moment)
 
 		/**
 		 * @ngdoc object
@@ -559,6 +558,6 @@
 		angularMoment(angular, require('moment'));
 		module.exports = 'angularMoment';
 	} else {
-		angularMoment(angular, window.moment);
+		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
 	}
 })();
