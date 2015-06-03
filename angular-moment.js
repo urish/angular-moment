@@ -8,6 +8,8 @@
 
 	function angularMoment(angular, moment) {
 
+		var localDate = new Date().getTime();
+
 		/**
 		 * @ngdoc overview
 		 * @name angularMoment
@@ -170,7 +172,6 @@
 					var titleFormat = amTimeAgoConfig.titleFormat;
 					var fullDateThreshold = amTimeAgoConfig.fullDateThreshold;
 					var fullDateFormat = amTimeAgoConfig.fullDateFormat;
-					var localDate = new Date().getTime();
 					var preprocess = angularMomentConfig.preprocess;
 					var modelName = attr.amTimeAgo;
 					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
