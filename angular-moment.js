@@ -549,6 +549,32 @@
 				amTimeAgoFilter.$stateful = angularMomentConfig.statefulFilters;
 
 				return amTimeAgoFilter;
+			}])
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amTimeToNow
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('amTimeToNow', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
+				function amTimeToNowFilter(value, preprocess, suffix) {
+					if (typeof value === 'undefined' || value === null) {
+						return '';
+					}
+
+					value = amMoment.preprocessDate(value, preprocess);
+					var date = moment(value);
+					if (!date.isValid()) {
+						return '';
+					}
+
+					return amMoment.applyTimezone(date).toNow(suffix);
+				}
+
+				amTimeToNowFilter.$stateful = angularMomentConfig.statefulFilters;
+
+				return amTimeToNowFilter;
 			}]);
 	}
 
