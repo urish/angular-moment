@@ -312,6 +312,17 @@ describe('module angularMoment', function () {
 					expect(element.text()).toBe('2013-12-15');
 				});
 			});
+
+			describe('am-from attribute', function() {
+				it('should make the calculations from the am-from given', function() {
+					$rootScope.from = new Date(2015, 6, 11);
+					$rootScope.testDate = new Date(2015, 6, 12);
+					var element = angular.element('<span am-time-ago="testDate" am-from="from"></span>');
+					element = $compile(element)($rootScope);
+					$rootScope.$digest();
+					expect(element.text()).toBe('in a day');
+				});
+			});
 		});
 
 		describe('am-without-suffix attribute', function () {
