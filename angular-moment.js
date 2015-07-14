@@ -173,11 +173,14 @@
 					var localDate = new Date().getTime();
 					var preprocess = angularMomentConfig.preprocess;
 					var modelName = attr.amTimeAgo;
+					var currentFrom;
 					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
 
 					function getNow() {
 						var now;
-						if (amTimeAgoConfig.serverTime) {
+						if (currentFrom) {
+							now = currentFrom;
+						} else if (amTimeAgoConfig.serverTime) {
 							var localNow = new Date().getTime();
 							var nowMillis = localNow - localDate + amTimeAgoConfig.serverTime;
 							now = moment(nowMillis);
@@ -255,6 +258,17 @@
 						currentValue = value;
 						updateMoment();
 					});
+
+					if (angular.isDefined(attr.amFrom)) {
+						scope.$watch(attr.amFrom, function (value) {
+							if ((typeof value === 'undefined') || (value === null) || (value === '')) {
+								currentFrom = null;
+							} else {
+								currentFrom = moment(value);
+							}
+							updateMoment();
+						});
+					}
 
 					if (angular.isDefined(attr.amWithoutSuffix)) {
 						scope.$watch(attr.amWithoutSuffix, function (value) {
