@@ -546,15 +546,22 @@
 		 * @function
 		 */
 			.filter('amTimeAgo', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
-				function amTimeAgoFilter(value, preprocess, suffix) {
+				function amTimeAgoFilter(value, preprocess, suffix, from) {
+					var date, dateFrom;
+
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
 
 					value = amMoment.preprocessDate(value, preprocess);
-					var date = moment(value);
+					date = moment(value);
 					if (!date.isValid()) {
 						return '';
+					}
+
+					dateFrom = moment(from);
+					if (typeof from !== 'undefined' && dateFrom.isValid()) {
+						return amMoment.applyTimezone(date).from(dateFrom, suffix);
 					}
 
 					return amMoment.applyTimezone(date).fromNow(suffix);
