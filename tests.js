@@ -582,6 +582,11 @@ describe('module angularMoment', function () {
 			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', 'Pacific/Tahiti')).toBe('(02,46,54);01.22.2012');
 		});
 
+		it('should accept UTC offset as a timezone parameter', function () {
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00')).toBe('(02,46,54);01.22.2012');
+		});
+
 		it('should return an empty string for invalid input', function () {
 			expect(amDateFormat('blah blah', '(HH,mm,ss);MM.DD.YYYY')).toBe('');
 		});

@@ -408,24 +408,29 @@
 				 * @methodOf angularMoment.service.amMoment
 				 *
 				 * @description
-				 * Apply a timezone onto a given moment object - if moment-timezone.js is included
-				 * Otherwise, it'll not apply any timezone shift.
+				 * Apply a timezone onto a given moment object. It can be a named timezone (e.g. 'America/Phoenix') or an offset from UTC (e.g. '+0300')
+				 * moment-timezone.js is needed when a named timezone is used, otherwise, it'll not apply any timezone shift.
 				 *
 				 * @param {Moment} aMoment a moment() instance to apply the timezone shift to
 				 * @param {string=} timezone The timezone to apply. If none given, will apply the timezone
-				 * 		configured in angularMomentConfig.timezone.
+				 * 		configured in angularMomentConfig.timezone. It can be a named timezone (e.g. 'America/Phoenix') or an offset from UTC (e.g. '+0300')
 				 *
 				 * @returns {Moment} The given moment with the timezone shift applied
 				 */
 				this.applyTimezone = function (aMoment, timezone) {
 					timezone = timezone || angularMomentConfig.timezone;
-					if (aMoment && timezone) {
-						if (aMoment.tz) {
-							aMoment = aMoment.tz(timezone);
-						} else {
-							$log.warn('angular-moment: timezone specified but moment.tz() is undefined. Did you forget to include moment-timezone.js?');
-						}
+					if (!timezone) {
+						return aMoment;
 					}
+
+					if (timezone.match(/Z|[+-]\d\d:?\d\d/gi)) {
+						aMoment = aMoment.utcOffset(timezone);
+					} else if (aMoment.tz) {
+						aMoment = aMoment.tz(timezone);
+					} else {
+						$log.warn('angular-moment: named timezone specified but moment.tz() is undefined. Did you forget to include moment-timezone.js?');
+					}
+
 					return aMoment;
 				};
 			}])
