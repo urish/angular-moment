@@ -451,6 +451,18 @@ describe('module angularMoment', function () {
 			expect(amCalendar(Date.UTC(2012, 0, 22, 4, 46, 54))).toBe('01/21/2012');
 		});
 
+		it('should respect the timezone parameter', function () {
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			amMoment.changeLocale('en', {calendar: {sameElse: '(HH,mm,ss);MM.DD.YYYY'}});
+			expect(amCalendar(timestamp, 'utc', 'Pacific/Tahiti')).toBe('(02,46,54);01.22.2012');
+		});
+
+		it('should accept UTC offset as a timezone parameter', function () {
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			amMoment.changeLocale('en', {calendar: {sameElse: '(HH,mm,ss);MM.DD.YYYY'}});
+			expect(amCalendar(timestamp, 'utc', '-10:00')).toBe('(02,46,54);01.22.2012');
+		});
+
 		it('should apply the "utc" preprocessor when the string "utc" is given in the second argument', function () {
 			expect(amCalendar(Date.UTC(2012, 0, 22, 0, 0, 0), 'utc')).toBe('01/22/2012');
 			expect(amCalendar(Date.UTC(2012, 0, 22, 23, 59, 59), 'utc')).toBe('01/22/2012');
