@@ -441,7 +441,7 @@
 		 * @module angularMoment
 		 */
 			.filter('amCalendar', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
-				function amCalendarFilter(value, preprocess) {
+				function amCalendarFilter(value, preprocess, timezone) {
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
@@ -452,7 +452,7 @@
 						return '';
 					}
 
-					return amMoment.applyTimezone(date).calendar();
+					return amMoment.applyTimezone(date, timezone).calendar();
 				}
 
 				// Since AngularJS 1.3, filters have to explicitly define being stateful
