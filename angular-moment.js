@@ -419,12 +419,12 @@
 				 */
 				this.applyTimezone = function (aMoment, timezone) {
 					timezone = timezone || angularMomentConfig.timezone;
-					if (!aMoment && !timezone) {
+					if (!timezone) {
 						return aMoment;
 					}
 
 					if (timezone.match(/Z|[+-]\d\d:?\d\d/gi)) {
-						aMoment = aMoment.utcOffset(timezone);
+						aMoment = aMoment.zone(timezone);
 					} else if (aMoment.tz) {
 						aMoment = aMoment.tz(timezone);
 					} else {
