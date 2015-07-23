@@ -2,6 +2,7 @@
 
 ## 0.10.2 - TBD
 - Look for `moment` on the `global` object ([#133](https://github.com/urish/angular-moment/pull/133), contributed by [kitbrennan90](https://github.com/kitbrennan90))
+- Add support to use UTC offset timezones in addition to named timezones ([#151](https://github.com/urish/angular-moment/pull/151), contributed by [DiegoZoracKy](https://github.com/DiegoZoracKy))
 
 ## 0.10.1 - 2015-05-01
 - Fix broken SystemJS/JSPM support (see [#104](https://github.com/urish/angular-moment/issues/104))
