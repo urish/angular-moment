@@ -652,6 +652,13 @@ describe('module angularMoment', function () {
 			expect(amTimeAgo(date, null, true)).toBe('a few seconds');
 		});
 
+		it('should support started date as fourth parameter', function () {
+			var date = new Date(2015, 7, 14),
+			  from = new Date(2015, 7, 15);
+			expect(amTimeAgo(date, null, null, from)).toBe('a day ago');
+			expect(amTimeAgo(date, null, true, from)).toBe('a day');
+		});
+
 		it('should gracefully handle undefined values', function () {
 			expect(amTimeAgo()).toBe('');
 		});
