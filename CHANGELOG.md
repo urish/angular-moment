@@ -1,9 +1,10 @@
 # Changelog
 
-## 0.10.2 - TBD
+## 0.10.2 - 2015-07-28
 - Look for `moment` on the `global` object ([#133](https://github.com/urish/angular-moment/pull/133), contributed by [kitbrennan90](https://github.com/kitbrennan90))
 - Add support to use UTC offset timezones in addition to named timezones ([#151](https://github.com/urish/angular-moment/pull/151), contributed by [DiegoZoracKy](https://github.com/DiegoZoracKy))
 - Add timezone parameter for amCalendar filter ([#152](https://github.com/urish/angular-moment/pull/152), contributed by [DiegoZoracKy](https://github.com/DiegoZoracKy))
+- Add `from` parameter to the `amTimeAgo` filter ([#146](https://github.com/urish/angular-moment/pull/146), contributed by [pipo02mix](https://github.com/pipo02mix))
 
 ## 0.10.1 - 2015-05-01
 - Fix broken SystemJS/JSPM support (see [#104](https://github.com/urish/angular-moment/issues/104))
