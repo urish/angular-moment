@@ -368,7 +368,8 @@ describe('module angularMoment', function () {
 		describe('am-format attribute', function () {
 			it('should support custom date format', function () {
 				var today = new Date();
-				$rootScope.testDate = today.getFullYear() + '#' + today.getDate() + '#' + today.getMonth();
+				var date = Math.min(today.getDate(), 28);
+				$rootScope.testDate = today.getFullYear() + '#' + date + '#' + today.getMonth();
 				var element = angular.element('<span am-time-ago="testDate" am-format="YYYY#DD#MM"></span>');
 				element = $compile(element)($rootScope);
 				$rootScope.$digest();
@@ -377,7 +378,8 @@ describe('module angularMoment', function () {
 
 			it('should support angular expressions in date format', function () {
 				var today = new Date();
-				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + today.getDate();
+				var date = Math.min(today.getDate(), 28);
+				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + date;
 				var element = angular.element('<span am-time-ago="testDate" am-format="{{dateFormat}}"></span>');
 				element = $compile(element)($rootScope);
 				$rootScope.$digest();
@@ -391,7 +393,8 @@ describe('module angularMoment', function () {
 			it('should be used when no `am-format` attribute is found', function () {
 				angularMomentConfig.format = 'MM@YYYY@DD';
 				var today = new Date();
-				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + today.getDate();
+				var date = Math.min(today.getDate(), 28);
+				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + date;
 				var element = angular.element('<span am-time-ago="testDate"></span>');
 				element = $compile(element)($rootScope);
 				$rootScope.$digest();
@@ -401,7 +404,8 @@ describe('module angularMoment', function () {
 			it('should be overridable by `am-format` attribute', function () {
 				angularMomentConfig.format = 'YYYY@MM@@DD';
 				var today = new Date();
-				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + today.getDate();
+				var date = Math.min(today.getDate(), 28);
+				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + date;
 				var element = angular.element('<span am-format="MM@YYYY@DD" am-time-ago="testDate"></span>');
 				element = $compile(element)($rootScope);
 				$rootScope.$digest();
