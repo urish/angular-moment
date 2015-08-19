@@ -505,12 +505,13 @@
 		 * @function
 		 */
 			.filter('amDateFormat', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
-				function amDateFormatFilter(value, format, preprocess, timezone) {
+				function amDateFormatFilter(value, format, preprocess, timezone, inputFormat) {
+					var currentFormat = inputFormat || angularMomentConfig.format;
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
 
-					value = amMoment.preprocessDate(value, preprocess);
+					value = amMoment.preprocessDate(value, preprocess, currentFormat);
 					var date = moment(value);
 					if (!date.isValid()) {
 						return '';
