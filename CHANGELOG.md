@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.10.3 - TBD
+- Allow `amDateFormat` to work with custom formatted input date strings ([#162](https://github.com/urish/angular-moment/pull/162), contributed by [jblashka](https://github.com/jblashka))
+
 ## 0.10.2 - 2015-07-28
 - Look for `moment` on the `global` object ([#133](https://github.com/urish/angular-moment/pull/133), contributed by [kitbrennan90](https://github.com/kitbrennan90))
 - Add support to use UTC offset timezones in addition to named timezones ([#151](https://github.com/urish/angular-moment/pull/151), contributed by [DiegoZoracKy](https://github.com/DiegoZoracKy))
