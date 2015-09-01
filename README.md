@@ -119,7 +119,7 @@ This snippet will return the number of days between the current date and the dat
 For more information about Moment.JS difference function, see the
 [docs for the diff() function](http://momentjs.com/docs/#/displaying/difference/).
 
-### amDurationFormat
+### amDurationFormat filter
 
 Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) for explanation about the formatting algorithm. 
 
