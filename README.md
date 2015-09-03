@@ -131,7 +131,7 @@ Example:
 
 Will display the age of the message (e.g. 10 minutes, 1 hour, 2 days, etc).
 
-### subtract filter
+### amSubtract filter
 
 Subtract values (hours, minutes, seconds ...) from a specified date.
 
@@ -140,11 +140,11 @@ See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) fo
 Example:
 
 ```html
-<span>Start time: {{day.start | subtract : '1' : 'hours' | amDateFormat : 'hh'}} : {{day.start | subtract : '30' : 'minutes' | amDateFormat : 'mm'}}</span>
+<span>Start time: {{day.start | amSubtract : '1' : 'hours' | amDateFormat : 'hh'}} : {{day.start | amSubtract : '30' : 'minutes' | amDateFormat : 'mm'}}</span>
 
 ```
 
-### add filter
+### amAdd filter
 
 Add values (hours, minutes, seconds ...) to a specified date.
 
@@ -153,7 +153,7 @@ See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) fo
 Example:
 
 ```html
-<span>Start time: {{day.start | add : '1' : 'hours' | amDateFormat : 'hh'}} : {{day.start | add : '30' : 'minutes' | amDateFormat : 'mm'}}</span>
+<span>Start time: {{day.start | amAdd : '1' : 'hours' | amDateFormat : 'hh'}} : {{day.start | amAdd : '30' : 'minutes' | amDateFormat : 'mm'}}</span>
 
 ```
 

@@ -580,12 +580,12 @@
 
 		/**
 		 * @ngdoc filter
-		 * @name angularMoment.filter:subtract
+		 * @name angularMoment.filter:amSubtract
 		 * @module angularMoment
 		 * @function
 		 */
-			.filter('subtract', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
-				function subtractFilter(value, amount, type) {
+			.filter('amSubtract', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function amSubtractFilter(value, amount, type) {
 
 					if (typeof value === 'undefined' || value === null) {
 						return '';
@@ -594,19 +594,19 @@
 					return moment(value).subtract(parseInt(amount, 10), type);
 				}
 
-				subtractFilter.$stateful = angularMomentConfig.statefulFilters;
+				amSubtractFilter.$stateful = angularMomentConfig.statefulFilters;
 
-				return subtractFilter;
+				return amSubtractFilter;
 			}])
 
 		/**
 		 * @ngdoc filter
-		 * @name angularMoment.filter:add
+		 * @name angularMoment.filter:amAdd
 		 * @module angularMoment
 		 * @function
 		 */
-			.filter('add', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
-				function addFilter(value, amount, type) {
+			.filter('amAdd', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function amAddFilter(value, amount, type) {
 
 					if (typeof value === 'undefined' || value === null) {
 						return '';
@@ -615,9 +615,9 @@
 					return moment(value).add(parseInt(amount, 10), type);
 				}
 
-				addFilter.$stateful = angularMomentConfig.statefulFilters;
+				amAddFilter.$stateful = angularMomentConfig.statefulFilters;
 
-				return addFilter;
+				return amAddFilter;
 			}]);
 	}
 
