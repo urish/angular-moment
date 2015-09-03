@@ -133,7 +133,7 @@ Will display the age of the message (e.g. 10 minutes, 1 hour, 2 days, etc).
 
 ### subtract filter
 
-Subtract values (hours, minutes, seconds ...) from the date.
+Subtract values (hours, minutes, seconds ...) from a specified date.
 
 See [Moment.JS documentation](http://momentjs.com/docs/#/manipulating/subtract/) for a list of supported duration formats.
 
@@ -146,7 +146,7 @@ Example:
 
 ### add filter
 
-Add values (hours, minutes, seconds ...) from the date.
+Add values (hours, minutes, seconds ...) to a specified date.
 
 See [Moment.JS documentation](http://momentjs.com/docs/#/manipulating/add/) for a list of supported duration formats.
 
