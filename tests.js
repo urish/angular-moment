@@ -703,16 +703,12 @@ describe('module angularMoment', function () {
 
 		it('should subtract 1 hour from date', function () {
 			var date = new Date(2000, 1, 1, 0, 0, 0);
-			// var result = 'Mon Jan 31 2000 23:00:00 GMT+0100';
-			var result = amSubtract(date, 1, 'hours').toString();
-			expect(amSubtract(date, 1, 'hours').toString()).toBe(result);
+			expect(amSubtract(date, 1, 'hours').toString()).toMatch(/^Mon Jan 31 2000 23:00:00/);
 		});
 
 		it('should subtract 1 minute from date', function () {
 			var date = new Date(2000, 1, 1, 0, 0, 0);
-			// var result = 'Mon Jan 31 2000 23:59:00 GMT+0100';		Travis have GMT+0000
-			var result = amSubtract(date, 1, 'minutes').toString();
-			expect(amSubtract(date, 1, 'minutes').toString()).toBe(result);
+			expect(amSubtract(date, 1, 'minutes').toString()).toMatch(/^Mon Jan 31 2000 23:59:00/);
 		});
 
 	});
@@ -728,16 +724,12 @@ describe('module angularMoment', function () {
 
 		it('should add 1 hour to date', function () {
 			var date = new Date(2000, 1, 1, 0, 0, 0);
-			// var result = 'Tue Feb 01 2000 01:00:00 GMT+0100';
-			var result = amAdd(date, 1, 'hours').toString();
-			expect(amAdd(date, 1, 'hours').toString()).toBe(result);
+			expect(amAdd(date, 1, 'hours').toString()).toMatch(/^Tue Feb 01 2000 01:00:00/);
 		});
 
 		it('should add 1 minute to date', function () {
 			var date = new Date(2000, 1, 1, 0, 0, 0);
-			// var result = 'Tue Feb 01 2000 00:01:00 GMT+0100';		Travis have GMT+0000
-			var result = amAdd(date, 1, 'minutes').toString();
-			expect(amAdd(date, 1, 'minutes').toString()).toBe(result);
+			expect(amAdd(date, 1, 'minutes').toString()).toMatch(/^Tue Feb 01 2000 00:01:00/);
 		});
 
 	});
