@@ -135,7 +135,7 @@ Will display the age of the message (e.g. 10 minutes, 1 hour, 2 days, etc).
 
 Subtract values (hours, minutes, seconds ...) from a specified date.
 
-See [Moment.JS documentation](http://momentjs.com/docs/#/manipulating/subtract/) for a list of supported duration formats.
+See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats.
 
 Example:
 
@@ -148,7 +148,7 @@ Example:
 
 Add values (hours, minutes, seconds ...) to a specified date.
 
-See [Moment.JS documentation](http://momentjs.com/docs/#/manipulating/add/) for a list of supported duration formats.
+See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats.
 
 Example:
 
