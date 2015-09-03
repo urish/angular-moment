@@ -576,6 +576,48 @@
 				amTimeAgoFilter.$stateful = angularMomentConfig.statefulFilters;
 
 				return amTimeAgoFilter;
+			}])
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amSubtract
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('amSubtract', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function amSubtractFilter(value, amount, type) {
+
+					if (typeof value === 'undefined' || value === null) {
+						return '';
+					}
+
+					return moment(value).subtract(parseInt(amount, 10), type);
+				}
+
+				amSubtractFilter.$stateful = angularMomentConfig.statefulFilters;
+
+				return amSubtractFilter;
+			}])
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amAdd
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('amAdd', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function amAddFilter(value, amount, type) {
+
+					if (typeof value === 'undefined' || value === null) {
+						return '';
+					}
+
+					return moment(value).add(parseInt(amount, 10), type);
+				}
+
+				amAddFilter.$stateful = angularMomentConfig.statefulFilters;
+
+				return amAddFilter;
 			}]);
 	}
 

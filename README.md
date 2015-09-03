@@ -121,7 +121,7 @@ For more information about Moment.JS difference function, see the
 
 ### amDurationFormat filter
 
-Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) for explanation about the formatting algorithm. 
+Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) for explanation about the formatting algorithm.
 
 Example:
 
@@ -130,6 +130,32 @@ Example:
 ```
 
 Will display the age of the message (e.g. 10 minutes, 1 hour, 2 days, etc).
+
+### amSubtract filter
+
+Subtract values (hours, minutes, seconds ...) from a specified date.
+
+See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats.
+
+Example:
+
+```html
+<span>Start time: {{day.start | amSubtract : '1' : 'hours' | amDateFormat : 'hh'}} : {{day.start | amSubtract : '30' : 'minutes' | amDateFormat : 'mm'}}</span>
+
+```
+
+### amAdd filter
+
+Add values (hours, minutes, seconds ...) to a specified date.
+
+See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats.
+
+Example:
+
+```html
+<span>Start time: {{day.start | amAdd : '1' : 'hours' | amDateFormat : 'hh'}} : {{day.start | amAdd : '30' : 'minutes' | amDateFormat : 'mm'}}</span>
+
+```
 
 ### Time zone support
 
