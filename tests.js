@@ -28,6 +28,7 @@ describe('module angularMoment', function () {
 		(moment.locale || moment.lang)('en');
 		// Add a sample timezones for tests
 		moment.tz.add('UTC|UTC|0|0|');
+		moment.tz.add('Europe/Zurich|CET CEST|-10 -20|01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-19Lc0 11A0 1o00 11A0 1xG10 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00');
 		moment.tz.add('Pacific/Tahiti|LMT TAHT|9W.g a0|01|-2joe1.I');
 	}));
 
@@ -460,6 +461,11 @@ describe('module angularMoment', function () {
 			amMoment.changeLocale('en', {calendar: {sameElse: '(HH,mm,ss);MM.DD.YYYY'}});
 			expect(amCalendar(timestamp, 'utc', 'Pacific/Tahiti')).toBe('(02,46,54);01.22.2012');
 			amMoment.changeLocale('en', {calendar: {sameElse: 'L'}});
+		});
+
+		it('should parse timezones containing Z correctly (issue #168)', function () {
+			angularMomentConfig.timezone = 'Europe/Zurich';
+			expect(amCalendar(Date.UTC(2015, 8, 3, 23, 55, 55))).toBe('2015-09-04T01:55:55+02:00');
 		});
 
 		it('should accept UTC offset as a timezone parameter', function () {

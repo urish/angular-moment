@@ -423,7 +423,7 @@
 						return aMoment;
 					}
 
-					if (timezone.match(/Z|[+-]\d\d:?\d\d/gi)) {
+					if (timezone.match(/^Z|[+-]\d\d:?\d\d$/i)) {
 						aMoment = aMoment.utcOffset(timezone);
 					} else if (aMoment.tz) {
 						aMoment = aMoment.tz(timezone);
