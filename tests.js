@@ -305,7 +305,7 @@ describe('module angularMoment', function () {
 
 				it('should support setting the full date format through attribute', function () {
 					amTimeAgoConfig.fullDateThreshold = 7;
-					$rootScope.testDate =  new Date(2013, 11, 15);
+					$rootScope.testDate = new Date(2013, 11, 15);
 					var element = angular.element('<span am-time-ago="testDate" am-full-date-format="YYYY-MM-DD"></span>');
 					element = $compile(element)($rootScope);
 					$rootScope.$digest();
@@ -313,8 +313,8 @@ describe('module angularMoment', function () {
 				});
 			});
 
-			describe('am-from attribute', function() {
-				it('should make the calculations from the am-from given', function() {
+			describe('am-from attribute', function () {
+				it('should make the calculations from the am-from given', function () {
 					$rootScope.from = new Date(2015, 6, 11);
 					$rootScope.testDate = new Date(2015, 6, 12);
 					var element = angular.element('<span am-time-ago="testDate" am-from="from"></span>');
@@ -609,24 +609,24 @@ describe('module angularMoment', function () {
 			expect(amDateFormat('blah blah', '(HH,mm,ss);MM.DD.YYYY')).toBe('');
 		});
 
-                it('should accept a string format to parse input date', function () {
-                        var timestamp = '20120122124654';
-                        expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00', 'YYYYMMDDHHmmss')).toBe('(02,46,54);01.22.2012');
-                });
+		it('should accept a string format to parse input date', function () {
+			var timestamp = '20120122124654';
+			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00', 'YYYYMMDDHHmmss')).toBe('(02,46,54);01.22.2012');
+		});
 
-                describe('format config property', function () {
-                        it('should be used when no inputFormat parameter is set', function () {
-                                var timestamp = '20120122124654';
-                                angularMomentConfig.format = 'YYYYMMDDHHmmss';
-                                expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00')).toBe('(02,46,54);01.22.2012');
-                        });
+		describe('format config property', function () {
+			it('should be used when no inputFormat parameter is set', function () {
+				var timestamp = '20120122124654';
+				angularMomentConfig.format = 'YYYYMMDDHHmmss';
+				expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00')).toBe('(02,46,54);01.22.2012');
+			});
 
-                        it('should be overrideable by inputFormat parameter', function () {
-                                var timestamp = '20120122124654';
-                                angularMomentConfig.format = 'ssmmHHDDMMYYYY';
-                                expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00', 'YYYYMMDDHHmmss')).toBe('(02,46,54);01.22.2012');
-                        });
-                });
+			it('should be overrideable by inputFormat parameter', function () {
+				var timestamp = '20120122124654';
+				angularMomentConfig.format = 'ssmmHHDDMMYYYY';
+				expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00', 'YYYYMMDDHHmmss')).toBe('(02,46,54);01.22.2012');
+			});
+		});
 	});
 
 	describe('amDurationFormat filter', function () {
@@ -677,7 +677,7 @@ describe('module angularMoment', function () {
 
 		it('should support started date as fourth parameter', function () {
 			var date = new Date(2015, 7, 14),
-			  from = new Date(2015, 7, 15);
+				from = new Date(2015, 7, 15);
 			expect(amTimeAgo(date, null, null, from)).toBe('a day ago');
 			expect(amTimeAgo(date, null, true, from)).toBe('a day');
 		});

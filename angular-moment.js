@@ -413,7 +413,7 @@
 				 *
 				 * @param {Moment} aMoment a moment() instance to apply the timezone shift to
 				 * @param {string=} timezone The timezone to apply. If none given, will apply the timezone
-				 * 		configured in angularMomentConfig.timezone. It can be a named timezone (e.g. 'America/Phoenix') or an offset from UTC (e.g. '+0300')
+				 *        configured in angularMomentConfig.timezone. It can be a named timezone (e.g. 'America/Phoenix') or an offset from UTC (e.g. '+0300')
 				 *
 				 * @returns {Moment} The given moment with the timezone shift applied
 				 */
