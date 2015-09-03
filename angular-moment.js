@@ -576,7 +576,7 @@
 				amTimeAgoFilter.$stateful = angularMomentConfig.statefulFilters;
 
 				return amTimeAgoFilter;
-			}]);
+			}])
 
 		/**
 		 * @ngdoc filter
@@ -597,7 +597,7 @@
 				subtractFilter.$stateful = angularMomentConfig.statefulFilters;
 
 				return subtractFilter;
-			}]);
+			}])
 
 		/**
 		 * @ngdoc filter
@@ -606,7 +606,7 @@
 		 * @function
 		 */
 			.filter('add', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
-				function subtractFilter(value, amount, type) {
+				function addFilter(value, amount, type) {
 
 					if (typeof value === 'undefined' || value === null) {
 						return '';
