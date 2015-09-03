@@ -468,7 +468,7 @@
 		 * @module angularMoment
 		 */
 			.filter('amDifference', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
-				function amDifferenceFilter(value, otherValue, unit, usePrecision, preprocessValue, preprocessOtherValue) {
+				function amDifferenceFilter(value, otherValue, unit, usePrecision, format, preprocessValue, preprocessOtherValue) {
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
@@ -490,8 +490,12 @@
 						}
 					}
 
-					return amMoment.applyTimezone(date).diff(amMoment.applyTimezone(date2), unit, usePrecision);
-				}
+          if (typeof format !== 'undefined' && format !== null && format !== false) {
+            var result = amMoment.applyTimezone(date).diff(amMoment.applyTimezone(date2));
+            return moment.duration(result).format(unit, usePrecision);
+          }
+          return amMoment.applyTimezone(date).diff(amMoment.applyTimezone(date2), unit, usePrecision);
+        }
 
 				amDifferenceFilter.$stateful = angularMomentConfig.statefulFilters;
 
@@ -582,7 +586,9 @@
 	if (typeof define === 'function' && define.amd) {
 		define(['angular', 'moment'], angularMoment);
 	} else if (typeof module !== 'undefined' && module && module.exports) {
-		angularMoment(angular, require('moment'));
+		var moment = require('moment');
+		require('moment-duration-format');
+		angularMoment(angular, moment);
 		module.exports = 'angularMoment';
 	} else {
 		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
