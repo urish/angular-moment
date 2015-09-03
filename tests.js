@@ -692,6 +692,53 @@ describe('module angularMoment', function () {
 
 	});
 
+
+	describe('amSubtract filter', function () {
+
+		var amSubtract;
+
+		beforeEach(function () {
+			amSubtract = $filter('amSubtract');
+		});
+
+		it('should subtract 1 hour from date', function () {
+			var date = new Date(2000, 1, 1, 0, 0, 0);
+			var result = 'Mon Jan 31 2000 23:00:00 GMT+0100';
+			expect(amSubtract(date, 1, 'hours').toString()).toBe(result);
+		});
+
+		it('should subtract 1 minute from date', function () {
+			var date = new Date(2000, 1, 1, 0, 0, 0);
+			var result = 'Mon Jan 31 2000 23:59:00 GMT+0100';
+			expect(amSubtract(date, 1, 'minutes').toString()).toBe(result);
+		});
+
+	});
+
+
+	describe('amAdd filter', function () {
+
+		var amAdd;
+
+		beforeEach(function () {
+			amAdd = $filter('amAdd');
+		});
+
+		it('should add 1 hour to date', function () {
+			var date = new Date(2000, 1, 1, 0, 0, 0);
+			var result = 'Tue Feb 01 2000 01:00:00 GMT+0100';
+			expect(amAdd(date, 1, 'hours').toString()).toBe(result);
+		});
+
+		it('should add 1 minute to date', function () {
+			var date = new Date(2000, 1, 1, 0, 0, 0);
+			var result = 'Tue Feb 01 2000 00:01:00 GMT+0100';
+			expect(amAdd(date, 1, 'minutes').toString()).toBe(result);
+		});
+
+	});
+
+
 	describe('amMoment service', function () {
 		describe('#changeLocale', function () {
 			it('should convert today\'s date to custom calendar format', function () {
