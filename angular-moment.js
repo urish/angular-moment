@@ -577,6 +577,48 @@
 
 				return amTimeAgoFilter;
 			}]);
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:subtract
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('subtract', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function subtractFilter(value, amount, type) {
+
+					if (typeof value === 'undefined' || value === null) {
+						return '';
+					}
+
+					return moment(value).subtract(parseInt(amount, 10), type);
+				}
+
+				subtractFilter.$stateful = angularMomentConfig.statefulFilters;
+
+				return subtractFilter;
+			}]);
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:add
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('add', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function subtractFilter(value, amount, type) {
+
+					if (typeof value === 'undefined' || value === null) {
+						return '';
+					}
+
+					return moment(value).add(parseInt(amount, 10), type);
+				}
+
+				addFilter.$stateful = angularMomentConfig.statefulFilters;
+
+				return addFilter;
+			}]);
 	}
 
 	if (typeof define === 'function' && define.amd) {
