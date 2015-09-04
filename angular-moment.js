@@ -468,7 +468,7 @@
 		 * @module angularMoment
 		 */
 			.filter('amDifference', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
-				function amDifferenceFilter(value, otherValue, unit, usePrecision, format, preprocessValue, preprocessOtherValue) {
+				function amDifferenceFilter(value, otherValue, unit, usePrecision, preprocessValue, preprocessOtherValue, format) {
 					if (typeof value === 'undefined' || value === null) {
 						return '';
 					}
