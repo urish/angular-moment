@@ -522,6 +522,15 @@ describe('module angularMoment', function () {
 			expect(amDifference(testDate, today)).toBe(48813000);
 		});
 
+		it('should support use unit param as format when format param is true ', function () {
+			var test = new Date(2012, 0, 21, 1, 40, 50);
+			var testDate1 = new Date(2013, 0, 22, 2, 41, 51);
+			expect(amDifference(testDate1, test, 'D', false, null, null, true)).toBe('367');
+			expect(amDifference(testDate1, test, 'M', false, null, null, true)).toBe('12');
+			expect(amDifference(testDate1, test, 'Y', false, null, null, true)).toBe('1');
+			expect(amDifference(testDate1, test, 'Y M D h m s', false, null, null, true)).toBe('1 0 2 1 1 1');
+		});
+
 		it('should support passing "years", "months", "days", etc as a units parameter', function () {
 			var test = new Date(2012, 0, 22, 4, 46, 54);
 			var testDate1 = new Date(2013, 0, 22, 4, 46, 54);

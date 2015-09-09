@@ -17,6 +17,7 @@ module.exports = function (config) {
 			'bower_components/moment/moment.js',
 			'bower_components/moment/{locale,lang}/fr.js',
 			'bower_components/moment-timezone/moment-timezone.js',
+			'bower_components/moment-duration-format/lib/moment-duration-format.js',
 			'angular-moment.js',
 
 			// angular-mocks defines a global variable named 'module' which confuses moment-timezone.js.
