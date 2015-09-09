@@ -6,6 +6,7 @@
     "type": "git",
     "url": "http://github.com/urish/angular-moment.git"
   },
+  "license": "MIT",
   "dependencies": {
     "moment": ">=2.8.0 <2.11.0"
   },
