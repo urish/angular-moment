@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.11.0 - TBD
+
+!!! BREAKING CHANGE !!!
+
+Preprocessors, timezones and input format were removed from am-time-ago and all filters. Use the new `amFromUnix`, 
+`amUtc`, `amUtcOffset`, `amTimezone`, and `amParse` filters instead. 
+
+Examples:
+* `<time am-time-ago="myDate" am-format="YYYY-MM-DD">` becomes `<time am-time-ago="myDate|amParse:'YYYY-MM-DD'">`
+* `<time am-time-ago="myDate" am-preprocess="unix">` becomes `<time am-time-ago="myDate|amFromUnix">`
+* `{{myDate|amCalendar:'unix'}}` becomes `{{myDate|amFromUnix|amCalendar}}`
+* `{{myDate|amCalendar:null:'PDT'}}` becomes `{{myDate|amTimezone:'PDT'|amCalendar}}`
+
+The removal of the preprocessors also affects the other positional parameters of the `amTimeAgo`:
+ 
+`{{myDate|amTimeAgo:null:true:fromDate}}` becomes `{{myDate|amTimeAgo:true:fromDate}}`.
+
+For more information, please see [#174](https://github.com/urish/angular-moment/issues/174);
+
 ## 0.10.3 - 2015-09-05
 - Allow `amDateFormat` to work with custom formatted input date strings ([#162](https://github.com/urish/angular-moment/pull/162), contributed by [jblashka](https://github.com/jblashka))
 - `amAdd`, `amSubtract` - add/subtract a value from a given date ([#171](https://github.com/urish/angular-moment/pull/171), contributed by [nicholasruggeri](https://github.com/nicholasruggeri))

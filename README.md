@@ -47,23 +47,11 @@ myapp.run(function(amMoment) {
 });
 ```
 
-### Configuration
-
-Parameter `preprocess`(e.g: `unix`, `utc`) would pre-execute before.
-
-```js
-angular.module('myapp').constant('angularMomentConfig', {
-	preprocess: 'unix', // optional
-	timezone: 'Europe/London' // optional
-});
-```
-
 ### Timeago directive
 Use am-time-ago directive to format your relative timestamps. For example:
 
 ```html
 <span am-time-ago="message.time"></span>
-<span am-time-ago="message.time" am-preprocess="unix"></span>
 ```
 
 angular-moment will dynamically update the span to indicate how much time
@@ -156,6 +144,26 @@ Example:
 <span>Start time: {{day.start | amAdd : '1' : 'hours' | amDateFormat : 'hh'}} : {{day.start | amAdd : '30' : 'minutes' | amDateFormat : 'mm'}}</span>
 
 ```
+
+### amParse
+
+TODO add docs before 0.11.0 release
+
+### amFromUnix
+
+TODO add docs before 0.11.0 release
+
+### amUtc
+
+TODO add docs before 0.11.0 release
+
+### amUtcOffset
+
+TODO add docs before 0.11.0 release
+
+### amTimezone
+
+TODO add docs before 0.11.0 release
 
 ### Time zone support
 

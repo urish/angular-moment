@@ -30,6 +30,7 @@ describe('module angularMoment', function () {
 		moment.tz.add('UTC|UTC|0|0|');
 		moment.tz.add('Europe/Zurich|CET CEST|-10 -20|01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-19Lc0 11A0 1o00 11A0 1xG10 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00');
 		moment.tz.add('Pacific/Tahiti|LMT TAHT|9W.g a0|01|-2joe1.I');
+		moment.tz.setDefault(null);
 	}));
 
 	afterEach(function () {
@@ -41,14 +42,6 @@ describe('module angularMoment', function () {
 
 
 	describe('am-time-ago directive', function () {
-		it('should change the text of the element to "a few seconds ago" when given unix timestamp', function () {
-			$rootScope.testDate = new Date().getTime() / 1000;
-			var element = angular.element('<span am-time-ago="testDate" am-preprocess="unix"></span>');
-			element = $compile(element)($rootScope);
-			$rootScope.$digest();
-			expect(element.text()).toBe('a few seconds ago');
-		});
-
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
 			$rootScope.testDate = new Date();
 			var element = angular.element('<span am-time-ago="testDate"></span>');
@@ -111,7 +104,7 @@ describe('module angularMoment', function () {
 
 			var waitsInterval = setInterval(function () {
 				// Wait until $rootScope.date is more than 45 seconds old
-				if (new Date().getTime() - $rootScope.testDate.getTime() < 45000) {
+				if (new Date().getTime() - $rootScope.testDate.getTime() < 45200) {
 					return;
 				}
 
@@ -366,54 +359,6 @@ describe('module angularMoment', function () {
 			});
 		});
 
-		describe('am-format attribute', function () {
-			it('should support custom date format', function () {
-				var today = new Date();
-				var date = Math.min(today.getDate(), 28);
-				$rootScope.testDate = today.getFullYear() + '#' + date + '#' + today.getMonth();
-				var element = angular.element('<span am-time-ago="testDate" am-format="YYYY#DD#MM"></span>');
-				element = $compile(element)($rootScope);
-				$rootScope.$digest();
-				expect(element.text()).toBe('a month ago');
-			});
-
-			it('should support angular expressions in date format', function () {
-				var today = new Date();
-				var date = Math.min(today.getDate(), 28);
-				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + date;
-				var element = angular.element('<span am-time-ago="testDate" am-format="{{dateFormat}}"></span>');
-				element = $compile(element)($rootScope);
-				$rootScope.$digest();
-				$rootScope.dateFormat = 'MM@YYYY@DD';
-				$rootScope.$digest();
-				expect(element.text()).toBe('a month ago');
-			});
-		});
-
-		describe('format config property', function () {
-			it('should be used when no `am-format` attribute is found', function () {
-				angularMomentConfig.format = 'MM@YYYY@DD';
-				var today = new Date();
-				var date = Math.min(today.getDate(), 28);
-				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + date;
-				var element = angular.element('<span am-time-ago="testDate"></span>');
-				element = $compile(element)($rootScope);
-				$rootScope.$digest();
-				expect(element.text()).toBe('a month ago');
-			});
-
-			it('should be overridable by `am-format` attribute', function () {
-				angularMomentConfig.format = 'YYYY@MM@@DD';
-				var today = new Date();
-				var date = Math.min(today.getDate(), 28);
-				$rootScope.testDate = today.getMonth() + '@' + today.getFullYear() + '@' + date;
-				var element = angular.element('<span am-format="MM@YYYY@DD" am-time-ago="testDate"></span>');
-				element = $compile(element)($rootScope);
-				$rootScope.$digest();
-				expect(element.text()).toBe('a month ago');
-			});
-		});
-
 		describe('serverTime configuration', function () {
 			it('should calculate time ago in respect to the configured server time', function () {
 				amTimeAgoConfig.serverTime = Date.UTC(2014, 5, 12, 5, 22, 11);
@@ -423,6 +368,106 @@ describe('module angularMoment', function () {
 				$rootScope.$digest();
 				expect(element.text()).toBe('in 4 hours');
 			});
+		});
+	});
+
+	describe('amFromUnix filter', function () {
+		var amFromUnix;
+		beforeEach(function () {
+			amFromUnix = $filter('amFromUnix');
+		});
+
+		it('should convert a unix-timestamp into a moment object with the correct time value', function () {
+			var result = amFromUnix(1422095523);
+			expect(moment.isMoment(result)).toBe(true);
+			expect(result.valueOf()).toBe(1422095523000);
+		});
+	});
+
+	describe('amUtc filter', function () {
+		var amUtc;
+		beforeEach(function () {
+			amUtc = $filter('amUtc');
+		});
+
+		it('should create a UTC moment from the given date', function () {
+			var result = amUtc(new Date());
+			expect(moment.isMoment(result)).toBe(true);
+			expect(result.utcOffset()).toBe(0);
+		});
+	});
+
+	describe('amParse filter', function () {
+		var amParse;
+		beforeEach(function () {
+			amParse = $filter('amParse');
+		});
+
+		it('should parse the given date string according to the given format, and return a moment object', function () {
+			var result = amParse('2015#09#13', 'YYYY#MM#DD');
+			expect(moment.isMoment(result)).toBe(true);
+			expect(result.year()).toBe(2015);
+			expect(result.month()).toBe(8);
+			expect(result.date()).toBe(13);
+		});
+	});
+
+	describe('amTimezone filter', function () {
+		var amTimezone;
+
+		beforeEach(function () {
+			amTimezone = $filter('amTimezone');
+		});
+
+		it('should apply the given timezone', function () {
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			var result = amTimezone(timestamp, 'Pacific/Tahiti');
+			expect(result.utcOffset()).toBe(-600);
+			expect(result.format('YYYY-MM-DD HH:mm:ss')).toBe('2012-01-22 02:46:54');
+		});
+
+		it('should parse timezones containing Z correctly (issue #168)', function () {
+			var timestamp = Date.UTC(2015, 8, 3, 23, 55, 55);
+			var result = amTimezone(timestamp, 'Europe/Zurich');
+			expect(result.utcOffset()).toBe(120);
+			expect(result.format('YYYY-MM-DD HH:mm:ss')).toBe('2015-09-04 01:55:55');
+		});
+
+		it('should gracefully handle the case where moment-timezone is not loaded', function () {
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			var originalMomentTz = moment.fn.tz;
+			try {
+				delete moment.fn.tz;
+				var result = amTimezone(timestamp, 'Pacific/Tahiti');
+				expect(moment.isMoment(result)).toBe(true);
+				// We the timezone will not be correct since moment.fn.tz isn't present. The user will be warned
+				// about this.
+			} finally {
+				moment.fn.tz = originalMomentTz;
+				moment.fn.tz = originalMomentTz;
+			}
+		});
+	});
+
+	describe('amUtcOffset filter', function () {
+		var amUtcOffset;
+
+		beforeEach(function () {
+			amUtcOffset = $filter('amUtcOffset');
+		});
+
+		it('should accept a numeric UTC offset and apply it to the given date / moment', function () {
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			var result = amUtcOffset(timestamp, -450);
+			expect(result.utcOffset()).toBe(-450);
+			expect(result.format('YYYY-MM-DD HH:mm:ss')).toBe('2012-01-22 05:16:54');
+		});
+
+		it('should accept a string UTC offset and apply it to the given date / moment', function () {
+			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
+			var result = amUtcOffset(timestamp, '-08:00');
+			expect(result.utcOffset()).toBe(-480);
+			expect(result.format('YYYY-MM-DD HH:mm:ss')).toBe('2012-01-22 04:46:54');
 		});
 	});
 
@@ -449,59 +494,6 @@ describe('module angularMoment', function () {
 
 		it('should accept a numeric unix timestamp (milliseconds since the epoch) as input', function () {
 			expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe('01/22/2012');
-		});
-
-		it('should respect the configured timezone', function () {
-			angularMomentConfig.timezone = 'Pacific/Tahiti';
-			expect(amCalendar(Date.UTC(2012, 0, 22, 4, 46, 54))).toBe('01/21/2012');
-		});
-
-		it('should respect the timezone parameter', function () {
-			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
-			amMoment.changeLocale('en', {calendar: {sameElse: '(HH,mm,ss);MM.DD.YYYY'}});
-			expect(amCalendar(timestamp, 'utc', 'Pacific/Tahiti')).toBe('(02,46,54);01.22.2012');
-			amMoment.changeLocale('en', {calendar: {sameElse: 'L'}});
-		});
-
-		it('should parse timezones containing Z correctly (issue #168)', function () {
-			angularMomentConfig.timezone = 'Europe/Zurich';
-			expect(amCalendar(Date.UTC(2015, 8, 3, 23, 55, 55))).toBe('2015-09-04T01:55:55+02:00');
-		});
-
-		it('should accept UTC offset as a timezone parameter', function () {
-			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
-			amMoment.changeLocale('en', {calendar: {sameElse: '(HH,mm,ss);MM.DD.YYYY'}});
-			expect(amCalendar(timestamp, 'utc', '-10:00')).toBe('(02,46,54);01.22.2012');
-			amMoment.changeLocale('en', {calendar: {sameElse: 'L'}});
-		});
-
-		it('should apply the "utc" preprocessor when the string "utc" is given in the second argument', function () {
-			expect(amCalendar(Date.UTC(2012, 0, 22, 0, 0, 0), 'utc')).toBe('01/22/2012');
-			expect(amCalendar(Date.UTC(2012, 0, 22, 23, 59, 59), 'utc')).toBe('01/22/2012');
-		});
-
-		it('should apply the "unix" preprocessor if angularMomentConfig.preprocess is set to "unix" and no preprocessor is given', function () {
-			var unixDate = new Date(1970, 0, 2, 10, 0, 0).getTime() / 1000;
-			angularMomentConfig.preprocess = 'unix';
-			expect(amCalendar(unixDate)).toBe('01/02/1970');
-		});
-
-		it('should ignore the default preprocessor if we explicity give it null in the second argument', function () {
-			var unixDate = new Date(1970, 0, 1, 10, 0, 0).getTime();
-			angularMomentConfig.preprocess = 'unix';
-			expect(amCalendar(unixDate, null)).toBe('01/01/1970');
-		});
-
-		it('should gracefully handle the case where timezone is given but moment-timezone is not loaded', function () {
-			angularMomentConfig.timezone = 'Pacific/Tahiti';
-			var originalMomentTz = moment.fn.tz;
-			try {
-				delete moment.fn.tz;
-				expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe('01/22/2012');
-			} finally {
-				moment.fn.tz = originalMomentTz;
-				moment.fn.tz = originalMomentTz;
-			}
 		});
 
 		it('should return an empty string for invalid input', function () {
@@ -553,16 +545,6 @@ describe('module angularMoment', function () {
 			expect(amDifference(new Date(2012, 0, 22, 4, 46, 55).getTime(), new Date(2012, 0, 22, 4, 46, 54).getTime())).toBe(1000);
 		});
 
-		it('should apply the "utc" preprocessor when the string "utc" is given as a preprocessor argument', function () {
-			expect(amDifference([2012, 0, 22, 0, 0, 1], Date.UTC(2012, 0, 22, 0, 0, 0), null, null, 'utc')).toBe(1000);
-			expect(amDifference(Date.UTC(2012, 0, 22, 0, 0, 1), [2012, 0, 22, 0, 0, 0], null, null, null, 'utc')).toBe(1000);
-		});
-
-		it('should apply the "unix" preprocessor if angularMomentConfig.preprocess is set to "unix" and no preprocessor is given', function () {
-			angularMomentConfig.preprocess = 'unix';
-			expect(amDifference(100001, 100000)).toBe(1000);
-		});
-
 		it('should return an empty string for invalid input', function () {
 			expect(amDifference('blah blah')).toBe('');
 		});
@@ -601,37 +583,8 @@ describe('module angularMoment', function () {
 			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY')).toBe('(02,46,54);01.22.2012');
 		});
 
-		it('should respect the timezone parameter', function () {
-			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
-			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', 'Pacific/Tahiti')).toBe('(02,46,54);01.22.2012');
-		});
-
-		it('should accept UTC offset as a timezone parameter', function () {
-			var timestamp = Date.UTC(2012, 0, 22, 12, 46, 54);
-			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00')).toBe('(02,46,54);01.22.2012');
-		});
-
 		it('should return an empty string for invalid input', function () {
 			expect(amDateFormat('blah blah', '(HH,mm,ss);MM.DD.YYYY')).toBe('');
-		});
-
-		it('should accept a string format to parse input date', function () {
-			var timestamp = '20120122124654';
-			expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00', 'YYYYMMDDHHmmss')).toBe('(02,46,54);01.22.2012');
-		});
-
-		describe('format config property', function () {
-			it('should be used when no inputFormat parameter is set', function () {
-				var timestamp = '20120122124654';
-				angularMomentConfig.format = 'YYYYMMDDHHmmss';
-				expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00')).toBe('(02,46,54);01.22.2012');
-			});
-
-			it('should be overrideable by inputFormat parameter', function () {
-				var timestamp = '20120122124654';
-				angularMomentConfig.format = 'ssmmHHDDMMYYYY';
-				expect(amDateFormat(timestamp, '(HH,mm,ss);MM.DD.YYYY', 'utc', '-10:00', 'YYYYMMDDHHmmss')).toBe('(02,46,54);01.22.2012');
-			});
 		});
 	});
 
@@ -676,16 +629,16 @@ describe('module angularMoment', function () {
 			expect(amTimeAgo(date)).toBe('a few seconds ago');
 		});
 
-		it('should remove suffix from the result if the third parameter (suffix) is true', function () {
+		it('should remove suffix from the result if the second parameter (suffix) is true', function () {
 			var date = new Date();
-			expect(amTimeAgo(date, null, true)).toBe('a few seconds');
+			expect(amTimeAgo(date, true)).toBe('a few seconds');
 		});
 
-		it('should support started date as fourth parameter', function () {
+		it('should support starting date as third parameter', function () {
 			var date = new Date(2015, 7, 14),
 				from = new Date(2015, 7, 15);
-			expect(amTimeAgo(date, null, null, from)).toBe('a day ago');
-			expect(amTimeAgo(date, null, true, from)).toBe('a day');
+			expect(amTimeAgo(date, null, from)).toBe('a day ago');
+			expect(amTimeAgo(date, true, from)).toBe('a day');
 		});
 
 		it('should gracefully handle undefined values', function () {
@@ -777,10 +730,10 @@ describe('module angularMoment', function () {
 		describe('#changeTimezone', function () {
 			it('Should update the current timezone', function () {
 				amMoment.changeTimezone('UTC');
-				expect(amMoment.applyTimezone(moment()).utcOffset()).toBe(0);
+				expect(amMoment.preprocessDate(moment()).utcOffset()).toBe(0);
 
 				amMoment.changeTimezone('Pacific/Tahiti');
-				expect(amMoment.applyTimezone(moment()).utcOffset()).toBe(-600);
+				expect(amMoment.preprocessDate(moment()).utcOffset()).toBe(-600);
 			});
 
 			it('should broadcast an angularMoment:timezoneChanged event on the root scope with the new timezone value', function () {
@@ -794,26 +747,24 @@ describe('module angularMoment', function () {
 		});
 
 		describe('#preprocessDate', function () {
-			it('should call a custom preprocessor that was registered on amMoment.preprocessors', function () {
+			it('should call a custom preprocessor set by `angularMomentConfig.preprocess`', function () {
 				var testDate = new Date(2013, 0, 22, 12, 46, 54);
 				var meeting = {
 					name: 'Budget plan',
 					date: testDate
 				};
 
-				amMoment.preprocessors.foobar = function (value) {
+				angularMomentConfig.preprocess = function (value) {
 					return moment(value.date);
 				};
 
 				expect(amMoment.preprocessDate(meeting, 'foobar').valueOf()).toEqual(testDate.getTime());
 			});
 
-			it('should issue a warning if an unsupported preprocessor is used and fall-back to default processing', inject(function ($log) {
-				var testDate = new Date(2014, 0, 22, 12, 46, 54);
-				spyOn($log, 'warn');
-				expect(amMoment.preprocessDate(testDate.getTime(), 'blabla').valueOf()).toEqual(testDate.getTime());
-				expect($log.warn).toHaveBeenCalledWith('angular-moment: Ignoring unsupported value for preprocess: blabla');
-			}));
+			it('should respect the default timezone', function () {
+				angularMomentConfig.timezone = 'Pacific/Tahiti';
+				expect(amMoment.preprocessDate(new Date()).utcOffset()).toBe(-600);
+			});
 		});
 	});
 
@@ -825,8 +776,9 @@ describe('module angularMoment', function () {
 
 	describe('angularMomentConfig constant', function () {
 		it('should have an empty timezone value by default', function () {
-			expect(angularMomentConfig.timezone).toBe('');
+			expect(angularMomentConfig.timezone).toBe(null);
 		});
+
 		it('should have an empty preprocess value by default', function () {
 			expect(angularMomentConfig.preprocess).toBe(null);
 		});
