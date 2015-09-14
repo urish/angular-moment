@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.11.0 - TBD
+## 1.0.0-beta.1 - 2015-09-14
 
 !!! BREAKING CHANGE !!!
 
@@ -17,7 +17,7 @@ The removal of the preprocessors also affects the other positional parameters of
  
 `{{myDate|amTimeAgo:null:true:fromDate}}` becomes `{{myDate|amTimeAgo:true:fromDate}}`.
 
-For more information, please see [#174](https://github.com/urish/angular-moment/issues/174);
+For more information, please see [#174](https://github.com/urish/angular-moment/issues/174).
 
 ## 0.10.3 - 2015-09-05
 - Allow `amDateFormat` to work with custom formatted input date strings ([#162](https://github.com/urish/angular-moment/pull/162), contributed by [jblashka](https://github.com/jblashka))
