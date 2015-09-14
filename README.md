@@ -68,6 +68,50 @@ The user will initially see "a few seconds ago", and about a minute
 after the span will automatically update with the text "a minute ago",
 etc.
 
+### amParse filter
+
+Parses a custom-formatted date into a moment object that can be used with the `am-time-ago` directive and the
+other filters. For example, the following code will accept dates that are formatted like "2015.04.25 22:00:15':
+
+```html
+<span am-time-ago="message.time | amParse:'YYYY.MM.DD HH:mm:ss'"></span>
+```
+
+### amFromUnix filter
+
+Converts a unix-timestamp (seconds since 1/1/1970) into a moment object. Example:
+
+```html
+<span am-time-ago="message.unixTime | amFromUnix">
+```
+
+### amUtc filter
+
+Create / switch the current moment object into UTC mode. For example, given a date object in `message.date`, 
+the following code will display the time in UTC instead of the local timezone:
+
+```html
+<span>{{message.date | amUtc | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
+```
+
+### amUtcOffset filter
+
+Uses the given utc offset when displaying a date. For example, the following code will display the date with
+a UTC + 3 hours time offset:
+
+```html
+<span>{{message.date | amUtcOffset:'+0300' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
+```
+
+### amTimezone filter
+
+Applies a timezone to the given date / moment object. You need to include `moment-timezone.js` in your project
+and load timezone data in order to use this filter. The following example displays the time in Israel's timezone:
+
+```html
+<span>{{message.date | amTimezone:'Israel' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
+```
+
 ### amDateFormat filter
 Format dates using moment.js format() method. Example:
 
@@ -109,7 +153,9 @@ For more information about Moment.JS difference function, see the
 
 ### amDurationFormat filter
 
-Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/) for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) for explanation about the formatting algorithm.
+Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/)
+for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) 
+for explanation about the formatting algorithm.
 
 Example:
 
@@ -145,26 +191,6 @@ Example:
 
 ```
 
-### amParse
-
-TODO add docs before 0.11.0 release
-
-### amFromUnix
-
-TODO add docs before 0.11.0 release
-
-### amUtc
-
-TODO add docs before 0.11.0 release
-
-### amUtcOffset
-
-TODO add docs before 0.11.0 release
-
-### amTimezone
-
-TODO add docs before 0.11.0 release
-
 ### Time zone support
 
 The `amDateFormat` and `amCalendar` filters can be configured to display dates aligned
@@ -176,7 +202,7 @@ angular.module('myapp').constant('angularMomentConfig', {
 });
 ```
 
-Remember to include `moment-timezone.js` in your project, otherwise the custom timezone
+Remember to include `moment-timezone.js` v0.3.0 or greater in your project, otherwise the custom timezone
 functionality will not be available. You will also need to include a timezone data file that
 you can create using the [Timezone Data Builder](http://momentjs.com/timezone/data/)
 or simply download from [here](https://rawgithub.com/qw4n7y/7282780/raw/6ae3b334b295f93047e8f3ad300db6bc4387e235/moment-timezone-data.js).
