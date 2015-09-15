@@ -447,6 +447,13 @@ describe('module angularMoment', function () {
 				moment.fn.tz = originalMomentTz;
 			}
 		});
+
+		it('should not cause infinite digest loop when combined with am-time-ago', function () {
+			$rootScope.testDate = new Date();
+			var element = angular.element('<div am-time-ago="testDate|amTimezone:\'UTC\'"></div>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+		});
 	});
 
 	describe('amUtcOffset filter', function () {

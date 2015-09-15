@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-beta.2 - TBD
+
+- Bugfix: Infinite digest loop when combining `am-time-ago` and `amTimezone` ([#178](https://github.com/urish/angular-moment/issues/178))
+
 ## 1.0.0-beta.1 - 2015-09-14
 
 !!! BREAKING CHANGE !!!

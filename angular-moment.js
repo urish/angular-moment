@@ -473,10 +473,6 @@
 					}
 				}
 
-				// Since AngularJS 1.3, filters have to explicitly define being stateful
-				// (this is no longer the default).
-				amTimezone.$stateful = angularMomentConfig.statefulFilters;
-
 				return amTimezone;
 			}])
 
