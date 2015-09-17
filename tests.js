@@ -397,6 +397,27 @@ describe('module angularMoment', function () {
 		});
 	});
 
+	describe('amLocal filter', function () {
+		var amLocal;
+		beforeEach(function () {
+			amLocal = $filter('amLocal');
+		});
+
+		it('should convert the given moment object into local object', function () {
+			var localOffset = moment().utcOffset();
+			var utcDate = moment.utc();
+			var result = amLocal(utcDate);
+			expect(moment.isMoment(result)).toBe(true);
+			expect(result.utcOffset()).toBe(localOffset);
+		});
+
+		it('should return null if a non moment object was given', function () {
+			expect(amLocal(null)).toBe(null);
+			expect(amLocal('test')).toBe(null);
+			expect(amLocal(new Date())).toBe(null);
+		});
+	});
+
 	describe('amParse filter', function () {
 		var amParse;
 		beforeEach(function () {

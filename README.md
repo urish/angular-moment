@@ -103,6 +103,15 @@ a UTC + 3 hours time offset:
 <span>{{message.date | amUtcOffset:'+0300' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
 
+### amLocal filter
+
+Changes the given moment object to be in the local timezone. Usually used in conjunction with `amUtc` / `amTimezone` 
+for timezone conversion. For example, the following will convert the given UTC date to local time:
+
+```html
+<span>{{message.date | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
+```
+
 ### amTimezone filter
 
 Applies a timezone to the given date / moment object. You need to include `moment-timezone.js` in your project

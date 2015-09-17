@@ -449,6 +449,17 @@
 
 		/**
 		 * @ngdoc filter
+		 * @name angularMoment.filter:amLocal
+		 * @module angularMoment
+		 */
+			.filter('amLocal', ['moment', function (moment) {
+				return function (value) {
+					return moment.isMoment(value) ? value.local() : null;
+				};
+			}])
+
+		/**
+		 * @ngdoc filter
 		 * @name angularMoment.filter:amTimezone
 		 * @module angularMoment
 		 *
