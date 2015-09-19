@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0-beta.2 - TBD
+## 1.0.0-beta.2 - 2015-09-20
 
 - Bugfix: Infinite digest loop when combining `am-time-ago` and `amTimezone` ([#178](https://github.com/urish/angular-moment/issues/178))
 - Bugfix: Cannot use angular-moment under webpack ([#108](https://github.com/urish/angular-moment/issues/108))
