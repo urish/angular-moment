@@ -77,6 +77,8 @@ other filters. For example, the following code will accept dates that are format
 <span am-time-ago="message.time | amParse:'YYYY.MM.DD HH:mm:ss'"></span>
 ```
 
+Note: To use `amParse`, install angular-moment version 1.0.0-beta.2
+
 ### amFromUnix filter
 
 Converts a unix-timestamp (seconds since 1/1/1970) into a moment object. Example:
@@ -84,6 +86,8 @@ Converts a unix-timestamp (seconds since 1/1/1970) into a moment object. Example
 ```html
 <span am-time-ago="message.unixTime | amFromUnix">
 ```
+
+Note: To use `amFromUnix`, install angular-moment version 1.0.0-beta.2
 
 ### amUtc filter
 
@@ -94,6 +98,8 @@ the following code will display the time in UTC instead of the local timezone:
 <span>{{message.date | amUtc | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
 
+Note: To use `amUtc`, install angular-moment version 1.0.0-beta.2
+
 ### amUtcOffset filter
 
 Uses the given utc offset when displaying a date. For example, the following code will display the date with
@@ -102,6 +108,8 @@ a UTC + 3 hours time offset:
 ```html
 <span>{{message.date | amUtcOffset:'+0300' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
+
+Note: To use `amUtcOffset`, install angular-moment version 1.0.0-beta.2
 
 ### amLocal filter
 
@@ -112,6 +120,8 @@ for timezone conversion. For example, the following will convert the given UTC d
 <span>{{message.date | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
 
+Note: To use `amLocal`, install angular-moment version 1.0.0-beta.2
+
 ### amTimezone filter
 
 Applies a timezone to the given date / moment object. You need to include `moment-timezone.js` in your project
@@ -120,6 +130,8 @@ and load timezone data in order to use this filter. The following example displa
 ```html
 <span>{{message.date | amTimezone:'Israel' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
+
+Note: To use `amTimezone`, install angular-moment version 1.0.0-beta.2
 
 ### amDateFormat filter
 Format dates using moment.js format() method. Example:
