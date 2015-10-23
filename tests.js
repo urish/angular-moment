@@ -37,7 +37,6 @@ describe('module angularMoment', function () {
 		// Restore original configuration after each test
 		angular.copy(originalTimeAgoConfig, amTimeAgoConfig);
 		angular.copy(originalAngularMomentConfig, angularMomentConfig);
-		jasmine.clock().uninstall();
 	});
 
 
@@ -117,7 +116,6 @@ describe('module angularMoment', function () {
 
 		it('should schedule the update timer to one hour ahead for date in the far future (#73)', function () {
 			$rootScope.testDate = new Date(new Date().getTime() + 86400000);
-			jasmine.clock().install();
 			spyOn($window, 'setTimeout');
 			var element = angular.element('<div am-time-ago="testDate"></div>');
 			element = $compile(element)($rootScope);
