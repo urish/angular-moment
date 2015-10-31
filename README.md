@@ -230,10 +230,8 @@ or simply download from [here](https://rawgithub.com/qw4n7y/7282780/raw/6ae3b334
 
 ### Accessing `moment()` in your javascript
 
-If you wish to use `moment()` in your controllers or directives, inject the `$window` variable into the
+If you wish to use `moment()` in your services, controllers, or directives, simply inject the `moment` variable into the
 constructor.
-
-You can then access moment via `$window.moment`.
 
 License
 ----
