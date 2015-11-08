@@ -3,6 +3,7 @@
 ## 1.0.0-beta.3 - TBD
 
 - Support AngularJS 1.5.x 
+- Support for nw.js ([#196](https://github.com/urish/angular-moment/pull/196), contributed by [makkesk8](https://github.com/makkesk8))
 
 ## 1.0.0-beta.2 - 2015-09-20
 
