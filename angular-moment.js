@@ -9,6 +9,14 @@
 	function isUndefinedOrNull(val) {
 		return angular.isUndefined(val) || val === null;
 	}
+	
+	function IsUsingRequire() {
+		try {
+			return require('moment'); // Using nw.js or browserify?
+		} catch (e) {
+			throw new Error("Please install moment via npm. Please reference to: https://github.com/urish/angular-moment"); // Add wiki/troubleshooting section?
+		}
+	}
 
 	function angularMoment(angular, moment) {
 		
@@ -16,13 +24,9 @@
 		// If not, try to require it using browserify / nw.js native require
 		if(typeof moment === 'undefined') {
 			if(typeof require === 'function') {
-				try {
-					moment = require('moment'); // Using nw.js or browserify?
-				} catch (e) {
-					throw new Error('Please install moment via npm. Please reference to: https://github.com/urish/angular-moment'); // Add wiki/troubleshooting section?
-				}
+				moment = IsUsingRequire();
 			}else{
-				throw new Error('Moment cannot be found by angular-moment! Please reference to: https://github.com/urish/angular-moment'); // Add wiki/troubleshooting section?
+				throw new Error("Moment cannot be found by angular-moment! Please reference to: https://github.com/urish/angular-moment"); // Add wiki/troubleshooting section?
 			}
 		}
 
