@@ -112,7 +112,7 @@ Note: To use `amFromUnix`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amUtc filter
 
-Create / switch the current moment object into UTC mode. For example, given a date object in `message.date`, 
+Create / switch the current moment object into UTC mode. For example, given a date object in `message.date`,
 the following code will display the time in UTC instead of the local timezone:
 
 ```html
@@ -134,7 +134,7 @@ Note: To use `amUtcOffset`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amLocal filter
 
-Changes the given moment object to be in the local timezone. Usually used in conjunction with `amUtc` / `amTimezone` 
+Changes the given moment object to be in the local timezone. Usually used in conjunction with `amUtc` / `amTimezone`
 for timezone conversion. For example, the following will convert the given UTC date to local time:
 
 ```html
@@ -195,8 +195,8 @@ For more information about Moment.JS difference function, see the
 
 ### amDurationFormat filter
 
-Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/)
-for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) 
+Formats a duration (such as 5 days) in a human readable format. If a display format is provided (as third argument), duration is formatted according to this argument instead of being humanized. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/)
+for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/)
 for explanation about the formatting algorithm.
 
 Example:
@@ -206,6 +206,11 @@ Example:
 ```
 
 Will display the age of the message (e.g. 10 minutes, 1 hour, 2 days, etc).
+
+```html
+<span>Next train in {{train.nextDuration | amDurationFormat : 'seconds':undefined:'minutes' }} minutes</span>
+
+Will display "Next train in 3 minutes" if train.nextDuration is 190.
 
 ### amSubtract filter
 

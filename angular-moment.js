@@ -593,12 +593,21 @@
 		 * @function
 		 */
 			.filter('amDurationFormat', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
-				function amDurationFormatFilter(value, format, suffix) {
+				function amDurationFormatFilter(value, format, suffix, displayFormat) {
+					var units = ['milliseconds', 'seconds', 'minutes', 'hours', 'days', 'months', 'years'];
+					var asUnits = units.map(function (unit) {
+						return 'as' + unit.charAt(0).toUpperCase() + unit.slice(1);
+					});
+					var validDisplayFormats = units.concat(asUnits);
+
 					if (isUndefinedOrNull(value)) {
 						return '';
 					}
+					if (isUndefinedOrNull(displayFormat) || validDisplayFormats.indexOf(displayFormat) < 0) {
+						return moment.duration(value, format).humanize(suffix);
+					}
 
-					return moment.duration(value, format).humanize(suffix);
+					return moment.duration(value, format)[displayFormat]();
 				}
 
 				amDurationFormatFilter.$stateful = angularMomentConfig.statefulFilters;

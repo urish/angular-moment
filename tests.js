@@ -681,6 +681,14 @@ describe('module angularMoment', function () {
 		it('should gracefully handle undefined values for duration', function () {
 			expect(amDurationFormat(undefined, 'minutes')).toBe('');
 		});
+
+		it('should support display formatting', function () {
+			expect(amDurationFormat(130, 'seconds', undefined, 'minutes')).toBe(2);
+		});
+
+		it('should gracefully handle bad display format', function () {
+			expect(amDurationFormat(120, 'seconds', undefined, 'foo')).toBe('2 minutes');
+		});
 	});
 
 
