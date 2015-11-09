@@ -9,7 +9,7 @@
 	function isUndefinedOrNull(val) {
 		return angular.isUndefined(val) || val === null;
 	}
-	
+
 	function requireMoment() {
 		try {
 			return require('moment'); // Using nw.js or browserify?
@@ -19,7 +19,7 @@
 	}
 
 	function angularMoment(angular, moment) {
-		
+
 		if(typeof moment === 'undefined') {
 			if(typeof require === 'function') {
 				moment = requireMoment();
@@ -188,7 +188,7 @@
 		 *
 		 * @restrict A
 		 */
-			.directive('amTimeAgo', ['$window', 'moment', 'amMoment', 'amTimeAgoConfig', function ($window, moment, amMoment, amTimeAgoConfig) {
+			.directive('amTimeAgo', ['$window', 'moment', 'amMoment', 'amTimeAgoConfig', '$parse', function ($window, moment, amMoment, amTimeAgoConfig, $parse) {
 
 				return function (scope, element, attr) {
 					var activeTimeout = null;
@@ -201,6 +201,8 @@
 					var modelName = attr.amTimeAgo;
 					var currentFrom;
 					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
+
+					var formatter = attr.amTimeAgoFormatter && $parse(attr.amTimeAgoFormatter);
 
 					function getNow() {
 						var now;
@@ -227,12 +229,21 @@
 					function updateTime(momentInstance) {
 						var daysAgo = getNow().diff(momentInstance, 'day');
 						var showFullDate = fullDateThreshold && daysAgo >= fullDateThreshold;
+						var text;
 
-						if (showFullDate) {
-							element.text(momentInstance.format(fullDateFormat));
-						} else {
-							element.text(momentInstance.from(getNow(), withoutSuffix));
+						if (formatter) {
+							text = formatter(scope);
 						}
+
+						if (!text) {
+							if (showFullDate) {
+								text = momentInstance.format(fullDateFormat);
+							} else {
+								text = momentInstance.from(getNow(), withoutSuffix);
+							}
+						}
+
+						element.text(text);
 
 						if (titleFormat && !element.attr('title')) {
 							element.attr('title', momentInstance.local().format(titleFormat));

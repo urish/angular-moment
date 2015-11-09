@@ -41,6 +41,34 @@ describe('module angularMoment', function () {
 
 
 	describe('am-time-ago directive', function () {
+		it('should change the text of the element to the one returned from formatter function', function () {
+			$rootScope.testDate = new Date();
+			$rootScope.formatMe = function(date) {
+				if (date > new Date() - 60000) {
+					// within 1 minute
+					return 'soon';
+				}
+			};
+			var element = angular.element('<span am-time-ago="testDate" am-time-ago-formatter="formatMe(testDate)"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('soon');
+		});
+
+		it('should change the text of the element to "2 hours ago" when given a date 2 hours ago and formatter function returns undefined', function () {
+			$rootScope.testDate = new Date(new Date().getTime() - 2 * 60 * 60 * 1000);
+			$rootScope.formatMe = function(date) {
+				if (date > new Date() - 60000) {
+					// within 1 minute
+					return 'soon';
+				}
+			};
+			var element = angular.element('<span am-time-ago="testDate" am-time-ago-formatter="formatMe(testDate)"></span>');
+			element = $compile(element)($rootScope);
+			$rootScope.$digest();
+			expect(element.text()).toBe('2 hours ago');
+		});
+
 		it('should change the text of the element to "a few seconds ago" when given current time', function () {
 			$rootScope.testDate = new Date();
 			var element = angular.element('<span am-time-ago="testDate"></span>');

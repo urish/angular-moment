@@ -51,7 +51,7 @@ myapp.run(function(amMoment) {
 Use am-time-ago directive to format your relative timestamps. For example:
 
 ```html
-<span am-time-ago="message.time"></span>
+<span am-time-ago="message.time" am-time-ago-formatter="customFormatter(message.time)"></span>
 ```
 
 angular-moment will dynamically update the span to indicate how much time
@@ -67,6 +67,19 @@ $scope.message = {
 The user will initially see "a few seconds ago", and about a minute
 after the span will automatically update with the text "a minute ago",
 etc.
+
+Optionally, a function may be specified in `am-time-ago-formatter` to alter the displayed text
+based on custom logic. Example:
+
+```js
+$scope.customFormatter = function(date) {
+   // any date within 5 minutes from now or in the past will be displayed
+   // as 'in a few moments'
+   if (date > Date.now() - 5 * 60000) {
+      return 'in a few moments';
+   }
+};
+```
 
 ### amParse filter
 
@@ -91,7 +104,7 @@ Note: To use `amFromUnix`, install angular-moment version 1.0.0-beta.2
 
 ### amUtc filter
 
-Create / switch the current moment object into UTC mode. For example, given a date object in `message.date`, 
+Create / switch the current moment object into UTC mode. For example, given a date object in `message.date`,
 the following code will display the time in UTC instead of the local timezone:
 
 ```html
@@ -113,7 +126,7 @@ Note: To use `amUtcOffset`, install angular-moment version 1.0.0-beta.2
 
 ### amLocal filter
 
-Changes the given moment object to be in the local timezone. Usually used in conjunction with `amUtc` / `amTimezone` 
+Changes the given moment object to be in the local timezone. Usually used in conjunction with `amUtc` / `amTimezone`
 for timezone conversion. For example, the following will convert the given UTC date to local time:
 
 ```html
@@ -175,7 +188,7 @@ For more information about Moment.JS difference function, see the
 ### amDurationFormat filter
 
 Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/)
-for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) 
+for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/)
 for explanation about the formatting algorithm.
 
 Example:
