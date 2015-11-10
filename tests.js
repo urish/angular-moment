@@ -253,6 +253,18 @@ describe('module angularMoment', function () {
 				expect(element.attr('title')).toBe(testDateWithCustomFormatting);
 			});
 
+			it('should update the title attribute of the element if the binding model changed', function () {
+				amTimeAgoConfig.titleFormat = 'MMMM Do YYYY, h:mm:ss a';
+				$rootScope.testDate = Date.UTC(2015, 11, 10, 18, 44, 12);
+				var element = angular.element('<span am-time-ago="testDate"></span>');
+				element = $compile(element)($rootScope);
+				$rootScope.$digest();
+				$rootScope.testDate = Date.UTC(2015, 11, 10, 19, 43, 34);
+				$rootScope.$digest();
+				var testDate = moment($rootScope.testDate).format(amTimeAgoConfig.titleFormat);
+				expect(element.attr('title')).toBe(testDate);
+			});
+
 			describe('full date support', function () {
 				it('should display relative time if the date is recent', function () {
 					amTimeAgoConfig.fullDateThreshold = 7;
