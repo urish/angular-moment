@@ -1,4 +1,4 @@
-/* angular-moment.js / v1.0.0-beta.2 / (c) 2013, 2014, 2015 Uri Shaked / MIT Licence */
+/* angular-moment.js / v1.0.0-beta.3 / (c) 2013, 2014, 2015 Uri Shaked / MIT Licence */
 
 'format amd';
 /* global define */
@@ -9,7 +9,7 @@
 	function isUndefinedOrNull(val) {
 		return angular.isUndefined(val) || val === null;
 	}
-	
+
 	function requireMoment() {
 		try {
 			return require('moment'); // Using nw.js or browserify?
@@ -19,7 +19,7 @@
 	}
 
 	function angularMoment(angular, moment) {
-		
+
 		if(typeof moment === 'undefined') {
 			if(typeof require === 'function') {
 				moment = requireMoment();

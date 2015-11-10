@@ -1,9 +1,10 @@
 # Changelog
 
-## 1.0.0-beta.3 - TBD
+## 1.0.0-beta.3 - 2015-11-10
 
 - Support AngularJS 1.5.x 
 - Support for nw.js ([#196](https://github.com/urish/angular-moment/pull/196), contributed by [makkesk8](https://github.com/makkesk8))
+- Bugfix: `title` attribute does update when model changes ([#201](https://github.com/urish/angular-moment/pull/201), contributed by [stackia](https://github.com/stackia))
 
 ## 1.0.0-beta.2 - 2015-09-20
 
