@@ -201,6 +201,7 @@
 					var modelName = attr.amTimeAgo;
 					var currentFrom;
 					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
+					var setTitleTime = !element.attr('title');
 
 					function getNow() {
 						var now;
@@ -234,7 +235,7 @@
 							element.text(momentInstance.from(getNow(), withoutSuffix));
 						}
 
-						if (titleFormat && !element.attr('title')) {
+						if (titleFormat && setTitleTime) {
 							element.attr('title', momentInstance.local().format(titleFormat));
 						}
 
