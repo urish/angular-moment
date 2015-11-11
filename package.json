@@ -7,6 +7,13 @@
     "url": "http://github.com/urish/angular-moment.git"
   },
   "license": "MIT",
+  "files": [
+    "angular-moment.js",
+    "angular-moment.min.js",
+    "angular-moment.min.js.map",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "moment": ">=2.8.0 <2.11.0"
   },
