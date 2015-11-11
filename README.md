@@ -12,15 +12,15 @@ Installation
 ------------
 
 You can choose your preferred method of installation:
-* Through bower: `bower install angular-moment --save`
-* Through npm: `npm install angular-moment --save`
-* Through NuGet: `Install-Package angular-moment`
+* Through bower: `bower install angular-moment moment --save`
+* Through npm: `npm install angular-moment moment --save`
+* Through NuGet: `Install-Package angular-moment Moment.js`
 * From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/1.0.0-beta.3/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.3/angular-moment.min.js)
 * Download from github: [angular-moment.min.js](https://raw.github.com/urish/angular-moment/master/angular-moment.min.js)
 
 Usage
 -----
-Include both moment.js and angular-moment.js in your application.
+Include both **moment.js** and **angular-moment.js** in your application.
 
 ```html
 <script src="components/moment/moment.js"></script>
