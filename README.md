@@ -47,8 +47,8 @@ myapp.run(function(amMoment) {
 });
 ```
 
-### Timeago directive
-Use am-time-ago directive to format your relative timestamps. For example:
+### am-time-ago directive
+Use the `am-time-ago` directive to format your relative timestamps. For example:
 
 ```html
 <span am-time-ago="message.time"></span>
