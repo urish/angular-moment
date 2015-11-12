@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0-beta.4 - TBD
+- Add amStartOf and amEndOf filter ([#203](https://github.com/urish/angular-moment/pull/203), contributed by [pratik14](https://github.com/pratik14))
+
 ## 1.0.0-beta.3 - 2015-11-10
 
 - Support AngularJS 1.5.x 
