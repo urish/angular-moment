@@ -731,6 +731,65 @@ describe('module angularMoment', function () {
 
 	});
 
+	describe('amStartOf filter', function () {
+
+		var amStartOf;
+
+		beforeEach(function () {
+			amStartOf = $filter('amStartOf');
+		});
+
+		it('should set date to start of the hour', function () {
+			var date = new Date(2000, 1, 0, 12, 12, 12);
+			expect(amStartOf(date, 'hour').toString()).toMatch(/^Mon Jan 31 2000 12:00:00/);
+		});
+
+		it('should set date to start of the day', function () {
+			var date = new Date(2000, 1, 0, 12, 12, 12);
+			expect(amStartOf(date, 'day').toString()).toMatch(/^Mon Jan 31 2000 00:00:00/);
+		});
+
+		it('should set date to start of the week', function () {
+			var date = new Date(2000, 1, 10, 12, 12, 12);
+			expect(amStartOf(date, 'week').toString()).toMatch(/^Sun Feb 06 2000 00:00:00/);
+		});
+
+		it('should set date to start of the year', function () {
+			var date = new Date(2000, 6, 6, 12, 12, 12);
+			expect(amStartOf(date, 'year').toString()).toMatch(/^Sat Jan 01 2000 00:00:00/);
+		});
+
+	});
+
+	describe('amEndOf filter', function () {
+
+		var amEndOf;
+
+		beforeEach(function () {
+			amEndOf = $filter('amEndOf');
+		});
+
+		it('should set date to end of the hour', function () {
+			var date = new Date(2000, 0, 1, 12, 12, 12);
+			expect(amEndOf(date, 'hour').toString()).toMatch(/^Sat Jan 01 2000 12:59:59/);
+		});
+
+		it('should set date to end of the day', function () {
+			var date = new Date(2000, 0, 1, 12, 12, 12);
+			expect(amEndOf(date, 'day').toString()).toMatch(/^Sat Jan 01 2000 23:59:59/);
+		});
+
+		it('should set date to end of the week', function () {
+			var date = new Date(2000, 0, 10, 12, 12, 12);
+			expect(amEndOf(date, 'week').toString()).toMatch(/^Sat Jan 15 2000 23:59:59/);
+		});
+
+		it('should set date to end of the year', function () {
+			var date = new Date(2000, 6, 6, 12, 12, 12);
+			expect(amEndOf(date, 'year').toString()).toMatch(/^Sun Dec 31 2000 23:59:59/);
+		});
+
+	});
 
 	describe('amMoment service', function () {
 		describe('#changeLocale', function () {
