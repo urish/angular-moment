@@ -669,7 +669,49 @@
 				amAddFilter.$stateful = angularMomentConfig.statefulFilters;
 
 				return amAddFilter;
-			}]);
+			}])
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amStartOf
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('amStartOf', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function amStartOfFilter(value, type) {
+
+					if (isUndefinedOrNull(value)) {
+						return '';
+					}
+
+					return moment(value).startOf(type);
+				}
+
+				amStartOfFilter.$stateful = angularMomentConfig.statefulFilters;
+
+				return amStartOfFilter;
+			}])
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amEndOf
+		 * @module angularMoment
+		 * @function
+		 */
+			.filter('amEndOf', ['moment', 'angularMomentConfig', function (moment, angularMomentConfig) {
+				function amEndOfFilter(value, type) {
+
+					if (isUndefinedOrNull(value)) {
+						return '';
+					}
+
+					return moment(value).endOf(type);
+				}
+
+				amEndOfFilter.$stateful = angularMomentConfig.statefulFilters;
+
+				return amEndOfFilter;
+ 			}]);
 	}
 
 	if (typeof define === 'function' && define.amd) {
