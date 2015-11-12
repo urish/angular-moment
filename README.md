@@ -212,6 +212,32 @@ Example:
 
 ```
 
+### amStartOf filter
+
+Mutates the original moment by setting it to the start of a unit(minute, hour, day..) of time.
+
+See [Moment.JS documentation](http://momentjs.com/docs/#/manipulating/start-of/) for a list of supported duration formats.
+
+Example:
+
+```html
+<span>{{ date | amStartOf:'month' | amLocal }}</span>
+
+```
+
+### amEndOf filter
+
+Mutates the original moment by setting it to the end of a unit(minute, hour, day..) of time.
+
+See [Moment.JS documentation](http://momentjs.com/docs/#/manipulating/end-of/) for a list of supported duration formats.
+
+Example:
+
+```html
+<span>{{ date | amEndOf:'month' | amLocal }}</span>
+
+```
+
 ### Time zone support
 
 The `amDateFormat` and `amCalendar` filters can be configured to display dates aligned
