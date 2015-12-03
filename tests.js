@@ -549,7 +549,7 @@ describe('module angularMoment', function () {
 		it('should take the difference of two dates in milliseconds', function () {
 			var today = new Date(2012, 0, 22, 0, 0, 0);
 			var testDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 13, 33, 33);
-			expect(amDifference(testDate, today)).toBe(48813000);
+			expect(amDifference(today, testDate)).toBe(48813000);
 		});
 
 		it('should support passing "years", "months", "days", etc as a units parameter', function () {
