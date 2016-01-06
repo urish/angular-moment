@@ -15,7 +15,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "moment": ">=2.8.0 <2.11.0"
+    "moment": ">=2.8.0 <2.12.0"
   },
   "devDependencies": {
     "bower": "1.6.3",
@@ -27,7 +27,7 @@
     "grunt-karma": "0.12.1",
     "grunt-ngdocs": "0.2.9",
     "jasmine-core": "2.3.4",
-    "karma": "0.13.14",
+    "karma": "0.13.19",
     "karma-coverage": "0.5.3",
     "karma-jasmine": "0.3.6",
     "karma-phantomjs-launcher": "0.2.1",
