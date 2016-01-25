@@ -65,7 +65,7 @@ describe('module angularMoment', function () {
 			expect(element.text()).toBe('2 hours ago');
 		});
 
-		it('should change the text of the div to "one year ago" when given a date one year ago', function () {
+		it('should change the text of the div to "a year ago" when given a date one year ago', function () {
 			var today = new Date();
 			$rootScope.testDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
 			var element = angular.element('<div am-time-ago="testDate"></div>');
