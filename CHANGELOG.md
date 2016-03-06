@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0-beta.5 - TBD
+- Bugfix: `amTimeAgo` shouldn't convert the time to local timezone on the element's `title` attribute ([#226](https://github.com/urish/angular-moment/pull/226), contributed by [stackia](https://github.com/stackia))
+
 ## 1.0.0-beta.4 - 2016-02-09
 - Add amStartOf and amEndOf filter ([#203](https://github.com/urish/angular-moment/pull/203), contributed by [pratik14](https://github.com/pratik14))
 - Support Moment 2.11.x
