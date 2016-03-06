@@ -236,7 +236,7 @@
 						}
 
 						if (titleFormat && setTitleTime) {
-							element.attr('title', momentInstance.local().format(titleFormat));
+							element.attr('title', momentInstance.format(titleFormat));
 						}
 
 						if (!showFullDate) {
