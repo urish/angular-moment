@@ -15,7 +15,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "moment": ">=2.8.0 <2.12.0"
+    "moment": ">=2.8.0 <2.13.0"
   },
   "devDependencies": {
     "bower": "1.6.3",
