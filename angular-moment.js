@@ -471,7 +471,7 @@
 		 */
 			.filter('amLocal', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
 				var amLocalFn = function(value) {
-					return moment.isMoment(value) ? value.local() : null
+					return moment.isMoment(value) ? value.local() : null;
 				};
 
 				// Append amLocal to preprocessor so that it isn't overridden by a existing utc preprocessing
