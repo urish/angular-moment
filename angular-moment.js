@@ -469,9 +469,32 @@
 		 * @name angularMoment.filter:amLocal
 		 * @module angularMoment
 		 */
-			.filter('amLocal', ['moment', function (moment) {
-				return function (value) {
-					return moment.isMoment(value) ? value.local() : null;
+			.filter('amLocal', ['moment', 'amMoment', 'angularMomentConfig', function (moment, amMoment, angularMomentConfig) {
+				var amLocalFn = function(value) {
+					return moment.isMoment(value) ? value.local() : null
+				};
+
+				// Append amLocal to preprocessor so that it isn't overridden by a existing utc preprocessing
+				var _preprocess = angularMomentConfig.preprocess;
+				angularMomentConfig.preprocess = function(value) {
+					return amLocalFn(_preprocess(value));
+				};
+
+				return amLocalFn;
+			}])
+
+		/**
+		 * @ngdoc filter
+		 * @name angularMoment.filter:amLocalFormat
+		 * @module angularMoment
+		 */
+			.filter('amLocalFormat', ['moment', function (moment) {
+				return function (value, format) {
+					if (!moment.isMoment(value)) {
+						return null;
+					}
+
+					return moment(value.local()).format(format);
 				};
 			}])
 
