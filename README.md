@@ -3,7 +3,7 @@ angular-moment
 
 AngularJS directive and filters for [Moment.JS](http://www.momentjs.com).
 
-Copyright (C) 2013, 2014, 2015, Uri Shaked <uri@urish.org>
+Copyright (C) 2013, 2014, 2015, 2016, Uri Shaked <uri@urish.org>
 
 [![Build Status](https://travis-ci.org/urish/angular-moment.png?branch=master)](https://travis-ci.org/urish/angular-moment)
 [![Coverage Status](https://coveralls.io/repos/urish/angular-moment/badge.png)](https://coveralls.io/r/urish/angular-moment)
@@ -19,7 +19,7 @@ You can choose your preferred method of installation:
 * Through bower: `bower install angular-moment moment --save`
 * Through npm: `npm install angular-moment moment --save`
 * Through NuGet: `Install-Package angular-moment Moment.js`
-* From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/1.0.0-beta.4/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.4/angular-moment.min.js)
+* From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/1.0.0-beta.5/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.5/angular-moment.min.js)
 * Download from github: [angular-moment.min.js](https://raw.github.com/urish/angular-moment/master/angular-moment.min.js)
 
 Usage
@@ -81,7 +81,7 @@ other filters. For example, the following code will accept dates that are format
 <span am-time-ago="message.time | amParse:'YYYY.MM.DD HH:mm:ss'"></span>
 ```
 
-Note: To use `amParse`, install angular-moment version 1.0.0-beta.3
+Note: To use `amParse`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amFromUnix filter
 
@@ -91,7 +91,7 @@ Converts a unix-timestamp (seconds since 1/1/1970) into a moment object. Example
 <span am-time-ago="message.unixTime | amFromUnix">
 ```
 
-Note: To use `amFromUnix`, install angular-moment version 1.0.0-beta.3
+Note: To use `amFromUnix`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amUtc filter
 
@@ -102,7 +102,7 @@ the following code will display the time in UTC instead of the local timezone:
 <span>{{message.date | amUtc | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
 
-Note: To use `amUtc`, install angular-moment version 1.0.0-beta.3
+Note: To use `amUtc`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amUtcOffset filter
 
@@ -113,7 +113,7 @@ a UTC + 3 hours time offset:
 <span>{{message.date | amUtcOffset:'+0300' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
 
-Note: To use `amUtcOffset`, install angular-moment version 1.0.0-beta.3
+Note: To use `amUtcOffset`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amLocal filter
 
@@ -124,7 +124,7 @@ for timezone conversion. For example, the following will convert the given UTC d
 <span>{{message.date | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
 
-Note: To use `amLocal`, install angular-moment version 1.0.0-beta.3
+Note: To use `amLocal`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amTimezone filter
 
@@ -135,7 +135,7 @@ and load timezone data in order to use this filter. The following example displa
 <span>{{message.date | amTimezone:'Israel' | amDateFormat:'MM.DD.YYYY HH:mm:ss'}}</span>
 ```
 
-Note: To use `amTimezone`, install angular-moment version 1.0.0-beta.3
+Note: To use `amTimezone`, install angular-moment version 1.0.0-beta.3 or newer
 
 ### amDateFormat filter
 Format dates using moment.js format() method. Example:

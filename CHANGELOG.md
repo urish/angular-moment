@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0-beta.5 - TBD
+## 1.0.0-beta.5 - 2016-03-18
 - Bugfix: `amTimeAgo` shouldn't convert the time to local timezone on the element's `title` attribute ([#226](https://github.com/urish/angular-moment/pull/226), contributed by [stackia](https://github.com/stackia))
 - Support moment 2.12.x
 
