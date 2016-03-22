@@ -32,7 +32,7 @@ Instructions for using moment-timezone with webpack
  ```javascript
  var angular = require('angular');
  require('angular-moment');
- var ngModule = anglar.module('ngApp',['angularMoment'])
+ var ngModule = anglar.module('ngApp',['angularMoment']);
  ngModule.constant('moment', require('moment-timezone'));
  ```
  
