@@ -30,6 +30,7 @@ Instructions for using moment-timezone with webpack
   moment using Angular's dependency injection [See Resolved Issue](https://github.com/urish/angular-moment/pull/234)
  
  ```javascript
+ var angular = require('angular');
  require('angular-moment');
  var ngModule = anglar.module('ngApp',['angularMoment'])
  ngModule.constant('moment', require('moment-timezone'));
