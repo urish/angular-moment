@@ -22,6 +22,20 @@ You can choose your preferred method of installation:
 * From a CDN: [jsDelivr](https://cdn.jsdelivr.net/angular.moment/1.0.0-beta.5/angular-moment.min.js) or [CDNJS](https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.5/angular-moment.min.js)
 * Download from github: [angular-moment.min.js](https://raw.github.com/urish/angular-moment/master/angular-moment.min.js)
 
+
+Instructions for using moment-timezone with webpack
+----------
+
+ Even if you have `moment-timezone` in your `package.json`, `angular-moment` will not be able to use it unless you override
+  moment using Angular's dependency injection [See Resolved Issue](https://github.com/urish/angular-moment/pull/234)
+ 
+ ```javascript
+ require('angular-moment');
+ var ngModule = anglar.module('ngApp',['angularMoment'])
+ ngModule.constant('moment', require('moment-timezone'));
+ ```
+ 
+ 
 Usage
 -----
 Include both **moment.js** and **angular-moment.js** in your application.
