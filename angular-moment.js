@@ -180,7 +180,7 @@
 				 */
 				fullDateFormat: null,
 
-				fullDateThresholdDiff: 'day'
+				fullDateThresholdUnit: 'day'
 			})
 
 		/**
@@ -199,7 +199,7 @@
 					var titleFormat = amTimeAgoConfig.titleFormat;
 					var fullDateThreshold = amTimeAgoConfig.fullDateThreshold;
 					var fullDateFormat = amTimeAgoConfig.fullDateFormat;
-					var fullDateThresholdDiff = amTimeAgoConfig.fullDateThresholdDiff;
+					var fullDateThresholdUnit = amTimeAgoConfig.fullDateThresholdUnit;
 
 					var localDate = new Date().getTime();
 					var modelName = attr.amTimeAgo;
@@ -230,7 +230,7 @@
 					}
 
 					function updateTime(momentInstance) {
-						var timeAgo = getNow().diff(momentInstance, fullDateThresholdDiff);
+						var timeAgo = getNow().diff(momentInstance, fullDateThresholdUnit);
 						var showFullDate = fullDateThreshold && timeAgo >= fullDateThreshold;
 
 						if (showFullDate) {
@@ -322,8 +322,8 @@
 						updateMoment();
 					});
 
-					attr.$observe('amFullDateThresholdDiff', function (newValue) {
-						fullDateThresholdDiff = newValue;
+					attr.$observe('amFullDateThresholdUnit', function (newValue) {
+						fullDateThresholdUnit = newValue;
 						updateMoment();
 					});
 
