@@ -178,7 +178,9 @@
 				 * @description
 				 * Specify the format of the date when displayed as full date. null by default.
 				 */
-				fullDateFormat: null
+				fullDateFormat: null,
+
+				fullDateThresholdUnit: 'day'
 			})
 
 		/**
@@ -197,6 +199,8 @@
 					var titleFormat = amTimeAgoConfig.titleFormat;
 					var fullDateThreshold = amTimeAgoConfig.fullDateThreshold;
 					var fullDateFormat = amTimeAgoConfig.fullDateFormat;
+					var fullDateThresholdUnit = amTimeAgoConfig.fullDateThresholdUnit;
+
 					var localDate = new Date().getTime();
 					var modelName = attr.amTimeAgo;
 					var currentFrom;
@@ -226,8 +230,8 @@
 					}
 
 					function updateTime(momentInstance) {
-						var daysAgo = getNow().diff(momentInstance, 'day');
-						var showFullDate = fullDateThreshold && daysAgo >= fullDateThreshold;
+						var timeAgo = getNow().diff(momentInstance, fullDateThresholdUnit);
+						var showFullDate = fullDateThreshold && timeAgo >= fullDateThreshold;
 
 						if (showFullDate) {
 							element.text(momentInstance.format(fullDateFormat));
@@ -315,6 +319,11 @@
 
 					attr.$observe('amFullDateFormat', function (newValue) {
 						fullDateFormat = newValue;
+						updateMoment();
+					});
+
+					attr.$observe('amFullDateThresholdUnit', function (newValue) {
+						fullDateThresholdUnit = newValue;
 						updateMoment();
 					});
 
