@@ -562,6 +562,10 @@ describe('module angularMoment', function () {
 		it('should return an empty string for invalid input', function () {
 			expect(amCalendar('blah blah')).toBe('');
 		});
+
+		it('should take advanced arguments referenceTime and formats', function () {
+			expect(amCalendar(new Date(2012, 0, 22, 4, 46, 54), new Date(2012, 0, 23, 4, 46, 54), {lastDay: '[Yesterday at] H:m'})).toBe('Yesterday at 4:46');
+		});
 	});
 
 	describe('amDifference filter', function () {
