@@ -171,7 +171,7 @@ For more information about Moment.JS formatting options, see the
 Format dates using moment.js calendar() method. Example:
 
 ```html
-<span>{{message.time | amCalendar}}</span>
+<span>{{message.time | amCalendar:referenceTime:formats}}</span>
 ```
 
 This snippet will format the given time as e.g. "Today 2:30 AM" or "Last Monday 2:30 AM" etc..
