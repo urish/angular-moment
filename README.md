@@ -52,7 +52,7 @@ Add the module `angularMoment` as a dependency to your app module:
 var myapp = angular.module('myapp', ['angularMoment']);
 ```
 
-If you need internationalization support, load specified moment.js locale file right after the moment.js:
+If you need internationalization support, load specified moment.js locale file right after moment.js:
 
 ```html
 <script src="components/moment/moment.js"></script>
