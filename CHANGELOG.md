@@ -2,6 +2,7 @@
 
 ## 1.0.0-beta.6 - TBD
 - Support for setting the units of the full date threshold of `am-time-ago` ([#237](https://github.com/urish/angular-moment/pull/237), contributed by [denistrustepain](https://github.com/denistrustepain))
+- Add optional arguments `referenceTime` and `formats` to the `amCalendar` filter ([#241](https://github.com/urish/angular-moment/pull/241), contributed by [Nitro-N](https://github.com/Nitro-N))
 
 ## 1.0.0-beta.5 - 2016-03-18
 - Bugfix: `amTimeAgo` shouldn't convert the time to local timezone on the element's `title` attribute ([#226](https://github.com/urish/angular-moment/pull/226), contributed by [stackia](https://github.com/stackia))
