@@ -25,7 +25,6 @@
     "grunt-contrib-jshint": "1.0.0",
     "grunt-contrib-uglify": "1.0.1",
     "grunt-karma": "0.12.2",
-    "grunt-ngdocs": "0.2.9",
     "jasmine-core": "2.4.1",
     "phantomjs-prebuilt": "2.1.7",
     "karma": "0.13.22",
