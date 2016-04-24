@@ -1,6 +1,6 @@
 {
   "name": "angular-moment",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "main": "angular-moment.js",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "moment": ">=2.8.0 <2.13.0"
+    "moment": ">=2.8.0 <3.0.0"
   },
   "devDependencies": {
     "bower": "1.7.9",
