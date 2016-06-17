@@ -727,13 +727,15 @@
   if (typeof angular !== 'undefined') {
     angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
     module.exports = 'angularMoment';
-  } else if (typeof define === 'function' && define.amd && false) {
+  } else if (typeof define === 'function' && define.amd) {
 		define(['angular', 'moment'], angularMoment);
-	} else if (typeof module !== 'undefined' && module && module.exports && false) {
+	} else if (typeof require !== 'undefined') {
 		angularMoment(require('angular'), require('moment'));
 	} else {
 		throw new Error('Could not load angular-moment');
 	}
 
-  module.exports = 'angularMoment';
+  if (typeof module !== 'undefined') {
+    module.exports = 'angularMoment';
+  }
 })();
