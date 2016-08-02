@@ -725,7 +725,10 @@
 	}
 
 	if (typeof define === 'function' && define.amd) {
-		define(['angular', 'moment'], angularMoment);
+		define(['angular', 'moment'], function(angular, moment) {
+			angularMoment(angular, moment);
+			return 'angularMoment';
+		});
 	} else if (typeof module !== 'undefined' && module && module.exports) {
 		angularMoment(require('angular'), require('moment'));
 		module.exports = 'angularMoment';
