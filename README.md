@@ -68,6 +68,17 @@ myapp.run(function(amMoment) {
 });
 ```
 
+
+### Use in controller/service/factory
+Inject the `moment`-constant into your dependency injection. For example:
+ 
+```js
+angular.module('fooApp')
+    .controller('FooCtrl', ['$scope', 'moment', function ($scope, moment) {
+        $scope.exampleDate = moment().hour(8).minute(0).second(0).toDate();
+    }]);
+```
+
 ### am-time-ago directive
 Use the `am-time-ago` directive to format your relative timestamps. For example:
 
