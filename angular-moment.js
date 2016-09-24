@@ -724,12 +724,17 @@
  			}]);
 	}
 
-	if (typeof define === 'function' && define.amd) {
+  if (typeof angular !== 'undefined') {
+    angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
+  } else if (typeof define === 'function' && define.amd) {
 		define(['angular', 'moment'], angularMoment);
-	} else if (typeof module !== 'undefined' && module && module.exports) {
+	} else if (typeof require !== 'undefined') {
 		angularMoment(require('angular'), require('moment'));
-		module.exports = 'angularMoment';
 	} else {
-		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
+		throw new Error('Could not load angular-moment');
 	}
+
+  if (typeof module !== 'undefined') {
+    module.exports = 'angularMoment';
+  }
 })();
