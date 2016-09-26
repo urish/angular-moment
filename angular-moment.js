@@ -724,12 +724,18 @@
  			}]);
 	}
 
-	if (typeof define === 'function' && define.amd) {
-		define(['angular', 'moment'], angularMoment);
-	} else if (typeof module !== 'undefined' && module && module.exports) {
-		angularMoment(require('angular'), require('moment'));
-		module.exports = 'angularMoment';
-	} else {
-		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
-	}
+	if (typeof module !== 'undefined' && module && module.exports) {
+		var moment = moment;
+		if (typeof moment === 'undefined' && typeof require === 'function') {
+			moment = requireMoment();
+		} else {
+			throw new Error('Moment cannot be found by angular-moment! Please reference to: https://github.com/urish/angular-moment'); // Add wiki/troubleshooting section?
+		}
+        angularMoment(angular, moment);
+        module.exports = 'angularMoment';
+    } else if (typeof define === 'function' && define.amd) {
+        define(['angular', 'moment'], angularMoment);
+    } else {
+        angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
+    }
 })();
