@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0 - 2016-10-06
+- Improvments to the UMD code
+
+Breaking change: The AMD version now exports the module name ('angularMoment') instead of the actual module object. 
+
 ## 1.0.0-beta.6 - 2016-04-24
 - Support for setting the units of the full date threshold of `am-time-ago` ([#237](https://github.com/urish/angular-moment/pull/237), contributed by [denistrustepain](https://github.com/denistrustepain))
 - Add optional arguments `referenceTime` and `formats` to the `amCalendar` filter ([#241](https://github.com/urish/angular-moment/pull/241), contributed by [Nitro-N](https://github.com/Nitro-N))
