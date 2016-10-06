@@ -728,7 +728,7 @@
 
 	if (typeof define === 'function' && define.amd) {
 		define(['angular', 'moment'], angularMoment);
-	} else if (typeof module !== 'undefined' && module && module.exports) {
+	} else if (typeof module !== 'undefined' && module && module.exports && (typeof require === 'function')) {
 		module.exports = angularMoment(require('angular'), require('moment'));
 	} else {
 		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
