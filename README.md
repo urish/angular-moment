@@ -286,7 +286,7 @@ functionality will not be available. You will also need to include a timezone da
 you can create using the [Timezone Data Builder](http://momentjs.com/timezone/)
 or simply download from [here](https://rawgithub.com/qw4n7y/7282780/raw/6ae3b334b295f93047e8f3ad300db6bc4387e235/moment-timezone-data.js).
 
-### Accessing `moment()` in your javascript
+### Accessing `moment()` in your JavaScript
 
 If you wish to use `moment()` in your services, controllers, or directives, simply inject the `moment` variable into the
 constructor.
