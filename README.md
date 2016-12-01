@@ -28,15 +28,15 @@ Instructions for using moment-timezone with webpack
 
  Even if you have `moment-timezone` in your `package.json`, `angular-moment` will not be able to use it unless you override
   moment using Angular's dependency injection [See Resolved Issue](https://github.com/urish/angular-moment/pull/234)
- 
+
  ```javascript
  var angular = require('angular');
  require('angular-moment');
  var ngModule = angular.module('ngApp',['angularMoment']);
  ngModule.constant('moment', require('moment-timezone'));
  ```
- 
- 
+
+
 Usage
 -----
 Include both **moment.js** and **angular-moment.js** in your application.
@@ -71,7 +71,7 @@ myapp.run(function(amMoment) {
 
 ### Use in controller/service/factory
 Inject the `moment`-constant into your dependency injection. For example:
- 
+
 ```js
 angular.module('fooApp')
     .controller('FooCtrl', ['$scope', 'moment', function ($scope, moment) {
@@ -92,7 +92,7 @@ code:
 ```js
 $scope.message = {
    text: 'hello world!',
-   time: new Date()
+   time: new Date().getTime()
 };
 ```
 
@@ -119,7 +119,7 @@ Converts a unix-timestamp (seconds since 1/1/1970) into a moment object. Example
 
 ### amUtc filter
 
-Create / switch the current moment object into UTC mode. For example, given a date object in `message.date`, 
+Create / switch the current moment object into UTC mode. For example, given a date object in `message.date`,
 the following code will display the time in UTC instead of the local timezone:
 
 ```html
@@ -137,7 +137,7 @@ a UTC + 3 hours time offset:
 
 ### amLocal filter
 
-Changes the given moment object to be in the local timezone. Usually used in conjunction with `amUtc` / `amTimezone` 
+Changes the given moment object to be in the local timezone. Usually used in conjunction with `amUtc` / `amTimezone`
 for timezone conversion. For example, the following will convert the given UTC date to local time:
 
 ```html
@@ -195,7 +195,7 @@ For more information about Moment.JS difference function, see the
 ### amDurationFormat filter
 
 Formats a duration (such as 5 days) in a human readable format. See [Moment.JS documentation](http://momentjs.com/docs/#/durations/creating/)
-for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/) 
+for a list of supported duration formats, and [`humanize() documentation`](http://momentjs.com/docs/#/durations/humanize/)
 for explanation about the formatting algorithm.
 
 Example:
