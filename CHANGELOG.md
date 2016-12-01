@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1 - 2016-12-01
+- Angular 1.6 support ([#278](https://github.com/urish/angular-moment/pull/278), contributed by [alippai](https://github.com/alippai))
+
 ## 1.0.0 - 2016-10-06
 - Improvments to the UMD code
 
