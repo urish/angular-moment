@@ -503,7 +503,7 @@
 					}
 
 					if (aMoment.tz) {
-						return aMoment.tz(timezone);
+						return aMoment.clone().tz(timezone);
 					} else {
 						$log.warn('angular-moment: named timezone specified but moment.tz() is undefined. Did you forget to include moment-timezone.js ?');
 						return aMoment;
