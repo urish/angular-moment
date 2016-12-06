@@ -553,7 +553,7 @@
 						return '';
 					}
 
-					return date.diff(date2, unit, usePrecision);
+					return date2.diff(date, unit, usePrecision);
 				}
 
 				amDifferenceFilter.$stateful = angularMomentConfig.statefulFilters;
