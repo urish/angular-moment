@@ -312,6 +312,11 @@
 						});
 					}
 
+                    attr.$observe('amTimeAgo', function (newValue) {
+                        currentValue = newValue;
+                        updateMoment();
+                    });
+
 					attr.$observe('amFullDateThreshold', function (newValue) {
 						fullDateThreshold = newValue;
 						updateMoment();
