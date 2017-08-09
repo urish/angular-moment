@@ -732,6 +732,6 @@
 	} else if (typeof module !== 'undefined' && module && module.exports && (typeof require === 'function') && !isElectron) {
 		module.exports = angularMoment(require('angular'), require('moment'));
 	} else {
-		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
+		angularMoment(angular, (typeof global !== 'undefined' && typeof global.moment !== 'undefined' ? global : window).moment);
 	}
 })();
