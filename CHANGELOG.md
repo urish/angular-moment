@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.0 - 2017-09-28
+- Add additional typeof check for the global.moment instance ([#295](https://github.com/urish/angular-moment/pull/295), contributed by [schester44](https://github.com/schester44))
+
 ## 1.0.1 - 2016-12-01
 - Angular 1.6 support ([#278](https://github.com/urish/angular-moment/pull/278), contributed by [alippai](https://github.com/alippai))
 
