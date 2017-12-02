@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>angular-moment</id>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
         <title>Angular Moment</title>
         <authors>urish</authors>
         <projectUrl>https://github.com/urish/angular-moment</projectUrl>

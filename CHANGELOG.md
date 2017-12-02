@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0 - 2017-12-02
+- Update moment.js version in bower.json ([#300](https://github.com/urish/angular-moment/pull/300), contributed by [jc1arke](https://github.com/jc1arke))
+
 ## 1.1.0 - 2017-09-28
 - Add additional typeof check for the global.moment instance ([#295](https://github.com/urish/angular-moment/pull/295), contributed by [schester44](https://github.com/schester44))
 
