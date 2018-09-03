@@ -206,6 +206,7 @@
 					var currentFrom;
 					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
 					var setTitleTime = !element.attr('title');
+                    var truncate = !!element.attr('truncate');
 
 					function getNow() {
 						var now;
@@ -236,7 +237,13 @@
 						if (showFullDate) {
 							element.text(momentInstance.format(fullDateFormat));
 						} else {
-							element.text(momentInstance.from(getNow(), withoutSuffix));
+                            var text = momentInstance.from(getNow(), withoutSuffix);
+
+                            if (truncate && (text.indexOf('months') > -1 || text.indexOf('year') > -1)) {
+                                text = 'more than a month ago';
+                            }
+
+							element.text(text);
 						}
 
 						if (titleFormat && setTitleTime) {
