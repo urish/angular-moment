@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.0 - 2018-09-04
+- Update moment.js version in bower.json ([#306](https://github.com/urish/angular-moment/pull/306), contributed by [jniles](https://github.com/jniles))
+
 ## 1.2.0 - 2017-12-02
 - Update moment.js version in bower.json ([#300](https://github.com/urish/angular-moment/pull/300), contributed by [jc1arke](https://github.com/jc1arke))
 
