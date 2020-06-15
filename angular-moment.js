@@ -20,6 +20,8 @@
 
 	function angularMoment(angular, moment) {
 
+		var localDate = new Date().getTime();
+
 		if(typeof moment === 'undefined') {
 			if(typeof require === 'function') {
 				moment = requireMoment();
@@ -200,8 +202,7 @@
 					var fullDateThreshold = amTimeAgoConfig.fullDateThreshold;
 					var fullDateFormat = amTimeAgoConfig.fullDateFormat;
 					var fullDateThresholdUnit = amTimeAgoConfig.fullDateThresholdUnit;
-
-					var localDate = new Date().getTime();
+					
 					var modelName = attr.amTimeAgo;
 					var currentFrom;
 					var isTimeElement = ('TIME' === element[0].nodeName.toUpperCase());
