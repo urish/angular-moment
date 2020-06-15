@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.1 - 2020-06-15
+- Update angular.js version in bower.json #310
+
 ## 1.3.0 - 2018-09-04
 - Update angular.js version in bower.json ([#306](https://github.com/urish/angular-moment/pull/306), contributed by [jniles](https://github.com/jniles))
 
